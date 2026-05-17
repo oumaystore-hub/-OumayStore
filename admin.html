@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لوحة التحكم - OUMAYSTORE</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root { --primary: #1e3a5f; --accent: #c9a96e; --bg: #f8fafc; --white: #ffffff; --text: #334155; }
@@ -13,7 +13,7 @@
         
         /* Sidebar */
         .sidebar { width: 260px; background: var(--primary); color: white; padding: 20px; position: fixed; height: 100%; right: 0; top: 0; z-index: 100; transition: 0.3s; }
-        .logo { font-size: 1.5rem; font-weight: bold; margin-bottom: 40px; text-align: center; color: var(--accent); letter-spacing: 1px; }
+        .logo { font-size: 1.5rem; font-weight: 800; margin-bottom: 40px; text-align: center; color: var(--accent); letter-spacing: 1px; }
         .menu-item { padding: 12px 15px; cursor: pointer; border-radius: 10px; margin-bottom: 8px; transition: 0.3s; display: flex; align-items: center; gap: 12px; opacity: 0.8; }
         .menu-item:hover, .menu-item.active { background: rgba(255,255,255,0.1); opacity: 1; color: var(--accent); }
         
@@ -25,7 +25,7 @@
         /* Forms */
         .form-group { margin-bottom: 20px; }
         .form-label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; color: var(--primary); }
-        .form-input { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 10px; outline: none; transition: 0.3s; background: #f8fafc; }
+        .form-input { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 10px; outline: none; background: #f8fafc; transition: 0.3s; }
         .form-input:focus { border-color: var(--accent); background: #fff; box-shadow: 0 0 0 3px rgba(201,169,110,0.1); }
         
         /* Image Upload Multi */
@@ -54,9 +54,15 @@
         th { color: #64748b; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; }
         .prod-thumb { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; }
         
-        /* Login */
+        /* Login Overlay */
         #login-overlay { position: fixed; inset: 0; background: var(--primary); z-index: 999; display: flex; align-items: center; justify-content: center; }
         .login-card { background: white; padding: 40px; border-radius: 20px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
+
+        /* Order Details Modal */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 2000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+        .modal-sheet { background: white; width: 90%; max-width: 500px; max-height: 90vh; border-radius: 16px; padding: 25px; overflow-y: auto; }
+        .order-item-row { display: flex; gap: 10px; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .order-item-row img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; }
 
         @media(max-width: 768px) {
             .sidebar { width: 70px; padding: 10px; }
@@ -88,15 +94,15 @@
         <div class="menu-item" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> <span>خروج</span></div>
     </div>
 
-    <!-- المحتوى -->
+    <!-- المحتوى الرئيسي -->
     <div class="main-content">
-        
-        <!-- قسم المنتجات -->
+                <!-- قسم المنتجات -->
         <div id="tab-products">
             <div class="header">
-                <h2 style="color:var(--primary)">📦 المنتجات</h2>
+                <h2 style="color:var(--primary)">📦 إدارة المنتجات</h2>
                 <button onclick="openModal()" class="btn btn-accent"><i class="fa-solid fa-plus"></i> إضافة منتج</button>
-            </div>            
+            </div>
+            
             <div class="card">
                 <table>
                     <thead>
@@ -116,7 +122,7 @@
         <!-- قسم الطلبات -->
         <div id="tab-orders" style="display:none;">
             <div class="header">
-                <h2 style="color:var(--primary)">🛒 الطلبات الجديدة</h2>
+                <h2 style="color:var(--primary)">🛒 الطلبات الواردة</h2>
                 <button onclick="clearOrders()" class="btn btn-danger">حذف الكل</button>
             </div>
             <div class="card">
@@ -126,7 +132,7 @@
                             <th>رقم الطلب</th>
                             <th>معلومات العميل</th>
                             <th>المبلغ الإجمالي</th>
-                            <th>التاريخ</th>
+                            <th>التفاصيل</th>
                         </tr>
                     </thead>
                     <tbody id="order-list"></tbody>
@@ -139,13 +145,13 @@
     <div id="modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:200; align-items:center; justify-content:center; backdrop-filter:blur(5px);">
         <div class="card" style="width:95%; max-width:600px; max-height:90vh; overflow-y:auto;">
             <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
-                <h3>بيانات المنتج الجديد</h3>
-                <button onclick="closeModal()" style="background:none; border:none; font-size:1.2rem; cursor:pointer;">✕</button>
+                <h3>بيانات المنتج الجديد</h3>                <button onclick="closeModal()" style="background:none; border:none; font-size:1.2rem; cursor:pointer;">✕</button>
             </div>
             
             <div class="form-group">
                 <label class="form-label">اسم المنتج</label>
-                <input type="text" id="p-name" class="form-input">            </div>
+                <input type="text" id="p-name" class="form-input">
+            </div>
 
             <div class="form-group" style="display:flex; gap:15px;">
                 <div style="flex:1">
@@ -158,6 +164,7 @@
                         <option value="ملابس">ملابس</option>
                         <option value="أحذية">أحذية</option>
                         <option value="إكسسوارات">إكسسوارات</option>
+                        <option value="منزل">منزل وديكور</option>
                     </select>
                 </div>
             </div>
@@ -187,17 +194,29 @@
             </div>
 
             <div style="display:flex; gap:10px; margin-top:25px;">
-                <button onclick="saveProduct()" class="btn btn-accent" style="flex:1; justify-content:center;">حفظ ونشر</button>
-                <button onclick="closeModal()" class="btn btn-danger" style="flex:1; justify-content:center;">إلغاء</button>
+                <button onclick="saveProduct()" class="btn btn-accent" style="flex:1; justify-content:center;">حفظ ونشر</button>                <button onclick="closeModal()" class="btn btn-danger" style="flex:1; justify-content:center;">إلغاء</button>
             </div>
         </div>
     </div>
 
+    <!-- نافذة تفاصيل الطلب -->
+    <div id="order-modal" class="modal-overlay">
+        <div class="modal-sheet">
+            <div style="display:flex; justify-content:space-between; margin-bottom:15px;">
+                <h3>تفاصيل الطلب</h3>
+                <button onclick="closeOrderModal()" style="background:none; border:none; font-size:1.2rem; cursor:pointer;">✕</button>
+            </div>
+            <div id="order-details-content"></div>
+        </div>
+    </div>
+
     <script>
-        const STORAGE_KEY = 'oumay_products';        const ORDERS_KEY = 'oumay_orders';
+        // === استخدام نفس المفاتيح الموجودة في index.html ===
+        const KEY_PRODUCTS = 'oumay_products_v2';
+        const KEY_ORDERS = 'oumay_orders_v2';
         
-        let products = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-        let orders = JSON.parse(localStorage.getItem(ORDERS_KEY)) || [];
+        let products = JSON.parse(localStorage.getItem(KEY_PRODUCTS)) || [];
+        let orders = JSON.parse(localStorage.getItem(KEY_ORDERS)) || [];
         
         let currentImages = [];
         let currentColors = [];
@@ -224,8 +243,7 @@
         function handleFiles(input) {
             if (input.files) {
                 Array.from(input.files).forEach(file => {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
+                    const reader = new FileReader();                    reader.onload = (e) => {
                         currentImages.push(e.target.result);
                         renderPreviews();
                     };
@@ -243,7 +261,8 @@
                         <div class="remove-img" onclick="removeImage(${idx})">✕</div>
                     </div>`;
             });
-        }        function removeImage(idx) {
+        }
+        function removeImage(idx) {
             currentImages.splice(idx, 1);
             renderPreviews();
         }
@@ -274,7 +293,6 @@
             const price = document.getElementById('p-price').value;
             const cat = document.getElementById('p-cat').value;
             const desc = document.getElementById('p-desc').value;
-
             if(!name || !price) return alert('الاسم والسعر مطلوبان');
 
             const product = {
@@ -285,14 +303,15 @@
             };
 
             products.push(product);
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
+            localStorage.setItem(KEY_PRODUCTS, JSON.stringify(products)); // الحفظ بالمفتاح الموحد
             closeModal();
             renderProducts();
-            alert('تم نشر المنتج بنجاح!');
+            alert('تم نشر المنتج بنجاح! سيظهر الآن في المتجر.');
         }
 
         function renderProducts() {
-            const list = document.getElementById('prod-list');            list.innerHTML = '';
+            const list = document.getElementById('prod-list');
+            list.innerHTML = '';
             products.forEach((p, i) => {
                 const colorsHtml = p.colors.map(c => `<span style="display:inline-block;width:15px;height:15px;background:${c};border-radius:50%;margin-left:3px;border:1px solid #ddd;"></span>`).join('');
                 
@@ -309,7 +328,7 @@
         function deleteProd(i) {
             if(confirm('حذف المنتج؟')) {
                 products.splice(i, 1);
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
+                localStorage.setItem(KEY_PRODUCTS, JSON.stringify(products));
                 renderProducts();
             }
         }
@@ -321,27 +340,61 @@
             if(!orders.length) return list.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px">لا توجد طلبات</td></tr>';
             
             orders.forEach(o => {
-                // إصلاح مشكلة ظهور معلومات العميل
-                const custName = o.customerName || o.cust?.name || 'عميل';
-                const custPhone = o.phone || o.cust?.phone || '-';
-                
                 list.innerHTML += `
-                    <tr>
-                        <td>#${o.id.toString().slice(-4)}</td>
+                    <tr>                        <td>#${o.id.toString().slice(-4)}</td>
                         <td>
-                            <div style="font-weight:bold">${custName}</div>
-                            <div style="font-size:0.85rem;color:#64748b">${custPhone}</div>
+                            <div style="font-weight:bold">${o.customerName}</div>
+                            <div style="font-size:0.85rem;color:#64748b">${o.phone}</div>
                         </td>
                         <td style="color:var(--accent);font-weight:bold">${o.total} MAD</td>
-                        <td><small>${new Date(o.date).toLocaleDateString('ar-MA')}</small></td>
+                        <td>
+                            <button onclick="viewOrderDetails(${o.id})" class="btn btn-primary" style="padding:5px 10px; font-size:0.8rem;">
+                                <i class="fa-solid fa-eye"></i> عرض
+                            </button>
+                        </td>
                     </tr>`;
             });
         }
-        function clearOrders() {
-            if(confirm('حذف كل الطلبات؟')) {
+
+        function viewOrderDetails(id) {
+            const order = orders.find(o => o.id === id);
+            if(!order) return;
+
+            const content = document.getElementById('order-details-content');
+            content.innerHTML = `
+                <div style="background:#f8fafc; padding:15px; border-radius:10px; margin-bottom:15px;">
+                    <p><strong>العميل:</strong> ${order.customerName}</p>
+                    <p><strong>الهاتف:</strong> ${order.phone}</p>
+                    <p><strong>العنوان:</strong> ${order.address || 'غير محدد'}</p>
+                    <p><strong>التاريخ:</strong> ${new Date(order.date).toLocaleDateString('ar-MA')}</p>
+                </div>
+                <h4 style="margin-bottom:10px;">المنتجات:</h4>
+                ${order.items.map(item => `
+                    <div class="order-item-row">
+                        <img src="${item.images[0]}" onerror="this.src='https://placehold.co/50'">
+                        <div>
+                            <div style="font-weight:bold">${item.name}</div>
+                            <div style="font-size:0.85rem; color:#666">${item.selectedColor ? 'لون: '+item.selectedColor : ''}</div>
+                            <div style="color:var(--accent)">${item.price} MAD</div>
+                        </div>
+                    </div>
+                `).join('')}
+                <div style="margin-top:15px; text-align:left; font-weight:bold; font-size:1.2rem;">
+                    المجموع: ${order.total} MAD
+                </div>
+            `;
+            document.getElementById('order-modal').style.display = 'flex';
+        }
+
+        function closeOrderModal() {
+            document.getElementById('order-modal').style.display = 'none';
+        }
+
+        function clearOrders() {            if(confirm('حذف كل الطلبات؟')) {
                 orders = [];
-                localStorage.setItem(ORDERS_KEY, JSON.stringify(orders));
-                renderOrders();            }
+                localStorage.setItem(KEY_ORDERS, JSON.stringify(orders));
+                renderOrders();
+            }
         }
 
         // --- واجهة ---
