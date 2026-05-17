@@ -22,7 +22,6 @@
             transition: opacity 0.6s ease, visibility 0.6s;
         }
         .logo-box {text-align: center; margin-bottom: 3rem; animation: zoomIn 1s ease;}
-        /* تكبير الأيقونة وجعلها في الوسط */
         .logo-img-splash {
             width: 140px; height: 140px; object-fit: contain; 
             border-radius: 30px; margin-bottom: 20px; 
@@ -47,8 +46,8 @@
         .lang-sub {font-size: 0.8rem; opacity: 0.7;}
 
         /* --- واجهة المتجر --- */
-        #app-interface {display: none; flex-direction: column; height: 100vh; width: 100vw; position: relative;}        
-        /* Header */
+        #app-interface {display: none; flex-direction: column; height: 100vh; width: 100vw; position: relative;}
+                /* Header */
         header {
             background: var(--glass); backdrop-filter: blur(10px);
             padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;
@@ -86,17 +85,21 @@
             background: white; z-index: 2001; box-shadow: -5px 0 15px rgba(0,0,0,0.1);
             transition: right 0.3s ease; display: flex; flex-direction: column;
         }
-        .sidebar-menu.open {right: 0;}
+        /* تعديل لليسار في حالة الإنجليزية */
+        html[dir="ltr"] .sidebar-menu { right: auto; left: -300px; transition: left 0.3s ease; }
+        html[dir="ltr"] .sidebar-menu.open { left: 0; }
+        html[dir="rtl"] .sidebar-menu.open { right: 0; }
+
         .sidebar-header {
             padding: 20px; background: var(--navy); color: white;
             display: flex; justify-content: space-between; align-items: center;
         }
         .close-menu {font-size: 1.5rem; cursor: pointer;}
         .sidebar-links {padding: 10px; flex: 1; overflow-y: auto;}
-        .sidebar-link {
-            display: flex; align-items: center; gap: 15px; padding: 15px;
+        .sidebar-link {            display: flex; align-items: center; gap: 15px; padding: 15px;
             border-bottom: 1px solid #eee; color: var(--dark); text-decoration: none;
-            font-weight: 600; transition: 0.2s; cursor: pointer;        }
+            font-weight: 600; transition: 0.2s; cursor: pointer;
+        }
         .sidebar-link:hover {color: var(--gold); background: #f9f9f9;}
         .sidebar-link i {width: 25px; text-align: center; color: var(--navy);}
         
@@ -142,10 +145,10 @@
         .p-img-box {height: 150px; background: #f0f0f0; position: relative; overflow: hidden;}
         .p-img-box img {width: 100%; height: 100%; object-fit: cover;}
         .p-details {padding: 12px; flex: 1; display: flex; flex-direction: column;}
-        .p-name {font-size: 0.9rem; font-weight: 700; margin-bottom: 5px; color: var(--dark); line-height: 1.3;}
-        .p-price {color: var(--gold); font-weight: 800; font-size: 1.1rem; margin-top: auto;}
+        .p-name {font-size: 0.9rem; font-weight: 700; margin-bottom: 5px; color: var(--dark); line-height: 1.3;}        .p-price {color: var(--gold); font-weight: 800; font-size: 1.1rem; margin-top: auto;}
         .add-btn {
-            background: var(--navy); color: white; border: none;            padding: 8px; border-radius: 10px; font-size: 0.85rem;
+            background: var(--navy); color: white; border: none;
+            padding: 8px; border-radius: 10px; font-size: 0.85rem;
             margin-top: 8px; cursor: pointer; width: 100%;
             display: flex; align-items: center; justify-content: center; gap: 5px;
         }
@@ -191,14 +194,22 @@
         .star-rating-input label {font-size: 1.4rem; color: #ddd; cursor: pointer;}
         .star-rating-input input:checked ~ label, .star-rating-input label:hover, .star-rating-input label:hover ~ label {color: var(--gold);}
         .review-input-field {width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 8px; outline: none;}
-        .submit-review-btn {background: var(--navy); color: white; border: none; padding: 8px; border-radius: 8px; cursor: pointer; width: 100%;}
-        .user-review-item {background: white; border: 1px solid #eee; padding: 10px; border-radius: 8px; margin-bottom: 8px;}
+        .submit-review-btn {background: var(--navy); color: white; border: none; padding: 8px; border-radius: 8px; cursor: pointer; width: 100%;}        .user-review-item {background: white; border: 1px solid #eee; padding: 10px; border-radius: 8px; margin-bottom: 8px;}
         .user-review-stars {color: var(--gold); font-size: 0.8rem;}
+
         /* Cart Styles */
         .cart-item {display: flex; gap: 10px; margin-bottom: 12px; border-bottom: 1px solid #f5f5f5; padding-bottom: 10px;}
         .cart-item img {width: 60px; height: 60px; border-radius: 10px; object-fit: cover;}
         .form-input {width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 12px; background: #f9f9f9; outline: none;}
         .checkout-btn {background: var(--gold); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: bold; font-size: 1.1rem; margin-top: 10px; width: 100%;}
+
+        /* Store Info Section */
+        .store-info {
+            background: white; padding: 30px 20px; margin-top: 20px; border-top: 1px solid #eee;
+            text-align: center;
+        }
+        .info-item {margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; color: #555;}
+        .info-item i {color: var(--gold); font-size: 1.2rem;}
 
         @keyframes slideUp {from{transform:translateY(100%)} to{transform:translateY(0)}}
         @keyframes zoomIn {from{transform:scale(0.8);opacity:0} to{transform:scale(1);opacity:1}}
@@ -222,18 +233,17 @@
             <div class="lang-btn" onclick="startApp('en')">
                 <span class="flag">🇬🇧</span>
                 <div class="lang-info"><span class="lang-name">English</span><span class="lang-sub">English</span></div>
-                <i class="fa-solid fa-chevron-left"></i>
+                <i class="fa-solid fa-chevron-right"></i>
             </div>
             <div class="lang-btn" onclick="startApp('fr')">
                 <span class="flag">🇫🇷</span>
                 <div class="lang-info"><span class="lang-name">Français</span><span class="lang-sub">French</span></div>
-                <i class="fa-solid fa-chevron-left"></i>
+                <i class="fa-solid fa-chevron-right"></i>
             </div>
         </div>
     </div>
 
-    <!-- 2. واجهة المتجر -->
-    <div id="app-interface">
+    <!-- 2. واجهة المتجر -->    <div id="app-interface">
         <header>
             <div class="header-left">
                 <div class="menu-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></div>
@@ -243,7 +253,8 @@
                 </div>
             </div>
             <div class="cart-icon" onclick="toggleCart()">
-                <i class="fa-solid fa-bag-shopping"></i>                <span class="badge" id="cart-count">0</span>
+                <i class="fa-solid fa-bag-shopping"></i>
+                <span class="badge" id="cart-count">0</span>
             </div>
         </header>
 
@@ -251,17 +262,17 @@
         <div class="overlay-bg" id="overlay-bg" onclick="toggleSidebar()"></div>
         <div class="sidebar-menu" id="sidebar-menu">
             <div class="sidebar-header">
-                <h3>القائمة</h3>
+                <h3 data-i18n="menu">القائمة</h3>
                 <div class="close-menu" onclick="toggleSidebar()">✕</div>
             </div>
             <div class="sidebar-links">
-                <div class="sidebar-link" onclick="filterCategory('all')"><i class="fa-solid fa-house"></i> الرئيسية</div>
-                <div class="sidebar-link" onclick="filterCategory('ملابس')"><i class="fa-solid fa-shirt"></i> ملابس</div>
-                <div class="sidebar-link" onclick="filterCategory('أحذية')"><i class="fa-solid fa-shoe-prints"></i> أحذية</div>
-                <div class="sidebar-link" onclick="filterCategory('إكسسوارات')"><i class="fa-solid fa-gem"></i> إكسسوارات</div>
+                <div class="sidebar-link" onclick="filterCategory('all')"><i class="fa-solid fa-house"></i> <span data-i18n="home">الرئيسية</span></div>
+                <div class="sidebar-link" onclick="filterCategory('ملابس')"><i class="fa-solid fa-shirt"></i> <span data-i18n="clothes">ملابس</span></div>
+                <div class="sidebar-link" onclick="filterCategory('أحذية')"><i class="fa-solid fa-shoe-prints"></i> <span data-i18n="shoes">أحذية</span></div>
+                <div class="sidebar-link" onclick="filterCategory('إكسسوارات')"><i class="fa-solid fa-gem"></i> <span data-i18n="accessories">إكسسوارات</span></div>
                 <div style="margin: 15px 0; border-top: 1px solid #eee;"></div>
-                <div class="sidebar-link" onclick="showWishlist()"><i class="fa-solid fa-heart"></i> قائمة الأمنيات</div>
-                <div class="sidebar-link" onclick="alert('خاصية قريباً!')"><i class="fa-solid fa-user"></i> حسابي</div>
+                <div class="sidebar-link" onclick="showWishlist()"><i class="fa-solid fa-heart"></i> <span data-i18n="wishlist">قائمة الأمنيات</span></div>
+                <div class="sidebar-link" onclick="alert('Coming Soon!')"><i class="fa-solid fa-user"></i> <span data-i18n="account">حسابي</span></div>
             </div>
         </div>
 
@@ -270,29 +281,41 @@
             <div class="hero-slider">
                 <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800');">
                     <div class="slide-overlay">
-                        <div class="slide-title">أزياء الصيف</div>
-                        <div class="slide-desc">اكتشف أحدث الصيحات العصرية</div>
+                        <div class="slide-title" data-i18n="summer_fashion">أزياء الصيف</div>
+                        <div class="slide-desc" data-i18n="latest_trends">اكتشف أحدث الصيحات العصرية</div>
                     </div>
                 </div>
                 <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1484788984921-03950022c9ef?w=800');">
                     <div class="slide-overlay">
-                        <div class="slide-title">إكسسوارات فاخرة</div>
-                        <div class="slide-desc">لمسة من الأناقة والجمال</div>
+                        <div class="slide-title" data-i18n="luxury_acc">إكسسوارات فاخرة</div>
+                        <div class="slide-desc" data-i18n="elegance_touch">لمسة من الأناقة والجمال</div>
                     </div>
                 </div>
             </div>
-
             <!-- Products -->
-            <div style="padding: 0 15px; font-weight: 800; color: var(--navy); margin-bottom:10px; font-size:1.2rem;" id="section-title">وصل حديثاً</div>
+            <div style="padding: 0 15px; font-weight: 800; color: var(--navy); margin-bottom:10px; font-size:1.2rem;" id="section-title" data-i18n="new_arrivals">وصل حديثاً</div>
             <div class="products-grid" id="products-container"></div>
             <div id="empty-msg" style="text-align:center; padding:40px; color:#999; display:none;">
                 <i class="fa-solid fa-box-open" style="font-size:3rem; margin-bottom:10px; opacity:0.3;"></i><br>
-                لا توجد منتجات حالياً
+                <span data-i18n="no_products">لا توجد منتجات حالياً</span>
+            </div>
+
+            <!-- Store Info Section (معلومات المتجر) -->
+            <div class="store-info">
+                <h3 style="margin-bottom:20px; color:var(--navy);" data-i18n="contact_us">معلومات المتجر</h3>
+                <div class="info-item"><i class="fa-solid fa-location-dot"></i> <span>الدار البيضاء، المغرب</span></div>
+                <div class="info-item"><i class="fa-solid fa-phone"></i> <span>+212 600 000 000</span></div>
+                <div class="info-item"><i class="fa-solid fa-envelope"></i> <span>contact@oumaystore.com</span></div>
+                <div style="margin-top:20px; display:flex; justify-content:center; gap:15px;">
+                    <a href="#" style="color:var(--navy); font-size:1.5rem;"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" style="color:var(--navy); font-size:1.5rem;"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" style="color:var(--navy); font-size:1.5rem;"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
             </div>
 
             <!-- Footer -->
-            <footer style="background: var(--navy); color: white; padding: 30px 20px; margin-top: 30px; text-align: center;">
-                <div style="font-size: 1.2rem; font-weight: 800; margin-bottom: 10px; font-family: 'Amiri', serif;">OUMAY<span style="color:var(--gold)">STORE</span></div>                <p style="opacity:0.7; font-size:0.9rem;">© 2026 جميع الحقوق محفوظة.</p>
+            <footer style="background: var(--navy); color: white; padding: 20px; text-align: center; font-size:0.8rem;">
+                <p>© 2026 OUMAYSTORE. All Rights Reserved.</p>
             </footer>
         </div>
     </div>
@@ -311,16 +334,15 @@
             <div class="img-scroller" id="det-slider"></div>
             <p style="color:#666; line-height:1.6; margin-bottom:15px; font-size:0.95rem;" id="det-desc">وصف المنتج...</p>
             
-            <div style="font-weight:bold; margin-bottom:8px; font-size:0.9rem;">اختر اللون:</div>
+            <div style="font-weight:bold; margin-bottom:8px; font-size:0.9rem;" data-i18n="choose_color">اختر اللون:</div>
             <div class="colors-row" id="det-colors"></div>
 
             <button class="add-btn" style="padding:12px; margin-top:15px; font-size:1rem;" onclick="addToCartFromDetails()">
-                <i class="fa-solid fa-cart-plus"></i> أضف للسلة
+                <i class="fa-solid fa-cart-plus"></i> <span data-i18n="add_to_cart">أضف للسلة</span>
             </button>
 
-            <!-- قسم التقييمات -->
-            <div class="reviews-section">
-                <h4 style="margin-bottom:10px; color:var(--navy); font-size:1rem;">تقييمات المشترين</h4>
+            <!-- قسم التقييمات -->            <div class="reviews-section">
+                <h4 style="margin-bottom:10px; color:var(--navy); font-size:1rem;" data-i18n="reviews">تقييمات المشترين</h4>
                 <div class="review-form">
                     <div class="star-rating-input">
                         <input type="radio" id="star5" name="rating" value="5" /><label for="star5">★</label>
@@ -329,9 +351,9 @@
                         <input type="radio" id="star2" name="rating" value="2" /><label for="star2">★</label>
                         <input type="radio" id="star1" name="rating" value="1" /><label for="star1">★</label>
                     </div>
-                    <input type="text" id="reviewer-name" class="review-input-field" placeholder="اسمك">
-                    <textarea id="review-text" class="review-input-field" rows="2" placeholder="تعليقك..."></textarea>
-                    <button class="submit-review-btn" onclick="submitReview()">نشر التقييم</button>
+                    <input type="text" id="reviewer-name" class="review-input-field" placeholder="اسمك" data-i18n-ph="your_name">
+                    <textarea id="review-text" class="review-input-field" rows="2" placeholder="تعليقك..." data-i18n-ph="your_comment"></textarea>
+                    <button class="submit-review-btn" onclick="submitReview()" data-i18n="post_review">نشر التقييم</button>
                 </div>
                 <div id="reviews-list"></div>
             </div>
@@ -341,22 +363,23 @@
     <!-- نافذة السلة -->
     <div class="modal-overlay" id="cart-modal">
         <div class="modal-sheet">
-            <div class="det-header">                <div class="det-title">سلة المشتريات</div>
+            <div class="det-header">
+                <div class="det-title" data-i18n="shopping_cart">سلة المشتريات</div>
                 <button onclick="toggleCart()" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">✕</button>
             </div>
             
             <div id="cart-items-list" style="flex:1; overflow-y:auto; margin-bottom:20px;"></div>
             
             <div style="border-top:1px solid #eee; padding-top:15px;">
-                <input type="text" id="cust-name" class="form-input" placeholder="الاسم الكامل">
-                <input type="tel" id="cust-phone" class="form-input" placeholder="رقم الهاتف">
-                <input type="text" id="cust-address" class="form-input" placeholder="المدينة / العنوان">
+                <input type="text" id="cust-name" class="form-input" placeholder="الاسم الكامل" data-i18n-ph="full_name">
+                <input type="tel" id="cust-phone" class="form-input" placeholder="رقم الهاتف" data-i18n-ph="phone_number">
+                <input type="text" id="cust-address" class="form-input" placeholder="المدينة / العنوان" data-i18n-ph="address">
                 
                 <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:1.2rem; margin:15px 0;">
-                    <span>المجموع:</span>
+                    <span data-i18n="total">المجموع:</span>
                     <span id="cart-total" style="color:var(--gold)">0 MAD</span>
                 </div>
-                <button class="checkout-btn" onclick="submitOrder()">تأكيد الطلب</button>
+                <button class="checkout-btn" onclick="submitOrder()" data-i18n="confirm_order">تأكيد الطلب</button>
             </div>
         </div>
     </div>
@@ -367,30 +390,79 @@
         const KEY_ORDERS = 'oumay_orders_v2';
         const KEY_REVIEWS = 'oumay_reviews_v2';
 
-        let cart = JSON.parse(localStorage.getItem(KEY_CART)) || [];
-        let reviews = JSON.parse(localStorage.getItem(KEY_REVIEWS)) || {};
+        let cart = JSON.parse(localStorage.getItem(KEY_CART)) || [];        let reviews = JSON.parse(localStorage.getItem(KEY_REVIEWS)) || {};
         let currentProduct = null;
         let selectedColor = null;
         let allProducts = [];
+        let currentLang = 'ar';
+
+        // قاموس الترجمة
+        const translations = {
+            ar: {
+                menu: "القائمة", home: "الرئيسية", clothes: "ملابس", shoes: "أحذية", accessories: "إكسسوارات",
+                wishlist: "قائمة الأمنيات", account: "حسابي", summer_fashion: "أزياء الصيف", latest_trends: "اكتشف أحدث الصيحات العصرية",
+                luxury_acc: "إكسسوارات فاخرة", elegance_touch: "لمسة من الأناقة والجمال", new_arrivals: "وصل حديثاً",
+                no_products: "لا توجد منتجات حالياً", contact_us: "معلومات المتجر", choose_color: "اختر اللون:",
+                add_to_cart: "أضف للسلة", reviews: "تقييمات المشترين", your_name: "اسمك", your_comment: "تعليقك...",
+                post_review: "نشر التقييم", shopping_cart: "سلة المشتريات", full_name: "الاسم الكامل", phone_number: "رقم الهاتف",
+                address: "المدينة / العنوان", total: "المجموع:", confirm_order: "تأكيد الطلب"
+            },
+            en: {
+                menu: "Menu", home: "Home", clothes: "Clothes", shoes: "Shoes", accessories: "Accessories",
+                wishlist: "Wishlist", account: "My Account", summer_fashion: "Summer Fashion", latest_trends: "Discover Latest Trends",
+                luxury_acc: "Luxury Accessories", elegance_touch: "Touch of Elegance", new_arrivals: "New Arrivals",
+                no_products: "No products available", contact_us: "Store Info", choose_color: "Choose Color:",
+                add_to_cart: "Add to Cart", reviews: "Customer Reviews", your_name: "Your Name", your_comment: "Your Comment...",
+                post_review: "Post Review", shopping_cart: "Shopping Cart", full_name: "Full Name", phone_number: "Phone Number",
+                address: "City / Address", total: "Total:", confirm_order: "Confirm Order"
+            },
+            fr: {
+                menu: "Menu", home: "Accueil", clothes: "Vêtements", shoes: "Chaussures", accessories: "Accessoires",
+                wishlist: "Liste de souhaits", account: "Mon Compte", summer_fashion: "Mode Été", latest_trends: "Découvrez les Tendances",
+                luxury_acc: "Accessoires de Luxe", elegance_touch: "Touche d'Élégance", new_arrivals: "Nouveaux Arrivages",
+                no_products: "Aucun produit disponible", contact_us: "Infos Magasin", choose_color: "Choisir Couleur:",
+                add_to_cart: "Ajouter au Panier", reviews: "Avis Clients", your_name: "Votre Nom", your_comment: "Votre Commentaire...",
+                post_review: "Publier Avis", shopping_cart: "Panier", full_name: "Nom Complet", phone_number: "Numéro de Téléphone",
+                address: "Ville / Adresse", total: "Total:", confirm_order: "Confirmer Commande"
+            }
+        };
 
         function startApp(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            
+            // تطبيق الترجمة
+            applyTranslations();
+
             document.getElementById('splash-screen').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('splash-screen').style.display = 'none';
                 document.getElementById('app-interface').style.display = 'flex';
-                loadProducts();
-                updateCartUI();
+                loadProducts();                updateCartUI();
                 startSlider();
                 startHeaderToggle();
             }, 600);
             localStorage.setItem('oumay_lang', lang);
         }
 
+        function applyTranslations() {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if(translations[currentLang][key]) el.innerText = translations[currentLang][key];
+            });
+            document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+                const key = el.getAttribute('data-i18n-ph');
+                if(translations[currentLang][key]) el.placeholder = translations[currentLang][key];
+            });
+        }
+
         // تبديل الشعار والنص
         function startHeaderToggle() {
             const logo = document.getElementById('header-logo');
             const text = document.getElementById('header-text');
-            setInterval(() => {                if(logo.classList.contains('active-element')) {
+            setInterval(() => {
+                if(logo.classList.contains('active-element')) {
                     logo.classList.remove('active-element');
                     text.classList.add('active-element');
                 } else {
@@ -415,14 +487,19 @@
             
             let filtered = allProducts;
             if(cat !== 'all') {
+                // ترجمة بسيطة للفئات للبحث
+                let searchCat = cat;                if(currentLang === 'en') {
+                    if(cat === 'ملابس') searchCat = 'Clothes'; // يجب أن تكون الفئات في لوحة التحكم بالإنجليزية أو نعدل البحث
+                    // للتسهيل سنعتمد على التصنيف العربي المخزن حالياً
+                }
                 filtered = allProducts.filter(p => p.cat === cat);
                 title.innerText = cat;
             } else {
-                title.innerText = 'وصل حديثاً';
+                title.innerText = translations[currentLang].new_arrivals;
             }
 
             if(filtered.length === 0) {
-                container.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:20px;">لا توجد منتجات في هذا القسم</div>';
+                container.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:20px;">${translations[currentLang].no_products}</div>`;
                 return;
             }
 
@@ -433,13 +510,14 @@
 
         function showWishlist() {
             toggleSidebar();
-            alert('قسم قائمة الأمنيات قيد التطوير!');
+            alert('Coming Soon!');
         }
 
         // السلايدر
         function startSlider() {
             const slides = document.querySelectorAll('.slide');
-            let currentSlide = 0;            setInterval(() => {
+            let currentSlide = 0;
+            setInterval(() => {
                 slides[currentSlide].classList.remove('active');
                 currentSlide = (currentSlide + 1) % slides.length;
                 slides[currentSlide].classList.add('active');
@@ -459,7 +537,6 @@
             }
             renderGrid(allProducts);
         }
-
         function renderGrid(products) {
             const container = document.getElementById('products-container');
             container.innerHTML = '';
@@ -478,7 +555,7 @@
                         <div class="p-name" onclick="showDetails(${p.id})">${p.name}</div>
                         <div class="p-price">${p.price} MAD</div>
                         <button class="add-btn" onclick="quickAdd(${p.id})">
-                            <i class="fa-solid fa-plus"></i> إضافة
+                            <i class="fa-solid fa-plus"></i> ${translations[currentLang].add_to_cart.split(' ')[0]}
                         </button>
                     </div>
                 </div>`;
@@ -488,7 +565,8 @@
             currentProduct = allProducts.find(p => p.id === id);
             if(!currentProduct) return;
 
-            document.getElementById('det-name').innerText = currentProduct.name;            document.getElementById('det-price').innerText = currentProduct.price + ' MAD';
+            document.getElementById('det-name').innerText = currentProduct.name;
+            document.getElementById('det-price').innerText = currentProduct.price + ' MAD';
             document.getElementById('det-desc').innerText = currentProduct.desc || 'منتج عالي الجودة.';
             
             const slider = document.getElementById('det-slider');
@@ -508,7 +586,6 @@
             loadReviews(id);
             document.getElementById('details-modal').style.display = 'flex';
         }
-
         function selectColor(el, color) {
             document.querySelectorAll('.color-circle').forEach(c => c.classList.remove('selected'));
             el.classList.add('selected');
@@ -523,7 +600,7 @@
             list.innerHTML = '';
             const prodReviews = reviews[prodId] || [];
             if(prodReviews.length === 0) {
-                list.innerHTML = '<p style="text-align:center; color:#999; font-size:0.85rem;">لا توجد تقييمات بعد.</p>';
+                list.innerHTML = `<p style="text-align:center; color:#999; font-size:0.85rem;">${translations[currentLang].no_reviews || 'لا توجد تقييمات بعد.'}</p>`;
             } else {
                 prodReviews.forEach(r => {
                     let starsHtml = '';
@@ -537,7 +614,8 @@
                             <p style="font-size:0.85rem; color:#555;">${r.text}</p>
                         </div>`;
                 });
-            }        }
+            }
+        }
 
         function submitReview() {
             const ratingInput = document.querySelector('input[name="rating"]:checked');
@@ -557,7 +635,6 @@
             loadReviews(currentProduct.id);
             alert('شكراً لتقييمك!');
         }
-
         // السلة
         function quickAdd(id) {
             const p = allProducts.find(x => x.id === id);
@@ -586,7 +663,8 @@
 
         function updateCartUI() {
             document.getElementById('cart-count').innerText = cart.length;
-            const list = document.getElementById('cart-items-list');            list.innerHTML = '';
+            const list = document.getElementById('cart-items-list');
+            list.innerHTML = '';
             let total = 0;
             cart.forEach((item, idx) => {
                 total += item.price;
@@ -606,8 +684,7 @@
 
         function removeFromCart(idx) { cart.splice(idx, 1); saveCart(); }
         function toggleCart() {
-            const m = document.getElementById('cart-modal');
-            m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
+            const m = document.getElementById('cart-modal');            m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
             updateCartUI();
         }
 
