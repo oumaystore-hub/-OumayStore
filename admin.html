@@ -58,9 +58,18 @@
         #login-overlay { position: fixed; inset: 0; background: var(--primary); z-index: 9999; display: flex; align-items: center; justify-content: center; }
         .login-card { background: white; padding: 40px; border-radius: 20px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
 
-        /* Modal for Add Product (Fixed Z-Index) */
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 10000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(5px); padding: 20px; }
-        .modal-sheet { background: white; width: 100%; max-width: 600px; max-height: 90vh; border-radius: 16px; padding: 25px; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative; }
+        /* Modal for Add Product (Fixed Z-Index & Position) */
+        .modal-overlay { 
+            position: fixed; inset: 0; background: rgba(0,0,0,0.6); 
+            z-index: 10000; /* أعلى من القائمة الجانبية */
+            display: none; align-items: center; justify-content: center; 
+            backdrop-filter: blur(5px); padding: 20px; 
+        }
+        .modal-sheet { 
+            background: white; width: 100%; max-width: 600px; max-height: 90vh; 
+            border-radius: 16px; padding: 25px; overflow-y: auto; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative; 
+        }
         
         /* Order Details Modal */
         .order-modal-content { background: #f8fafc; padding: 15px; border-radius: 10px; margin-bottom: 15px; }
@@ -87,8 +96,7 @@
             <h2 style="color:var(--primary); margin-bottom:10px;">OUMAY ADMIN</h2>
             <p style="color:#64748b; margin-bottom:25px;">لوحة إدارة المتجر</p>
             <input type="password" id="pass-input" class="form-input" placeholder="كلمة المرور: 1234" style="margin-bottom:15px;">
-            <button onclick="login()" class="btn btn-primary" style="width:100%">دخول آمن</button>
-            <p id="login-err" style="color:red; margin-top:10px; display:none;">كلمة المرور غير صحيحة</p>
+            <button onclick="login()" class="btn btn-primary" style="width:100%">دخول آمن</button>            <p id="login-err" style="color:red; margin-top:10px; display:none;">كلمة المرور غير صحيحة</p>
         </div>
     </div>
 
@@ -96,7 +104,8 @@
     <div class="sidebar">
         <div class="logo">OUMAY<span>STORE</span></div>
         <div class="menu-item active" onclick="switchTab('products')"><i class="fa-solid fa-box-open"></i> <span>المنتجات</span></div>
-        <div class="menu-item" onclick="switchTab('orders')"><i class="fa-solid fa-truck-fast"></i> <span>الطلبات</span></div>        <div class="menu-item" onclick="window.open('index.html', '_blank')"><i class="fa-solid fa-store"></i> <span>عرض المتجر</span></div>
+        <div class="menu-item" onclick="switchTab('orders')"><i class="fa-solid fa-truck-fast"></i> <span>الطلبات</span></div>
+        <div class="menu-item" onclick="window.open('index.html', '_blank')"><i class="fa-solid fa-store"></i> <span>عرض المتجر</span></div>
         <div class="menu-item" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> <span>خروج</span></div>
     </div>
 
@@ -136,8 +145,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>رقم الطلب</th>
-                            <th>معلومات العميل</th>
+                            <th>رقم الطلب</th>                            <th>معلومات العميل</th>
                             <th>المبلغ الإجمالي</th>
                             <th>التفاصيل</th>
                         </tr>
@@ -145,7 +153,8 @@
                     <tbody id="order-list"></tbody>
                 </table>
             </div>
-        </div>    </div>
+        </div>
+    </div>
 
     <!-- نافذة إضافة منتج (تم إصلاح التداخل هنا) -->
     <div id="modal" class="modal-overlay">
@@ -185,7 +194,6 @@
                 <input type="file" id="p-files" multiple accept="image/*" style="display:none" onchange="handleFiles(this)">
                 <div id="preview-container" class="preview-container"></div>
             </div>
-
             <div class="form-group">
                 <label class="form-label">الألوان المتاحة</label>
                 <div class="color-picker-wrapper">
@@ -194,6 +202,7 @@
                 </div>
                 <div id="selected-colors" class="selected-colors"></div>
             </div>
+
             <div class="form-group">
                 <label class="form-label">وصف المنتج</label>
                 <textarea id="p-desc" class="form-input" rows="3"></textarea>
@@ -234,8 +243,7 @@
                 localStorage.setItem('admin_auth', 'true');
                 document.getElementById('login-overlay').style.display = 'none';
                 init();
-            } else {
-                document.getElementById('login-err').style.display = 'block';
+            } else {                document.getElementById('login-err').style.display = 'block';
             }
         }
         if(localStorage.getItem('admin_auth') === 'true') {
@@ -243,6 +251,7 @@
             init();
         }
         function logout() { localStorage.removeItem('admin_auth'); location.reload(); }
+
         function init() { renderProducts(); renderOrders(); }
 
         // --- إدارة الصور المتعددة ---
@@ -283,8 +292,7 @@
             }
         }
         function renderColors() {
-            const container = document.getElementById('selected-colors');
-            container.innerHTML = '';
+            const container = document.getElementById('selected-colors');            container.innerHTML = '';
             currentColors.forEach((c, idx) => {
                 container.innerHTML += `<div class="color-dot" style="background:${c}" onclick="removeColor(${idx})"></div>`;
             });
@@ -293,6 +301,7 @@
             currentColors.splice(idx, 1);
             renderColors();
         }
+
         // --- حفظ وعرض المنتجات ---
         function saveProduct() {
             const name = document.getElementById('p-name').value;
@@ -332,8 +341,7 @@
                     </tr>`;
             });
         }
-        function deleteProd(i) {
-            if(confirm('حذف المنتج؟')) {
+        function deleteProd(i) {            if(confirm('حذف المنتج؟')) {
                 products.splice(i, 1);
                 localStorage.setItem(KEY_PRODUCTS, JSON.stringify(products));
                 renderProducts();
@@ -341,7 +349,8 @@
         }
 
         // --- إدارة الطلبات ---
-        function renderOrders() {            const list = document.getElementById('order-list');
+        function renderOrders() {
+            const list = document.getElementById('order-list');
             list.innerHTML = '';
             if(!orders.length) return list.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px">لا توجد طلبات</td></tr>';
             
@@ -381,8 +390,7 @@
                         <img src="${item.images[0]}" onerror="this.src='https://placehold.co/50'">
                         <div>
                             <div style="font-weight:bold">${item.name}</div>
-                            <div style="font-size:0.85rem; color:#666">${item.selectedColor ? 'لون: '+item.selectedColor : ''}</div>
-                            <div style="color:var(--accent)">${item.price} MAD</div>
+                            <div style="font-size:0.85rem; color:#666">${item.selectedColor ? 'لون: '+item.selectedColor : ''}</div>                            <div style="color:var(--accent)">${item.price} MAD</div>
                         </div>
                     </div>
                 `).join('')}
@@ -390,7 +398,8 @@
                     المجموع: ${order.total} MAD
                 </div>
             `;
-            document.getElementById('order-modal').style.display = 'flex';        }
+            document.getElementById('order-modal').style.display = 'flex';
+        }
 
         function closeOrderModal() {
             document.getElementById('order-modal').style.display = 'none';
