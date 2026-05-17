@@ -4,125 +4,136 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>OUMAYSTORE</title>
+    
+    <!-- إعدادات PWA للتطبيق -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1e3a5f">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="icon" type="image/png" href="logo.png">
+
     <!-- الخطوط والأيقونات -->
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {--gold:#c9a96e; --navy:#1e3a5f; --cream:#faf8f5; --dark:#0f172a;}
         * {margin:0; padding:0; box-sizing:border-box; font-family:'Tajawal', sans-serif; -webkit-tap-highlight-color: transparent;}
         
-        body {background: var(--cream); color: var(--dark); overflow-x: hidden;}
+        body {background: var(--cream); color: var(--dark); overflow-x: hidden; height: 100vh;}
         
-        /* --- شاشة التحميل واللغة (Splash Screen) --- */
+        /* --- 1. شاشة البداية (Splash & Language) --- */
         #splash-screen {
             position: fixed; inset: 0; z-index: 9999;
             background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: opacity 0.5s ease, visibility 0.5s;
+            transition: opacity 0.6s ease, visibility 0.6s;
         }
-        .logo-box {text-align: center; margin-bottom: 3rem; animation: zoomIn 1s ease;}
-        .logo-text {font-size: 2.5rem; font-weight: 900; color: #fff; letter-spacing: 1px;}
-        .logo-text span {color: var(--gold);}
         
-        .lang-options {display: flex; gap: 15px; width: 90%; max-width: 400px;}
-        .lang-btn {
-            flex: 1; padding: 15px; background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2); border-radius: 12px;
-            color: white; text-align: center; cursor: pointer; backdrop-filter: blur(5px);
-            transition: 0.3s;
-        }
-        .lang-btn.active {background: var(--gold); border-color: var(--gold); transform: scale(1.05);}
-        .lang-btn i {font-size: 1.5rem; margin-bottom: 5px; display: block;}
+        .bg-shapes {position: absolute; inset: 0; overflow: hidden; pointer-events: none;}
+        .shape {position: absolute; border-radius: 50%; background: rgba(201,169,110,0.1); animation: float 10s infinite;}
+        .shape:nth-child(1){width:300px;height:300px;top:-50px;right:-50px;}
+        .shape:nth-child(2){width:200px;height:200px;bottom:10%;left:5%;}
+        @keyframes float {0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
 
-        /* --- واجهة المتجر الرئيسية --- */
-        #app-interface {display: none; min-height: 100vh; padding-bottom: 70px;}
+        .logo-container {text-align: center; margin-bottom: 3rem; animation: zoomIn 1s ease;}
+        .logo-img {width: 100px; height: 100px; object-fit: contain; border-radius: 20px; margin-bottom: 15px; background: rgba(255,255,255,0.1); padding: 10px;}
+        .logo-text {font-size: 2.5rem; font-weight: 900; color: #fff; font-family: 'Amiri', serif;}
+        .logo-text span {color: var(--gold);}
+        .tagline {color: rgba(255,255,255,0.6); font-size: 0.9rem; letter-spacing: 2px; margin-top: 5px;}
+
+        .lang-grid {display: grid; gap: 15px; width: 85%; max-width: 350px;}
+        .lang-btn {
+            display: flex; align-items: center; gap: 15px; padding: 15px;
+            background: rgba(255,255,255,0.08); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.15); border-radius: 16px;
+            color: white; cursor: pointer; transition: 0.3s;        }
+        .lang-btn:hover, .lang-btn:active {background: var(--gold); border-color: var(--gold); transform: scale(1.02);}
+        .flag {font-size: 1.8rem;}
+        .lang-info {flex: 1; text-align: right;}
+        .lang-name {font-weight: 700; display: block;}
+        .lang-sub {font-size: 0.8rem; opacity: 0.7;}
+
+        /* --- 2. واجهة المتجر (Main App) --- */
+        #app-interface {display: none; height: 100%; flex-direction: column;}
         
-        /* الهيدر */
         header {
-            position: sticky; top: 0; z-index: 100;
             background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);
             padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100;
         }
         .brand {font-size: 1.4rem; font-weight: 800; color: var(--navy);}
         .brand span {color: var(--gold);}
-        .cart-icon {position: relative; font-size: 1.3rem; color: var(--navy); cursor: pointer;}        .badge {
-            position: absolute; top: -8px; right: -8px;
-            background: var(--gold); color: white; font-size: 0.7rem;
-            width: 18px; height: 18px; border-radius: 50%;
+        .header-icons i {font-size: 1.3rem; color: var(--navy); margin-left: 20px; cursor: pointer; position: relative;}
+        .badge {
+            position: absolute; top: -8px; right: -8px; background: var(--gold); color: white;
+            font-size: 0.7rem; width: 18px; height: 18px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
         }
 
-        /* البانر */
+        .content-area {flex: 1; overflow-y: auto; padding-bottom: 80px;}
+        
         .hero {
-            margin: 20px; border-radius: 20px; overflow: hidden;
-            height: 200px; position: relative;
-            background: url('https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80') center/cover;
+            margin: 20px; border-radius: 20px; overflow: hidden; height: 180px;
+            background: url('https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800') center/cover;
+            position: relative;
         }
         .hero-overlay {
             position: absolute; inset: 0; background: linear-gradient(to right, rgba(30,58,95,0.8), transparent);
             display: flex; align-items: center; padding: 20px;
         }
-        .hero-text h2 {color: white; font-size: 1.8rem; margin-bottom: 5px;}
-        .hero-text p {color: var(--gold); font-weight: 600;}
+        .hero h2 {color: white; font-size: 1.6rem; margin-bottom: 5px;}
+        .hero p {color: var(--gold); font-weight: 600;}
 
-        /* المنتجات */
-        .section-title {padding: 0 20px; margin-top: 25px; margin-bottom: 15px; font-size: 1.2rem; font-weight: 700; color: var(--navy);}
+        .section-title {padding: 0 20px; margin-top: 20px; font-weight: 700; color: var(--navy); display: flex; justify-content: space-between;}
+        .see-all {color: var(--gold); font-size: 0.9rem; text-decoration: none;}
+
         .products-grid {
-            display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 15px;
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 15px;
         }
         .product-card {
             background: white; border-radius: 15px; overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.03); position: relative;
         }
-        .p-img {height: 160px; background: #eee; position: relative;}
-        .p-img img {width: 100%; height: 100%; object-fit: cover;}
-        .p-info {padding: 12px;}
+        .p-img {height: 150px; background: #f0f0f0;}
+        .p-img img {width: 100%; height: 100%; object-fit: cover;}        .p-details {padding: 12px;}
         .p-cat {font-size: 0.75rem; color: #888;}
-        .p-name {font-size: 0.95rem; font-weight: 700; margin: 4px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+        .p-name {font-size: 0.9rem; font-weight: 700; margin: 3px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
         .p-price {color: var(--gold); font-weight: 800;}
         .add-btn {
-            position: absolute; bottom: 10px; left: 10px;
-            width: 35px; height: 35px; border-radius: 50%;
-            background: var(--navy); color: white; border: none;
+            position: absolute; bottom: 10px; left: 10px; width: 32px; height: 32px;
+            background: var(--navy); color: white; border-radius: 50%; border: none;
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; box-shadow: 0 4px 10px rgba(30,58,95,0.3);
         }
 
         /* القائمة السفلية */
         .bottom-nav {
-            position: fixed; bottom: 0; left: 0; right: 0;
-            background: white; height: 65px;
-            display: flex; justify-content: space-around; align-items: center;
-            border-top: 1px solid #eee; z-index: 90;
-        }        .nav-item {
-            display: flex; flex-direction: column; align-items: center;
-            color: #aaa; font-size: 0.8rem; cursor: pointer; transition: 0.3s;
+            position: fixed; bottom: 0; left: 0; right: 0; height: 65px;
+            background: white; border-top: 1px solid #eee;
+            display: flex; justify-content: space-around; align-items: center; z-index: 90;
         }
-        .nav-item i {font-size: 1.4rem; margin-bottom: 4px;}
+        .nav-item {
+            display: flex; flex-direction: column; align-items: center; color: #aaa; font-size: 0.75rem;
+        }
+        .nav-item i {font-size: 1.3rem; margin-bottom: 4px;}
         .nav-item.active {color: var(--gold);}
 
-        /* سلة المشتريات (Modal) */
+        /* السلة */
         .cart-modal {
             position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 2000;
             display: none; align-items: flex-end;
         }
-        .cart-content {
-            background: white; width: 100%; height: 85vh;
-            border-radius: 25px 25px 0 0; padding: 20px;
-            animation: slideUp 0.3s ease; display: flex; flex-direction: column;
+        .cart-sheet {
+            background: white; width: 100%; height: 80vh; border-radius: 25px 25px 0 0;
+            padding: 20px; animation: slideUp 0.3s ease; display: flex; flex-direction: column;
         }
-        .cart-header {display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: 700; font-size: 1.2rem;}
-        .close-cart {cursor: pointer;}
+        .cart-header {display: flex; justify-content: space-between; margin-bottom: 20px; font-weight: bold;}
         .cart-items {flex: 1; overflow-y: auto;}
         .cart-item {display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #f5f5f5; padding-bottom: 10px;}
-        .cart-item img {width: 60px; height: 60px; border-radius: 10px; object-fit: cover;}
+        .cart-item img {width: 50px; height: 50px; border-radius: 8px; object-fit: cover;}
         .checkout-btn {
             background: var(--gold); color: white; border: none; padding: 15px;
-            border-radius: 15px; font-weight: 700; font-size: 1.1rem; margin-top: 10px;
+            border-radius: 12px; font-weight: bold; font-size: 1.1rem; margin-top: 10px;
         }
 
         @keyframes zoomIn {from{transform:scale(0.8);opacity:0} to{transform:scale(1);opacity:1}}
@@ -133,47 +144,73 @@
 
     <!-- 1. شاشة البداية واختيار اللغة -->
     <div id="splash-screen">
-        <div class="logo-box">
+        <div class="bg-shapes"><div class="shape"></div><div class="shape"></div></div>
+                <div class="logo-container">
+            <!-- تأكد أن اسم الصورة logo.png ومرفوعة في نفس المجلد -->
+            <img src="logo.png" alt="Logo" class="logo-img" onerror="this.style.display='none'">
             <div class="logo-text">OUMAY<span>STORE</span></div>
-            <p style="color:rgba(255,255,255,0.6); margin-top:5px;">Fashion & Lifestyle</p>
+            <div class="tagline">FASHION · HOME · LIFESTYLE</div>
         </div>
-        <div class="lang-options">
+
+        <div class="lang-grid">
             <div class="lang-btn" onclick="startApp('ar')">
-                <i class="fa-solid fa-globe"></i> العربية
+                <span class="flag">🇸🇦</span>
+                <div class="lang-info">
+                    <span class="lang-name">العربية</span>
+                    <span class="lang-sub">Arabic</span>
+                </div>
+                <i class="fa-solid fa-chevron-left"></i>
             </div>
             <div class="lang-btn" onclick="startApp('en')">
-                <i class="fa-solid fa-globe"></i> English
+                <span class="flag">🇬🇧</span>
+                <div class="lang-info">
+                    <span class="lang-name">English</span>
+                    <span class="lang-sub">English</span>
+                </div>
+                <i class="fa-solid fa-chevron-left"></i>
             </div>
             <div class="lang-btn" onclick="startApp('fr')">
-                <i class="fa-solid fa-globe"></i> Français
+                <span class="flag">🇫🇷</span>
+                <div class="lang-info">
+                    <span class="lang-name">Français</span>
+                    <span class="lang-sub">French</span>
+                </div>
+                <i class="fa-solid fa-chevron-left"></i>
             </div>
-        </div>    </div>
+        </div>
+    </div>
 
-    <!-- 2. واجهة التطبيق الرئيسية -->
+    <!-- 2. واجهة المتجر الرئيسية -->
     <div id="app-interface">
         <header>
             <div class="brand">OUMAY<span>STORE</span></div>
-            <div class="cart-icon" onclick="toggleCart()">
-                <i class="fa-solid fa-bag-shopping"></i>
-                <span class="badge" id="cart-count">0</span>
+            <div class="header-icons">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <i class="fa-solid fa-bag-shopping" onclick="toggleCart()">
+                    <span class="badge" id="cart-count">0</span>
+                </i>
             </div>
         </header>
 
-        <div class="hero">
-            <div class="hero-overlay">
-                <div class="hero-text">
-                    <h2>أحدث الصيحات</h2>
-                    <p>تسوقي الآن بأفضل الأسعار</p>
+        <div class="content-area">
+            <div class="hero">
+                <div class="hero-overlay">                    <div>
+                        <h2>أزياء الصيف</h2>
+                        <p>خصومات تصل إلى 50%</p>
+                    </div>
                 </div>
+            </div>
+
+            <div class="section-title">
+                <span>وصل حديثاً</span>
+                <a href="#" class="see-all">عرض الكل</a>
+            </div>
+
+            <div class="products-grid" id="products-list">
+                <!-- المنتجات ستظهر هنا تلقائياً -->
             </div>
         </div>
 
-        <div class="section-title">وصل حديثاً</div>
-        <div class="products-grid" id="products-container">
-            <!-- سيتم ملء المنتجات هنا بالجافا سكريبت -->
-        </div>
-
-        <!-- القائمة السفلية -->
         <div class="bottom-nav">
             <div class="nav-item active"><i class="fa-solid fa-house"></i><span>الرئيسية</span></div>
             <div class="nav-item"><i class="fa-solid fa-heart"></i><span>المفضلة</span></div>
@@ -183,52 +220,52 @@
 
     <!-- نافذة السلة -->
     <div class="cart-modal" id="cart-modal">
-        <div class="cart-content">
+        <div class="cart-sheet">
             <div class="cart-header">
                 <span>سلة المشتريات</span>
-                <span class="close-cart" onclick="toggleCart()"><i class="fa-solid fa-times"></i></span>
+                <span onclick="toggleCart()" style="cursor:pointer"><i class="fa-solid fa-times"></i></span>
             </div>
-            <div class="cart-items" id="cart-items-list">
-                <p style="text-align:center; color:#888; margin-top:50px;">السلة فارغة</p>
+            <div class="cart-items" id="cart-items-container">
+                <p style="text-align:center; color:#999; margin-top:50px;">السلة فارغة</p>
             </div>
             <div class="cart-footer">
                 <div style="display:flex; justify-content:space-between; font-weight:bold; margin-bottom:15px;">
                     <span>المجموع:</span>
                     <span id="cart-total">0 MAD</span>
                 </div>
-                <button class="checkout-btn" onclick="alert('تم إرسال الطلب بنجاح!')">إتمام الشراء</button>            </div>
+                <button class="checkout-btn" onclick="alert('شكراً لتسوقك!')">إتمام الشراء</button>
+            </div>
         </div>
     </div>
 
     <script>
-        // بيانات المنتجات (يمكنك تعديلها)
+        // بيانات المنتجات
         const products = [
-            {id: 1, name: "فستان صيفي أنيق", price: 250, img: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400"},
-            {id: 2, name: "حقيبة يد جلدية", price: 180, img: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400"},
-            {id: 3, name: "نظارة شمسية", price: 120, img: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=400"},
-            {id: 4, name: "حذاء كعب عالي", price: 300, img: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400"},
-            {id: 5, name: "ساعة ذهبية", price: 450, img: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=400"},
-            {id: 6, name: "عطر فرنسي", price: 550, img: "https://images.unsplash.com/photo-1541643600914-78b084683601?w=400"}
+            {id: 1, name: "فستان سهرة ذهبي", price: 450, img: "https://images.unsplash.com/photo-1566174053879-308624136a8e?w=400"},
+            {id: 2, name: "حقيبة يد كلاسيك", price: 220, img: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400"},
+            {id: 3, name: "نظارة شمسية فاخرة", price: 150, img: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=400"},            {id: 4, name: "حذاء كعب عالي", price: 320, img: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=400"},
+            {id: 5, name: "ساعة يد نسائية", price: 550, img: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=400"},
+            {id: 6, name: "طقم عطور", price: 600, img: "https://images.unsplash.com/photo-1541643600914-78b084683601?w=400"}
         ];
 
         let cart = [];
 
-        // تشغيل التطبيق
+        // دالة بدء التطبيق وإخفاء شاشة اللغة
         function startApp(lang) {
             document.getElementById('splash-screen').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('splash-screen').style.display = 'none';
-                document.getElementById('app-interface').style.display = 'block';
+                document.getElementById('app-interface').style.display = 'flex';
                 renderProducts();
-            }, 500);
+            }, 600);
             
-            // حفظ اللغة (محاكاة)
+            // حفظ اللغة (اختياري)
             localStorage.setItem('oumay_lang', lang);
         }
 
         // عرض المنتجات
         function renderProducts() {
-            const container = document.getElementById('products-container');
+            const container = document.getElementById('products-list');
             container.innerHTML = products.map(p => `
                 <div class="product-card">
                     <div class="p-img">
@@ -237,7 +274,7 @@
                             <i class="fa-solid fa-plus"></i>
                         </button>
                     </div>
-                    <div class="p-info">
+                    <div class="p-details">
                         <div class="p-cat">اكسسوارات</div>
                         <div class="p-name">${p.name}</div>
                         <div class="p-price">${p.price} MAD</div>
@@ -245,29 +282,24 @@
                 </div>
             `).join('');
         }
+
         // إضافة للسلة
         function addToCart(id) {
             const product = products.find(p => p.id === id);
             cart.push(product);
             updateCartUI();
-            
-            // تأثير بصري بسيط
-            const btn = event.currentTarget;
-            btn.style.transform = "scale(0.8)";
-            setTimeout(()=> btn.style.transform = "scale(1)", 200);
         }
 
-        // تحديث واجهة السلة
+        // تحديث السلة
         function updateCartUI() {
-            document.getElementById('cart-count').innerText = cart.length;
+            document.getElementById('cart-count').innerText = cart.length;            const list = document.getElementById('cart-items-container');
             
-            const list = document.getElementById('cart-items-list');
             if(cart.length === 0) {
-                list.innerHTML = '<p style="text-align:center; color:#888; margin-top:50px;">السلة فارغة</p>';
+                list.innerHTML = '<p style="text-align:center; color:#999; margin-top:50px;">السلة فارغة</p>';
             } else {
                 list.innerHTML = cart.map((item, index) => `
                     <div class="cart-item">
-                        <img src="${item.img}" alt="">
+                        <img src="${item.img}">
                         <div style="flex:1">
                             <div style="font-weight:bold">${item.name}</div>
                             <div style="color:var(--gold)">${item.price} MAD</div>
@@ -276,7 +308,7 @@
                     </div>
                 `).join('');
             }
-
+            
             const total = cart.reduce((sum, item) => sum + item.price, 0);
             document.getElementById('cart-total').innerText = total + " MAD";
         }
