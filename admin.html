@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - OUMAYSTORE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --primary: #1e3a5f; --accent: #c9a96e; --bg: #f3f4f6; --white: #ffffff; --text: #1f2937; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
+        body { background: var(--bg); color: var(--text); display: flex; min-height: 100vh; }
+        
+        /* Sidebar */
+        .sidebar { width: 250px; background: var(--primary); color: white; padding: 20px; position: fixed; height: 100%; right: 0; top: 0; display: flex; flex-direction: column; }
+        .logo { font-size: 1.5rem; font-weight: bold; margin-bottom: 40px; text-align: center; color: var(--accent); }
+        .menu-item { padding: 12px 15px; cursor: pointer; border-radius: 8px; margin-bottom: 5px; transition: 0.3s; display: flex; align-items: center; gap: 10px; }
+        .menu-item:hover, .menu-item.active { background: rgba(255,255,255,0.1); color: var(--accent); }
+        
+        /* Main Content */
+        .main-content { margin-right: 250px; flex: 1; padding: 30px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .card { background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 20px; }
+        
+        /* Forms & Tables */
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: 500; }
+        .form-control { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; outline: none; }
+        .btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-accent { background: var(--accent); color: white; }
+        .btn-danger { background: #ef4444; color: white; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { padding: 12px; text-align: right; border-bottom: 1px solid #eee; }
+        th { color: #666; font-size: 0.9rem; }
+        .prod-img { width: 40px; height: 40px; border-radius: 6px; object-fit: cover; }
+        
+        /* Login Screen */
+        #login-screen { position: fixed; inset: 0; background: var(--primary); z-index: 1000; display: flex; align-items: center; justify-content: center; }
+        .login-box { background: white; padding: 40px; border-radius: 16px; width: 90%; max-width: 400px; text-align: center; }
+        
+        @media(max-width: 768px) {
+            .sidebar { width: 70px; padding: 10px; }
+            .sidebar span { display: none; }
+            .main-content { margin-right: 70px; padding: 15px; }
+            .logo { font-size: 1rem; }
+        }
+    </style>
+</head><body>
+
+    <!-- شاشة تسجيل الدخول -->
+    <div id="login-screen">
+        <div class="login-box">
+            <h2 style="color:var(--primary); margin-bottom: 20px;">OUMAY ADMIN</h2>
+            <input type="password" id="admin-pass" class="form-control" placeholder="كلمة المرور (1234)" style="margin-bottom: 15px;">
+            <button onclick="checkLogin()" class="btn btn-primary" style="width: 100%;">دخول</button>
+            <p id="err-msg" style="color:red; margin-top:10px; display:none;">كلمة المرور خاطئة</p>
+        </div>
+    </div>
+
+    <!-- القائمة الجانبية -->
+    <div class="sidebar">
+        <div class="logo">OUMAY<span style="color:white">STORE</span></div>
+        <div class="menu-item active" onclick="showSection('products')"><i class="fa-solid fa-box"></i> <span>المنتجات</span></div>
+        <div class="menu-item" onclick="showSection('orders')"><i class="fa-solid fa-cart-shopping"></i> <span>الطلبات</span></div>
+        <div class="menu-item" onclick="window.location.href='index.html'"><i class="fa-solid fa-store"></i> <span>عرض المتجر</span></div>
+        <div class="menu-item" onclick="logout()"><i class="fa-solid fa-sign-out-alt"></i> <span>خروج</span></div>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="main-content">
+        
+        <!-- قسم المنتجات -->
+        <div id="products-section">
+            <div class="header">
+                <h2>إدارة المنتجات</h2>
+                <button onclick="openAddModal()" class="btn btn-accent">+ إضافة منتج</button>
+            </div>
+            
+            <div class="card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>صورة</th>
+                            <th>الاسم</th>
+                            <th>السعر</th>
+                            <th>إجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="products-table-body">
+                        <!-- سيتم ملء المنتجات هنا -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- قسم الطلبات -->
+        <div id="orders-section" style="display:none;">            <div class="header">
+                <h2>الطلبات الواردة</h2>
+                <button onclick="clearOrders()" class="btn btn-danger">حذف الكل</button>
+            </div>
+            <div class="card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>رقم الطلب</th>
+                            <th>العميل</th>
+                            <th>المبلغ</th>
+                            <th>الحالة</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orders-table-body">
+                        <!-- الطلبات هنا -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة إضافة منتج -->
+    <div id="add-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:900; align-items:center; justify-content:center;">
+        <div class="card" style="width:90%; max-width:500px; max-height:90vh; overflow-y:auto;">
+            <h3 style="margin-bottom:20px;">بيانات المنتج</h3>
+            <div class="form-group">
+                <label>اسم المنتج</label>
+                <input type="text" id="p-name" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>السعر (MAD)</label>
+                <input type="number" id="p-price" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>رابط الصورة</label>
+                <input type="text" id="p-img" class="form-control" placeholder="https://...">
+            </div>
+            <div style="display:flex; gap:10px; margin-top:20px;">
+                <button onclick="saveProduct()" class="btn btn-primary" style="flex:1;">حفظ</button>
+                <button onclick="closeModal()" class="btn btn-danger" style="flex:1;">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. التحقق من الدخول
+        function checkLogin() {
+            const pass = document.getElementById('admin-pass').value;
+            if(pass === "1234") { // كلمة المرور الافتراضية                localStorage.setItem('isAdmin', 'true');
+                document.getElementById('login-screen').style.display = 'none';
+                loadData();
+            } else {
+                document.getElementById('err-msg').style.display = 'block';
+            }
+        }
+
+        // التحقق التلقائي عند الفتح
+        if(localStorage.getItem('isAdmin') === 'true') {
+            document.getElementById('login-screen').style.display = 'none';
+            loadData();
+        }
+
+        function logout() {
+            localStorage.removeItem('isAdmin');
+            location.reload();
+        }
+
+        // 2. إدارة البيانات (الربط مع المتجر)
+        let products = JSON.parse(localStorage.getItem('oumay_products')) || [];
+        let orders = JSON.parse(localStorage.getItem('oumay_orders')) || [];
+
+        function loadData() {
+            renderProducts();
+            renderOrders();
+        }
+
+        // عرض المنتجات
+        function renderProducts() {
+            const tbody = document.getElementById('products-table-body');
+            tbody.innerHTML = '';
+            products.forEach((p, index) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td><img src="${p.img}" class="prod-img" onerror="this.src='https://placehold.co/40'"></td>
+                        <td>${p.name}</td>
+                        <td>${p.price} MAD</td>
+                        <td>
+                            <button onclick="deleteProduct(${index})" class="btn btn-danger" style="padding:5px 10px; font-size:0.8rem;">حذف</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // حفظ منتج جديد
+        function saveProduct() {
+            const name = document.getElementById('p-name').value;
+            const price = document.getElementById('p-price').value;            const img = document.getElementById('p-img').value;
+
+            if(name && price) {
+                const newProd = {
+                    id: Date.now(),
+                    name: name,
+                    price: parseInt(price),
+                    img: img || 'https://placehold.co/400'
+                };
+                products.push(newProd);
+                localStorage.setItem('oumay_products', JSON.stringify(products)); // الحفظ في نفس مفتاح المتجر
+                renderProducts();
+                closeModal();
+                alert('تمت الإضافة بنجاح! سيظهر المنتج في المتجر الآن.');
+            }
+        }
+
+        function deleteProduct(index) {
+            if(confirm('هل أنت متأكد؟')) {
+                products.splice(index, 1);
+                localStorage.setItem('oumay_products', JSON.stringify(products));
+                renderProducts();
+            }
+        }
+
+        // عرض الطلبات
+        function renderOrders() {
+            const tbody = document.getElementById('orders-table-body');
+            tbody.innerHTML = '';
+            if(orders.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center">لا توجد طلبات جديدة</td></tr>';
+                return;
+            }
+            orders.forEach(o => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>#${o.id}</td>
+                        <td>${o.customerName}<br><small>${o.phone}</small></td>
+                        <td>${o.total} MAD</td>
+                        <td><span style="color:green">جديد</span></td>
+                    </tr>
+                `;
+            });
+        }
+
+        function clearOrders() {
+            if(confirm('حذف جميع الطلبات؟')) {
+                orders = [];
+                localStorage.setItem('oumay_orders', JSON.stringify(orders));
+                renderOrders();            }
+        }
+
+        // وظائف الواجهة
+        function showSection(sec) {
+            document.getElementById('products-section').style.display = sec === 'products' ? 'block' : 'none';
+            document.getElementById('orders-section').style.display = sec === 'orders' ? 'block' : 'none';
+        }
+
+        function openAddModal() { document.getElementById('add-modal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('add-modal').style.display = 'none'; }
+    </script>
+</body>
+</html>
