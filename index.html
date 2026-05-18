@@ -152,7 +152,7 @@
             display: flex; align-items: center; justify-content: center; gap: 5px;
         }
 
-        /* Modals (Details & Cart) - FIXED Z-INDEX & CLOSING */
+        /* Modals (Details & Cart) - FIXED SCROLLING */
         .modal-overlay {
             position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 3000;
             display: none; align-items: flex-end; backdrop-filter: blur(4px);
@@ -161,19 +161,21 @@
             background: white; width: 100%; max-height: 92vh; border-radius: 25px 25px 0 0;
             padding: 20px; animation: slideUp 0.3s ease; display: flex; flex-direction: column;
             overflow-y: auto; box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+            /* تحسين التمرير على الهواتف */
+            -webkit-overflow-scrolling: touch; 
         }
         
         /* Product Details Styles */
-        .det-header {display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px;}
+        .det-header {display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px; padding-right: 10px;}
         .det-title {font-size: 1.3rem; font-weight: 800; color: var(--navy); line-height: 1.3;}
         .det-price {font-size: 1.2rem; color: var(--gold); font-weight: 700; margin-top: 5px;}
         
         .img-scroller {
             display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; scroll-snap-type: x mandatory;
-            margin-bottom: 15px;
+            margin-bottom: 15px; height: 200px; /* تحديد ارتفاع ثابت للصور */
         }
         .img-scroller img {
-            width: 85%; min-width: 220px; height: 220px; object-fit: cover; border-radius: 15px; scroll-snap-align: center;
+            width: 85%; min-width: 220px; height: 100%; object-fit: cover; border-radius: 15px; scroll-snap-align: center;
         }
         
         .colors-row {display: flex; gap: 10px; margin: 10px 0;}
@@ -192,9 +194,9 @@
         .star-rating-input input {display: none;}
         .star-rating-input label {font-size: 1.4rem; color: #ddd; cursor: pointer;}
         .star-rating-input input:checked ~ label, .star-rating-input label:hover, .star-rating-input label:hover ~ label {color: var(--gold);}
-        .review-input-field {width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 8px; outline: none;}
-        .submit-review-btn {background: var(--navy); color: white; border: none; padding: 8px; border-radius: 8px; cursor: pointer; width: 100%;}
-        .user-review-item {background: white; border: 1px solid #eee; padding: 10px; border-radius: 8px; margin-bottom: 8px;}        .user-review-stars {color: var(--gold); font-size: 0.8rem;}
+        .review-input-field {width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 8px; outline: none;}        .submit-review-btn {background: var(--navy); color: white; border: none; padding: 8px; border-radius: 8px; cursor: pointer; width: 100%;}
+        .user-review-item {background: white; border: 1px solid #eee; padding: 10px; border-radius: 8px; margin-bottom: 8px;}
+        .user-review-stars {color: var(--gold); font-size: 0.8rem;}
 
         /* Cart Styles */
         .cart-item {display: flex; gap: 10px; margin-bottom: 12px; border-bottom: 1px solid #f5f5f5; padding-bottom: 10px;}
@@ -241,9 +243,9 @@
             </div>
         </div>
     </div>
-
     <!-- 2. واجهة المتجر -->
-    <div id="app-interface">        <header>
+    <div id="app-interface">
+        <header>
             <div class="header-left">
                 <div class="menu-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></div>
                 <div class="brand-container">
@@ -291,8 +293,8 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Products -->            <div style="padding: 0 15px; font-weight: 800; color: var(--navy); margin-bottom:10px; font-size:1.2rem;" id="section-title" data-i18n="new_arrivals">وصل حديثاً</div>
+            <!-- Products -->
+            <div style="padding: 0 15px; font-weight: 800; color: var(--navy); margin-bottom:10px; font-size:1.2rem;" id="section-title" data-i18n="new_arrivals">وصل حديثاً</div>
             <div class="products-grid" id="products-container"></div>
             <div id="empty-msg" style="text-align:center; padding:40px; color:#999; display:none;">
                 <i class="fa-solid fa-box-open" style="font-size:3rem; margin-bottom:10px; opacity:0.3;"></i><br>
@@ -339,9 +341,9 @@
             <button class="add-btn" style="padding:12px; margin-top:15px; font-size:1rem;" onclick="addToCartFromDetails()">
                 <i class="fa-solid fa-cart-plus"></i> <span data-i18n="add_to_cart">أضف للسلة</span>
             </button>
-
             <!-- قسم التقييمات -->
-            <div class="reviews-section">                <h4 style="margin-bottom:10px; color:var(--navy); font-size:1rem;" data-i18n="reviews">تقييمات المشترين</h4>
+            <div class="reviews-section">
+                <h4 style="margin-bottom:10px; color:var(--navy); font-size:1rem;" data-i18n="reviews">تقييمات المشترين</h4>
                 <div class="review-form">
                     <div class="star-rating-input">
                         <input type="radio" id="star5" name="rating" value="5" /><label for="star5">★</label>
@@ -388,9 +390,9 @@
         const KEY_CART = 'oumay_cart_v2';
         const KEY_ORDERS = 'oumay_orders_v2';
         const KEY_REVIEWS = 'oumay_reviews_v2';
-
         let cart = JSON.parse(localStorage.getItem(KEY_CART)) || [];
-        let reviews = JSON.parse(localStorage.getItem(KEY_REVIEWS)) || {};        let currentProduct = null;
+        let reviews = JSON.parse(localStorage.getItem(KEY_REVIEWS)) || {};
+        let currentProduct = null;
         let selectedColor = null;
         let allProducts = [];
         let currentLang = 'ar';
@@ -437,9 +439,9 @@
             setTimeout(() => {
                 document.getElementById('splash-screen').style.display = 'none';
                 document.getElementById('app-interface').style.display = 'flex';
-                loadProducts();
-                updateCartUI();
-                startSlider();                startHeaderToggle();
+                loadProducts();                updateCartUI();
+                startSlider();
+                startHeaderToggle();
             }, 600);
             localStorage.setItem('oumay_lang', lang);
         }
@@ -487,8 +489,8 @@
             } else {
                 title.innerText = translations[currentLang].new_arrivals;
             }
-
-            if(filtered.length === 0) {                container.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:20px;">${translations[currentLang].no_products}</div>`;
+            if(filtered.length === 0) {
+                container.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:20px;">${translations[currentLang].no_products}</div>`;
                 return;
             }
 
@@ -535,9 +537,9 @@
         }
 
         function createProductCard(p) {
-            return `
-                <div class="product-card">
-                    <div class="p-img-box" onclick="showDetails(${p.id})">                        <img src="${p.images[0]}" onerror="this.src='https://placehold.co/400'">
+            return `                <div class="product-card">
+                    <div class="p-img-box" onclick="showDetails(${p.id})">
+                        <img src="${p.images[0]}" onerror="this.src='https://placehold.co/400'">
                     </div>
                     <div class="p-details">
                         <div class="p-name" onclick="showDetails(${p.id})">${p.name}</div>
@@ -584,9 +586,9 @@
         function closeDetails() { document.getElementById('details-modal').style.display = 'none'; }
 
         function loadReviews(prodId) {
-            const list = document.getElementById('reviews-list');
-            list.innerHTML = '';
-            const prodReviews = reviews[prodId] || [];            if(prodReviews.length === 0) {
+            const list = document.getElementById('reviews-list');            list.innerHTML = '';
+            const prodReviews = reviews[prodId] || [];
+            if(prodReviews.length === 0) {
                 list.innerHTML = `<p style="text-align:center; color:#999; font-size:0.85rem;">${translations[currentLang].no_reviews || 'لا توجد تقييمات بعد.'}</p>`;
             } else {
                 prodReviews.forEach(r => {
@@ -634,8 +636,8 @@
                 setTimeout(() => btn.innerHTML = original, 1000);
             }
         }
-
-        function addToCartFromDetails() {            if(!currentProduct) return;
+        function addToCartFromDetails() {
+            if(!currentProduct) return;
             cart.push({...currentProduct, selectedColor: selectedColor});
             saveCart();
             closeDetails();
@@ -682,9 +684,9 @@
             const address = document.getElementById('cust-address').value;
             if(!name || !phone) return alert('يرجى إدخال الاسم ورقم الهاتف');
 
-            const orders = JSON.parse(localStorage.getItem(KEY_ORDERS)) || [];
-            orders.push({
-                id: Date.now(), date: new Date().toISOString(), customerName: name, phone: phone, address: address,                items: cart, total: cart.reduce((a,b)=>a+b.price, 0), status: 'pending'
+            const orders = JSON.parse(localStorage.getItem(KEY_ORDERS)) || [];            orders.push({
+                id: Date.now(), date: new Date().toISOString(), customerName: name, phone: phone, address: address,
+                items: cart, total: cart.reduce((a,b)=>a+b.price, 0), status: 'pending'
             });
             localStorage.setItem(KEY_ORDERS, JSON.stringify(orders));
             cart = []; saveCart(); toggleCart();
