@@ -172,7 +172,7 @@
     </div>
 
     <!-- نافذة إضافة منتج -->
-    <div id="modal" class="modal-overlay">
+    <div id="modal" class="modal-overlay" onclick="if(event.target === this) closeModal()">
         <div class="modal-sheet">
             <div style="display:flex; justify-content:space-between; margin-bottom:20px; align-items:center;">
                 <h3 style="color:var(--primary)">بيانات المنتج الجديد</h3>
@@ -231,7 +231,7 @@
     </div>
 
     <!-- نافذة تفاصيل الطلب -->
-    <div id="order-modal" class="modal-overlay">
+    <div id="order-modal" class="modal-overlay" onclick="if(event.target === this) closeOrderModal()">
         <div class="modal-sheet">
             <div style="display:flex; justify-content:space-between; margin-bottom:15px; align-items:center;">
                 <h3 style="color:var(--primary)">تفاصيل الطلب</h3>
