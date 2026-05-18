@@ -12,14 +12,21 @@
         body { background: var(--bg); color: var(--text); display: flex; min-height: 100vh; overflow-x: hidden; }
         
         /* Sidebar */
-        .sidebar { width: 260px; background: var(--primary); color: white; padding: 20px; position: fixed; height: 100%; right: 0; top: 0; z-index: 100; transition: 0.3s; }
-        .logo { font-size: 1.5rem; font-weight: 800; margin-bottom: 40px; text-align: center; color: var(--accent); letter-spacing: 1px; }
-        .menu-item { padding: 12px 15px; cursor: pointer; border-radius: 10px; margin-bottom: 8px; transition: 0.3s; display: flex; align-items: center; gap: 12px; opacity: 0.8; }
+        .sidebar { 
+            width: 260px; background: var(--primary); color: white; padding: 20px; 
+            position: fixed; height: 100%; right: 0; top: 0; z-index: 100; transition: 0.3s; 
+            display: flex; flex-direction: column;
+        }
+        .logo { font-size: 1.5rem; font-weight: 800; margin-bottom: 40px; text-align: center; color: var(--accent); letter-spacing: 1px; white-space: nowrap;}
+        .menu-item { 
+            padding: 12px 15px; cursor: pointer; border-radius: 10px; margin-bottom: 8px; 
+            transition: 0.3s; display: flex; align-items: center; gap: 12px; opacity: 0.8; white-space: nowrap;
+        }
         .menu-item:hover, .menu-item.active { background: rgba(255,255,255,0.1); opacity: 1; color: var(--accent); }
         
         /* Main Content */
         .main-content { margin-right: 260px; flex: 1; padding: 30px; transition: 0.3s; width: 100%; }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 10px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 15px; }
         .card { background: var(--white); padding: 25px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid #e2e8f0; overflow: hidden; }
         
         /* Forms */
@@ -40,16 +47,16 @@
         .color-picker-wrapper { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
         input[type="color"] { width: 40px; height: 40px; padding: 0; border: none; border-radius: 50%; cursor: pointer; overflow: hidden; }
         .selected-colors { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
-        .color-dot { width: 30px; height: 30px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: relative; cursor: pointer; }
-        .color-dot:hover::after { content: '×'; position: absolute; inset: 0; background: rgba(0,0,0,0.5); color: white; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 12px; }
+        .color-dot { width: 30px; height: 30px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: relative; cursor: pointer; }        .color-dot:hover::after { content: '×'; position: absolute; inset: 0; background: rgba(0,0,0,0.5); color: white; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 12px; }
 
         /* Buttons & Tables */
-        .btn { padding: 12px 24px; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; transition: 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+        .btn { padding: 12px 24px; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; transition: 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
         .btn-primary { background: var(--primary); color: white; }
         .btn-accent { background: var(--accent); color: white; }
-        .btn-danger { background: #ef4444; color: white; }        .btn:hover { transform: translateY(-2px); opacity: 0.9; }
+        .btn-danger { background: #ef4444; color: white; }
+        .btn:hover { transform: translateY(-2px); opacity: 0.9; }
 
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; min-width: 600px; /* لضمان عدم تكسر الجدول */ }
         th, td { padding: 15px; text-align: right; border-bottom: 1px solid #f1f5f9; }
         th { color: #64748b; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; }
         .prod-thumb { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; }
@@ -76,17 +83,20 @@
         .order-item-row { display: flex; gap: 10px; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
         .order-item-row img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; }
 
+        /* --- تحسينات الهاتف (Responsive) --- */
         @media(max-width: 768px) {
-            .sidebar { width: 70px; padding: 10px; }
-            .sidebar span, .logo span { display: none; }
+            .sidebar { width: 70px; padding: 10px; align-items: center; }
+            .sidebar span, .logo span { display: none; } /* إخفاء النصوص */
+            .logo { font-size: 1.2rem; margin-bottom: 20px; }
             .main-content { margin-right: 70px; padding: 15px; }
-            .menu-item { justify-content: center; }
+            .menu-item { justify-content: center; padding: 15px 0; }
             .header { flex-direction: column; align-items: stretch; }
-            .btn { width: 100%; justify-content: center; }
-            th, td { padding: 10px; font-size: 0.8rem; }
-            .prod-thumb { width: 40px; height: 40px; }
-        }
-    </style>
+            .btn { width: 100%; margin-bottom: 5px; } /* الأزرار بعرض كامل */
+            .card { padding: 15px; }
+            
+            /* إصلاح الجدول على الهاتف */
+            .table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        }    </style>
 </head>
 <body>
 
@@ -96,7 +106,8 @@
             <h2 style="color:var(--primary); margin-bottom:10px;">OUMAY ADMIN</h2>
             <p style="color:#64748b; margin-bottom:25px;">لوحة إدارة المتجر</p>
             <input type="password" id="pass-input" class="form-input" placeholder="كلمة المرور: 1234" style="margin-bottom:15px;">
-            <button onclick="login()" class="btn btn-primary" style="width:100%">دخول آمن</button>            <p id="login-err" style="color:red; margin-top:10px; display:none;">كلمة المرور غير صحيحة</p>
+            <button onclick="login()" class="btn btn-primary" style="width:100%">دخول آمن</button>
+            <p id="login-err" style="color:red; margin-top:10px; display:none;">كلمة المرور غير صحيحة</p>
         </div>
     </div>
 
@@ -119,21 +130,22 @@
                 <button onclick="openModal()" class="btn btn-accent"><i class="fa-solid fa-plus"></i> إضافة منتج</button>
             </div>
             
-            <div class="card" style="overflow-x: auto;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>صورة</th>
-                            <th>الاسم</th>
-                            <th>السعر</th>
-                            <th>الألوان</th>
-                            <th>إجراءات</th>
-                        </tr>
-                    </thead>
-                    <tbody id="prod-list"></tbody>
-                </table>
-            </div>
-        </div>
+            <div class="card">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>صورة</th>
+                                <th>الاسم</th>
+                                <th>السعر</th>
+                                <th>الألوان</th>
+                                <th>إجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="prod-list"></tbody>
+                    </table>
+                </div>
+            </div>        </div>
 
         <!-- قسم الطلبات -->
         <div id="tab-orders" style="display:none;">
@@ -141,17 +153,20 @@
                 <h2 style="color:var(--primary)">🛒 الطلبات الواردة</h2>
                 <button onclick="clearOrders()" class="btn btn-danger">حذف الكل</button>
             </div>
-            <div class="card" style="overflow-x: auto;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>رقم الطلب</th>                            <th>معلومات العميل</th>
-                            <th>المبلغ الإجمالي</th>
-                            <th>التفاصيل</th>
-                        </tr>
-                    </thead>
-                    <tbody id="order-list"></tbody>
-                </table>
+            <div class="card">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>رقم الطلب</th>
+                                <th>معلومات العميل</th>
+                                <th>المبلغ الإجمالي</th>
+                                <th>التفاصيل</th>
+                            </tr>
+                        </thead>
+                        <tbody id="order-list"></tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -179,8 +194,7 @@
                     <select id="p-cat" class="form-input">
                         <option value="ملابس">ملابس</option>
                         <option value="أحذية">أحذية</option>
-                        <option value="إكسسوارات">إكسسوارات</option>
-                        <option value="منزل">منزل وديكور</option>
+                        <option value="إكسسوارات">إكسسوارات</option>                        <option value="منزل">منزل وديكور</option>
                     </select>
                 </div>
             </div>
@@ -194,6 +208,7 @@
                 <input type="file" id="p-files" multiple accept="image/*" style="display:none" onchange="handleFiles(this)">
                 <div id="preview-container" class="preview-container"></div>
             </div>
+
             <div class="form-group">
                 <label class="form-label">الألوان المتاحة</label>
                 <div class="color-picker-wrapper">
@@ -228,8 +243,7 @@
 
     <script>
         // === استخدام نفس المفاتيح الموجودة في index.html ===
-        const KEY_PRODUCTS = 'oumay_products_v2';
-        const KEY_ORDERS = 'oumay_orders_v2';
+        const KEY_PRODUCTS = 'oumay_products_v2';        const KEY_ORDERS = 'oumay_orders_v2';
         
         let products = JSON.parse(localStorage.getItem(KEY_PRODUCTS)) || [];
         let orders = JSON.parse(localStorage.getItem(KEY_ORDERS)) || [];
@@ -243,7 +257,8 @@
                 localStorage.setItem('admin_auth', 'true');
                 document.getElementById('login-overlay').style.display = 'none';
                 init();
-            } else {                document.getElementById('login-err').style.display = 'block';
+            } else {
+                document.getElementById('login-err').style.display = 'block';
             }
         }
         if(localStorage.getItem('admin_auth') === 'true') {
@@ -277,8 +292,7 @@
                         <div class="remove-img" onclick="removeImage(${idx})">✕</div>
                     </div>`;
             });
-        }
-        function removeImage(idx) {
+        }        function removeImage(idx) {
             currentImages.splice(idx, 1);
             renderPreviews();
         }
@@ -292,7 +306,8 @@
             }
         }
         function renderColors() {
-            const container = document.getElementById('selected-colors');            container.innerHTML = '';
+            const container = document.getElementById('selected-colors');
+            container.innerHTML = '';
             currentColors.forEach((c, idx) => {
                 container.innerHTML += `<div class="color-dot" style="background:${c}" onclick="removeColor(${idx})"></div>`;
             });
@@ -326,8 +341,7 @@
         }
 
         function renderProducts() {
-            const list = document.getElementById('prod-list');
-            list.innerHTML = '';
+            const list = document.getElementById('prod-list');            list.innerHTML = '';
             products.forEach((p, i) => {
                 const colorsHtml = p.colors.map(c => `<span style="display:inline-block;width:15px;height:15px;background:${c};border-radius:50%;margin-left:3px;border:1px solid #ddd;"></span>`).join('');
                 
@@ -341,7 +355,8 @@
                     </tr>`;
             });
         }
-        function deleteProd(i) {            if(confirm('حذف المنتج؟')) {
+        function deleteProd(i) {
+            if(confirm('حذف المنتج؟')) {
                 products.splice(i, 1);
                 localStorage.setItem(KEY_PRODUCTS, JSON.stringify(products));
                 renderProducts();
@@ -375,7 +390,6 @@
         function viewOrderDetails(id) {
             const order = orders.find(o => o.id === id);
             if(!order) return;
-
             const content = document.getElementById('order-details-content');
             content.innerHTML = `
                 <div class="order-modal-content">
@@ -390,7 +404,8 @@
                         <img src="${item.images[0]}" onerror="this.src='https://placehold.co/50'">
                         <div>
                             <div style="font-weight:bold">${item.name}</div>
-                            <div style="font-size:0.85rem; color:#666">${item.selectedColor ? 'لون: '+item.selectedColor : ''}</div>                            <div style="color:var(--accent)">${item.price} MAD</div>
+                            <div style="font-size:0.85rem; color:#666">${item.selectedColor ? 'لون: '+item.selectedColor : ''}</div>
+                            <div style="color:var(--accent)">${item.price} MAD</div>
                         </div>
                     </div>
                 `).join('')}
@@ -424,8 +439,7 @@
             document.getElementById('modal').style.display = 'flex';
             document.getElementById('p-name').value = '';
             document.getElementById('p-price').value = '';
-            document.getElementById('p-desc').value = '';
-            currentImages = []; currentColors = [];
+            document.getElementById('p-desc').value = '';            currentImages = []; currentColors = [];
             renderPreviews(); renderColors();
         }
         function closeModal() { document.getElementById('modal').style.display = 'none'; }
