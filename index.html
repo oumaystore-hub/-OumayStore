@@ -85,7 +85,6 @@
             background: white; z-index: 2001; box-shadow: -5px 0 15px rgba(0,0,0,0.1);
             transition: right 0.3s ease; display: flex; flex-direction: column;
         }
-        /* تعديل لليسار في حالة الإنجليزية */
         html[dir="ltr"] .sidebar-menu { right: auto; left: -300px; transition: left 0.3s ease; }
         html[dir="ltr"] .sidebar-menu.open { left: 0; }
         html[dir="rtl"] .sidebar-menu.open { right: 0; }
@@ -96,8 +95,8 @@
         }
         .close-menu {font-size: 1.5rem; cursor: pointer;}
         .sidebar-links {padding: 10px; flex: 1; overflow-y: auto;}
-        .sidebar-link {            display: flex; align-items: center; gap: 15px; padding: 15px;
-            border-bottom: 1px solid #eee; color: var(--dark); text-decoration: none;
+        .sidebar-link {
+            display: flex; align-items: center; gap: 15px; padding: 15px;            border-bottom: 1px solid #eee; color: var(--dark); text-decoration: none;
             font-weight: 600; transition: 0.2s; cursor: pointer;
         }
         .sidebar-link:hover {color: var(--gold); background: #f9f9f9;}
@@ -145,15 +144,15 @@
         .p-img-box {height: 150px; background: #f0f0f0; position: relative; overflow: hidden;}
         .p-img-box img {width: 100%; height: 100%; object-fit: cover;}
         .p-details {padding: 12px; flex: 1; display: flex; flex-direction: column;}
-        .p-name {font-size: 0.9rem; font-weight: 700; margin-bottom: 5px; color: var(--dark); line-height: 1.3;}        .p-price {color: var(--gold); font-weight: 800; font-size: 1.1rem; margin-top: auto;}
-        .add-btn {
+        .p-name {font-size: 0.9rem; font-weight: 700; margin-bottom: 5px; color: var(--dark); line-height: 1.3;}
+        .p-price {color: var(--gold); font-weight: 800; font-size: 1.1rem; margin-top: auto;}        .add-btn {
             background: var(--navy); color: white; border: none;
             padding: 8px; border-radius: 10px; font-size: 0.85rem;
             margin-top: 8px; cursor: pointer; width: 100%;
             display: flex; align-items: center; justify-content: center; gap: 5px;
         }
 
-        /* Modals */
+        /* Modals (Details & Cart) - FIXED Z-INDEX */
         .modal-overlay {
             position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 3000;
             display: none; align-items: flex-end; backdrop-filter: blur(4px);
@@ -164,7 +163,7 @@
             overflow-y: auto; box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
         }
         
-        /* Product Details */
+        /* Product Details Styles */
         .det-header {display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px;}
         .det-title {font-size: 1.3rem; font-weight: 800; color: var(--navy); line-height: 1.3;}
         .det-price {font-size: 1.2rem; color: var(--gold); font-weight: 700; margin-top: 5px;}
@@ -194,8 +193,8 @@
         .star-rating-input label {font-size: 1.4rem; color: #ddd; cursor: pointer;}
         .star-rating-input input:checked ~ label, .star-rating-input label:hover, .star-rating-input label:hover ~ label {color: var(--gold);}
         .review-input-field {width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 8px; outline: none;}
-        .submit-review-btn {background: var(--navy); color: white; border: none; padding: 8px; border-radius: 8px; cursor: pointer; width: 100%;}        .user-review-item {background: white; border: 1px solid #eee; padding: 10px; border-radius: 8px; margin-bottom: 8px;}
-        .user-review-stars {color: var(--gold); font-size: 0.8rem;}
+        .submit-review-btn {background: var(--navy); color: white; border: none; padding: 8px; border-radius: 8px; cursor: pointer; width: 100%;}
+        .user-review-item {background: white; border: 1px solid #eee; padding: 10px; border-radius: 8px; margin-bottom: 8px;}        .user-review-stars {color: var(--gold); font-size: 0.8rem;}
 
         /* Cart Styles */
         .cart-item {display: flex; gap: 10px; margin-bottom: 12px; border-bottom: 1px solid #f5f5f5; padding-bottom: 10px;}
@@ -243,8 +242,8 @@
         </div>
     </div>
 
-    <!-- 2. واجهة المتجر -->    <div id="app-interface">
-        <header>
+    <!-- 2. واجهة المتجر -->
+    <div id="app-interface">        <header>
             <div class="header-left">
                 <div class="menu-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></div>
                 <div class="brand-container">
@@ -292,15 +291,15 @@
                     </div>
                 </div>
             </div>
-            <!-- Products -->
-            <div style="padding: 0 15px; font-weight: 800; color: var(--navy); margin-bottom:10px; font-size:1.2rem;" id="section-title" data-i18n="new_arrivals">وصل حديثاً</div>
+
+            <!-- Products -->            <div style="padding: 0 15px; font-weight: 800; color: var(--navy); margin-bottom:10px; font-size:1.2rem;" id="section-title" data-i18n="new_arrivals">وصل حديثاً</div>
             <div class="products-grid" id="products-container"></div>
             <div id="empty-msg" style="text-align:center; padding:40px; color:#999; display:none;">
                 <i class="fa-solid fa-box-open" style="font-size:3rem; margin-bottom:10px; opacity:0.3;"></i><br>
                 <span data-i18n="no_products">لا توجد منتجات حالياً</span>
             </div>
 
-            <!-- Store Info Section (معلومات المتجر) -->
+            <!-- Store Info Section -->
             <div class="store-info">
                 <h3 style="margin-bottom:20px; color:var(--navy);" data-i18n="contact_us">معلومات المتجر</h3>
                 <div class="info-item"><i class="fa-solid fa-location-dot"></i> <span>الدار البيضاء، المغرب</span></div>
@@ -321,14 +320,14 @@
     </div>
 
     <!-- نافذة تفاصيل المنتج -->
-    <div class="modal-overlay" id="details-modal">
+    <div class="modal-overlay" id="details-modal" onclick="if(event.target === this) closeDetails()">
         <div class="modal-sheet">
             <div class="det-header">
                 <div>
                     <div class="det-title" id="det-name">اسم المنتج</div>
                     <div class="det-price" id="det-price">0 MAD</div>
                 </div>
-                <button onclick="closeDetails()" style="background:none; border:none; font-size:1.5rem; cursor:pointer; color:#888;">✕</button>
+                <button onclick="closeDetails()" style="background:none; border:none; font-size:1.8rem; cursor:pointer; color:#888; padding:5px;">✕</button>
             </div>
             
             <div class="img-scroller" id="det-slider"></div>
@@ -341,8 +340,8 @@
                 <i class="fa-solid fa-cart-plus"></i> <span data-i18n="add_to_cart">أضف للسلة</span>
             </button>
 
-            <!-- قسم التقييمات -->            <div class="reviews-section">
-                <h4 style="margin-bottom:10px; color:var(--navy); font-size:1rem;" data-i18n="reviews">تقييمات المشترين</h4>
+            <!-- قسم التقييمات -->
+            <div class="reviews-section">                <h4 style="margin-bottom:10px; color:var(--navy); font-size:1rem;" data-i18n="reviews">تقييمات المشترين</h4>
                 <div class="review-form">
                     <div class="star-rating-input">
                         <input type="radio" id="star5" name="rating" value="5" /><label for="star5">★</label>
@@ -361,11 +360,11 @@
     </div>
 
     <!-- نافذة السلة -->
-    <div class="modal-overlay" id="cart-modal">
+    <div class="modal-overlay" id="cart-modal" onclick="if(event.target === this) toggleCart()">
         <div class="modal-sheet">
             <div class="det-header">
                 <div class="det-title" data-i18n="shopping_cart">سلة المشتريات</div>
-                <button onclick="toggleCart()" style="background:none; border:none; font-size:1.5rem; cursor:pointer;">✕</button>
+                <button onclick="toggleCart()" style="background:none; border:none; font-size:1.8rem; cursor:pointer; padding:5px;">✕</button>
             </div>
             
             <div id="cart-items-list" style="flex:1; overflow-y:auto; margin-bottom:20px;"></div>
@@ -390,8 +389,8 @@
         const KEY_ORDERS = 'oumay_orders_v2';
         const KEY_REVIEWS = 'oumay_reviews_v2';
 
-        let cart = JSON.parse(localStorage.getItem(KEY_CART)) || [];        let reviews = JSON.parse(localStorage.getItem(KEY_REVIEWS)) || {};
-        let currentProduct = null;
+        let cart = JSON.parse(localStorage.getItem(KEY_CART)) || [];
+        let reviews = JSON.parse(localStorage.getItem(KEY_REVIEWS)) || {};        let currentProduct = null;
         let selectedColor = null;
         let allProducts = [];
         let currentLang = 'ar';
@@ -432,16 +431,15 @@
             document.documentElement.lang = lang;
             document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
             
-            // تطبيق الترجمة
             applyTranslations();
 
             document.getElementById('splash-screen').style.opacity = '0';
             setTimeout(() => {
                 document.getElementById('splash-screen').style.display = 'none';
                 document.getElementById('app-interface').style.display = 'flex';
-                loadProducts();                updateCartUI();
-                startSlider();
-                startHeaderToggle();
+                loadProducts();
+                updateCartUI();
+                startSlider();                startHeaderToggle();
             }, 600);
             localStorage.setItem('oumay_lang', lang);
         }
@@ -457,7 +455,6 @@
             });
         }
 
-        // تبديل الشعار والنص
         function startHeaderToggle() {
             const logo = document.getElementById('header-logo');
             const text = document.getElementById('header-text');
@@ -472,13 +469,11 @@
             }, 30000);
         }
 
-        // القائمة الجانبية
         function toggleSidebar() {
             document.getElementById('sidebar-menu').classList.toggle('open');
             document.getElementById('overlay-bg').classList.toggle('active');
         }
 
-        // تصفية المنتجات حسب القسم
         function filterCategory(cat) {
             toggleSidebar();
             const container = document.getElementById('products-container');
@@ -487,19 +482,13 @@
             
             let filtered = allProducts;
             if(cat !== 'all') {
-                // ترجمة بسيطة للفئات للبحث
-                let searchCat = cat;                if(currentLang === 'en') {
-                    if(cat === 'ملابس') searchCat = 'Clothes'; // يجب أن تكون الفئات في لوحة التحكم بالإنجليزية أو نعدل البحث
-                    // للتسهيل سنعتمد على التصنيف العربي المخزن حالياً
-                }
                 filtered = allProducts.filter(p => p.cat === cat);
                 title.innerText = cat;
             } else {
                 title.innerText = translations[currentLang].new_arrivals;
             }
 
-            if(filtered.length === 0) {
-                container.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:20px;">${translations[currentLang].no_products}</div>`;
+            if(filtered.length === 0) {                container.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:20px;">${translations[currentLang].no_products}</div>`;
                 return;
             }
 
@@ -513,7 +502,6 @@
             alert('Coming Soon!');
         }
 
-        // السلايدر
         function startSlider() {
             const slides = document.querySelectorAll('.slide');
             let currentSlide = 0;
@@ -537,6 +525,7 @@
             }
             renderGrid(allProducts);
         }
+
         function renderGrid(products) {
             const container = document.getElementById('products-container');
             container.innerHTML = '';
@@ -548,8 +537,7 @@
         function createProductCard(p) {
             return `
                 <div class="product-card">
-                    <div class="p-img-box" onclick="showDetails(${p.id})">
-                        <img src="${p.images[0]}" onerror="this.src='https://placehold.co/400'">
+                    <div class="p-img-box" onclick="showDetails(${p.id})">                        <img src="${p.images[0]}" onerror="this.src='https://placehold.co/400'">
                     </div>
                     <div class="p-details">
                         <div class="p-name" onclick="showDetails(${p.id})">${p.name}</div>
@@ -586,6 +574,7 @@
             loadReviews(id);
             document.getElementById('details-modal').style.display = 'flex';
         }
+
         function selectColor(el, color) {
             document.querySelectorAll('.color-circle').forEach(c => c.classList.remove('selected'));
             el.classList.add('selected');
@@ -594,12 +583,10 @@
 
         function closeDetails() { document.getElementById('details-modal').style.display = 'none'; }
 
-        // التقييمات
         function loadReviews(prodId) {
             const list = document.getElementById('reviews-list');
             list.innerHTML = '';
-            const prodReviews = reviews[prodId] || [];
-            if(prodReviews.length === 0) {
+            const prodReviews = reviews[prodId] || [];            if(prodReviews.length === 0) {
                 list.innerHTML = `<p style="text-align:center; color:#999; font-size:0.85rem;">${translations[currentLang].no_reviews || 'لا توجد تقييمات بعد.'}</p>`;
             } else {
                 prodReviews.forEach(r => {
@@ -635,7 +622,7 @@
             loadReviews(currentProduct.id);
             alert('شكراً لتقييمك!');
         }
-        // السلة
+
         function quickAdd(id) {
             const p = allProducts.find(x => x.id === id);
             if(p) {
@@ -648,8 +635,7 @@
             }
         }
 
-        function addToCartFromDetails() {
-            if(!currentProduct) return;
+        function addToCartFromDetails() {            if(!currentProduct) return;
             cart.push({...currentProduct, selectedColor: selectedColor});
             saveCart();
             closeDetails();
@@ -684,7 +670,8 @@
 
         function removeFromCart(idx) { cart.splice(idx, 1); saveCart(); }
         function toggleCart() {
-            const m = document.getElementById('cart-modal');            m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
+            const m = document.getElementById('cart-modal');
+            m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
             updateCartUI();
         }
 
@@ -697,8 +684,7 @@
 
             const orders = JSON.parse(localStorage.getItem(KEY_ORDERS)) || [];
             orders.push({
-                id: Date.now(), date: new Date().toISOString(), customerName: name, phone: phone, address: address,
-                items: cart, total: cart.reduce((a,b)=>a+b.price, 0), status: 'pending'
+                id: Date.now(), date: new Date().toISOString(), customerName: name, phone: phone, address: address,                items: cart, total: cart.reduce((a,b)=>a+b.price, 0), status: 'pending'
             });
             localStorage.setItem(KEY_ORDERS, JSON.stringify(orders));
             cart = []; saveCart(); toggleCart();
