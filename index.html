@@ -152,7 +152,7 @@
             display: flex; align-items: center; justify-content: center; gap: 5px;
         }
 
-        /* Modals (Details & Cart) - FIXED SCROLLING & COMPACT REVIEWS */
+        /* Modals (Details & Cart) - FIXED SCROLLING & IMAGES */
         .modal-overlay {
             position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 3000;
             display: none; align-items: flex-end; backdrop-filter: blur(4px);
@@ -165,13 +165,13 @@
         }
         
         /* Product Details Styles */
-        .det-header {display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px; padding-right: 10px;}
-        .det-title {font-size: 1.2rem; font-weight: 800; color: var(--navy); line-height: 1.3;}
-        .det-price {font-size: 1.1rem; color: var(--gold); font-weight: 700; margin-top: 5px;}
+        .det-header {display: flex; justify-content: space-between; align-items: start; margin-bottom: 15px; padding-right: 10px;}
+        .det-title {font-size: 1.3rem; font-weight: 800; color: var(--navy); line-height: 1.3;}
+        .det-price {font-size: 1.2rem; color: var(--gold); font-weight: 700; margin-top: 5px;}
         
         .img-scroller {
             display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; scroll-snap-type: x mandatory;
-            margin-bottom: 15px; height: 200px; /* ارتفاع مناسب للصور */
+            margin-bottom: 15px; height: 220px; /* ارتفاع ثابت للصور */
             background: #f9f9f9; border-radius: 15px;
         }
         .img-scroller img {
@@ -187,15 +187,15 @@
             content: '✓'; color: white; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 12px;
         }
 
-        /* Reviews Section - COMPACTED */
-        .reviews-section {margin-top: 15px; border-top: 1px solid #eee; padding-top: 15px;}
-        .review-form {background: #f9f9f9; padding: 10px; border-radius: 12px; margin-bottom: 10px;}
-        .star-rating-input {display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 5px; margin-bottom: 8px;}
+        /* Reviews Section */
+        .reviews-section {margin-top: 20px; border-top: 1px solid #eee; padding-top: 15px;}
+        .review-form {background: #f9f9f9; padding: 15px; border-radius: 12px; margin-bottom: 15px;}
+        .star-rating-input {display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 5px; margin-bottom: 10px;}
         .star-rating-input input {display: none;}
-        .star-rating-input label {font-size: 1.2rem; color: #ddd; cursor: pointer;}
+        .star-rating-input label {font-size: 1.4rem; color: #ddd; cursor: pointer;}
         .star-rating-input input:checked ~ label, .star-rating-input label:hover, .star-rating-input label:hover ~ label {color: var(--gold);}
-        .review-input-field {width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 8px; outline: none; font-size: 0.9rem;}        .submit-review-btn {background: var(--navy); color: white; border: none; padding: 8px; border-radius: 8px; cursor: pointer; width: 100%; font-size: 0.9rem;}
-        .user-review-item {background: white; border: 1px solid #eee; padding: 8px; border-radius: 8px; margin-bottom: 8px;}
+        .review-input-field {width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 8px; outline: none;}        .submit-review-btn {background: var(--navy); color: white; border: none; padding: 8px; border-radius: 8px; cursor: pointer; width: 100%;}
+        .user-review-item {background: white; border: 1px solid #eee; padding: 10px; border-radius: 8px; margin-bottom: 8px;}
         .user-review-stars {color: var(--gold); font-size: 0.8rem;}
 
         /* Cart Styles */
@@ -341,7 +341,7 @@
             <button class="add-btn" style="padding:12px; margin-top:15px; font-size:1rem;" onclick="addToCartFromDetails()">
                 <i class="fa-solid fa-cart-plus"></i> <span data-i18n="add_to_cart">أضف للسلة</span>
             </button>
-            <!-- قسم التقييمات (مصغر) -->
+            <!-- قسم التقييمات -->
             <div class="reviews-section">
                 <h4 style="margin-bottom:10px; color:var(--navy); font-size:1rem;" data-i18n="reviews">تقييمات المشترين</h4>
                 <div class="review-form">
