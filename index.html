@@ -152,7 +152,7 @@
             display: flex; align-items: center; justify-content: center; gap: 5px;
         }
 
-        /* Modals (Details & Cart) - FIXED SCROLLING & IMAGES */
+        /* Modals (Details & Cart) - FIXED IMAGES TO SHOW FULLY */
         .modal-overlay {
             position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 3000;
             display: none; align-items: flex-end; backdrop-filter: blur(4px);
@@ -171,11 +171,13 @@
         
         .img-scroller {
             display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; scroll-snap-type: x mandatory;
-            margin-bottom: 15px; height: 220px; /* ارتفاع ثابت للصور */
-            background: #f9f9f9; border-radius: 15px;
+            margin-bottom: 15px; height: 250px; /* زيادة الارتفاع قليلاً */
+            background: #ffffff; border-radius: 15px; border: 1px solid #eee;
         }
         .img-scroller img {
-            width: 100%; min-width: 100%; height: 100%; object-fit: cover; border-radius: 15px; scroll-snap-align: center;
+            width: 100%; min-width: 100%; height: 100%; 
+            object-fit: contain; /* تغيير مهم: يظهر الصورة كاملة دون قص */
+            border-radius: 15px; scroll-snap-align: center;
         }
         
         .colors-row {display: flex; gap: 10px; margin: 10px 0;}
@@ -192,9 +194,9 @@
         .review-form {background: #f9f9f9; padding: 15px; border-radius: 12px; margin-bottom: 15px;}
         .star-rating-input {display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 5px; margin-bottom: 10px;}
         .star-rating-input input {display: none;}
-        .star-rating-input label {font-size: 1.4rem; color: #ddd; cursor: pointer;}
-        .star-rating-input input:checked ~ label, .star-rating-input label:hover, .star-rating-input label:hover ~ label {color: var(--gold);}
-        .review-input-field {width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 8px; outline: none;}        .submit-review-btn {background: var(--navy); color: white; border: none; padding: 8px; border-radius: 8px; cursor: pointer; width: 100%;}
+        .star-rating-input label {font-size: 1.4rem; color: #ddd; cursor: pointer;}        .star-rating-input input:checked ~ label, .star-rating-input label:hover, .star-rating-input label:hover ~ label {color: var(--gold);}
+        .review-input-field {width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 8px; outline: none;}
+        .submit-review-btn {background: var(--navy); color: white; border: none; padding: 8px; border-radius: 8px; cursor: pointer; width: 100%;}
         .user-review-item {background: white; border: 1px solid #eee; padding: 10px; border-radius: 8px; margin-bottom: 8px;}
         .user-review-stars {color: var(--gold); font-size: 0.8rem;}
 
@@ -241,8 +243,8 @@
                 <div class="lang-info"><span class="lang-name">Français</span><span class="lang-sub">French</span></div>
                 <i class="fa-solid fa-chevron-right"></i>
             </div>
-        </div>
-    </div>
+        </div>    </div>
+
     <!-- 2. واجهة المتجر -->
     <div id="app-interface">
         <header>
@@ -290,9 +292,9 @@
                     <div class="slide-overlay">
                         <div class="slide-title" data-i18n="luxury_acc">إكسسوارات فاخرة</div>
                         <div class="slide-desc" data-i18n="elegance_touch">لمسة من الأناقة والجمال</div>
-                    </div>
-                </div>
+                    </div>                </div>
             </div>
+
             <!-- Products -->
             <div style="padding: 0 15px; font-weight: 800; color: var(--navy); margin-bottom:10px; font-size:1.2rem;" id="section-title" data-i18n="new_arrivals">وصل حديثاً</div>
             <div class="products-grid" id="products-container"></div>
@@ -339,8 +341,8 @@
             <div class="colors-row" id="det-colors"></div>
 
             <button class="add-btn" style="padding:12px; margin-top:15px; font-size:1rem;" onclick="addToCartFromDetails()">
-                <i class="fa-solid fa-cart-plus"></i> <span data-i18n="add_to_cart">أضف للسلة</span>
-            </button>
+                <i class="fa-solid fa-cart-plus"></i> <span data-i18n="add_to_cart">أضف للسلة</span>            </button>
+
             <!-- قسم التقييمات -->
             <div class="reviews-section">
                 <h4 style="margin-bottom:10px; color:var(--navy); font-size:1rem;" data-i18n="reviews">تقييمات المشترين</h4>
@@ -388,8 +390,8 @@
     <script>
         const KEY_PRODUCTS = 'oumay_products_v2'; 
         const KEY_CART = 'oumay_cart_v2';
-        const KEY_ORDERS = 'oumay_orders_v2';
-        const KEY_REVIEWS = 'oumay_reviews_v2';
+        const KEY_ORDERS = 'oumay_orders_v2';        const KEY_REVIEWS = 'oumay_reviews_v2';
+
         let cart = JSON.parse(localStorage.getItem(KEY_CART)) || [];
         let reviews = JSON.parse(localStorage.getItem(KEY_REVIEWS)) || {};
         let currentProduct = null;
@@ -437,9 +439,9 @@
 
             document.getElementById('splash-screen').style.opacity = '0';
             setTimeout(() => {
-                document.getElementById('splash-screen').style.display = 'none';
-                document.getElementById('app-interface').style.display = 'flex';
-                loadProducts();                updateCartUI();
+                document.getElementById('splash-screen').style.display = 'none';                document.getElementById('app-interface').style.display = 'flex';
+                loadProducts();
+                updateCartUI();
                 startSlider();
                 startHeaderToggle();
             }, 600);
@@ -486,9 +488,9 @@
             if(cat !== 'all') {
                 filtered = allProducts.filter(p => p.cat === cat);
                 title.innerText = cat;
-            } else {
-                title.innerText = translations[currentLang].new_arrivals;
+            } else {                title.innerText = translations[currentLang].new_arrivals;
             }
+
             if(filtered.length === 0) {
                 container.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:20px;">${translations[currentLang].no_products}</div>`;
                 return;
@@ -535,9 +537,9 @@
                 container.innerHTML += createProductCard(p);
             });
         }
-
         function createProductCard(p) {
-            return `                <div class="product-card">
+            return `
+                <div class="product-card">
                     <div class="p-img-box" onclick="showDetails(${p.id})">
                         <img src="${p.images[0]}" onerror="this.src='https://placehold.co/400'">
                     </div>
@@ -584,8 +586,8 @@
             el.classList.add('selected');
             selectedColor = color;
         }
-
         function closeDetails() { document.getElementById('details-modal').style.display = 'none'; }
+
         function loadReviews(prodId) {
             const list = document.getElementById('reviews-list');
             list.innerHTML = '';
@@ -633,9 +635,9 @@
                 cart.push({...p, selectedColor: null});
                 saveCart();
                 const btn = event.target.closest('button');
-                const original = btn.innerHTML;
-                btn.innerHTML = '<i class="fa-solid fa-check"></i> تم';
-                setTimeout(() => btn.innerHTML = original, 1000);            }
+                const original = btn.innerHTML;                btn.innerHTML = '<i class="fa-solid fa-check"></i> تم';
+                setTimeout(() => btn.innerHTML = original, 1000);
+            }
         }
 
         function addToCartFromDetails() {
@@ -682,9 +684,9 @@
         function submitOrder() {
             if(cart.length === 0) return alert('السلة فارغة!');
             const name = document.getElementById('cust-name').value;
-            const phone = document.getElementById('cust-phone').value;
-            const address = document.getElementById('cust-address').value;
+            const phone = document.getElementById('cust-phone').value;            const address = document.getElementById('cust-address').value;
             if(!name || !phone) return alert('يرجى إدخال الاسم ورقم الهاتف');
+
             const orders = JSON.parse(localStorage.getItem(KEY_ORDERS)) || [];
             orders.push({
                 id: Date.now(), date: new Date().toISOString(), customerName: name, phone: phone, address: address,
