@@ -120,6 +120,7 @@
         <div class="logo">OUMAY<span>STORE</span></div>
         <div class="menu-item active" onclick="switchTab('products')"><i class="fa-solid fa-box-open"></i> <span>المنتجات</span></div>
         <div class="menu-item" onclick="switchTab('orders')"><i class="fa-solid fa-truck-fast"></i> <span>الطلبات</span></div>
+        <div class="menu-item" onclick="switchTab('settings')"><i class="fa-solid fa-gear"></i> <span>الإعدادات</span></div>
         <div class="menu-item" onclick="window.open('index.html', '_blank')"><i class="fa-solid fa-store"></i> <span>عرض المتجر</span></div>
         <div class="menu-item" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> <span>خروج</span></div>
     </div>
@@ -144,8 +145,8 @@
                             <th>الألوان</th>
                             <th>إجراءات</th>
                         </tr>
-                    </thead>
-                    <tbody id="prod-list"></tbody>                </table>
+                    </thead>                    <tbody id="prod-list"></tbody>
+                </table>
             </div>
         </div>
 
@@ -170,6 +171,20 @@
                 </table>
             </div>
         </div>
+
+        <!-- ✅ قسم الإعدادات -->
+        <div id="tab-settings" style="display:none;">
+            <div class="header">
+                <h2 style="color:var(--primary)">⚙️ إعدادات المتجر</h2>
+            </div>
+            <div class="card">
+                <div class="form-group">
+                    <label class="form-label">ثمن التوصيل (MAD)</label>
+                    <input type="number" id="shipping-cost-input" class="form-input" value="40">
+                </div>
+                <button onclick="saveSettings()" class="btn btn-primary">حفظ الإعدادات</button>
+            </div>
+        </div>
     </div>
 
     <!-- نافذة إضافة/تعديل منتج -->
@@ -179,8 +194,7 @@
                 <h3 style="color:var(--primary)" id="modal-title">بيانات المنتج</h3>
                 <button onclick="closeModal()" style="background:none; border:none; font-size:1.5rem; cursor:pointer; color:#888;">✕</button>
             </div>
-            
-            <input type="hidden" id="edit-prod-id">
+                        <input type="hidden" id="edit-prod-id">
 
             <div class="form-group">
                 <label class="form-label">اسم المنتج</label>
@@ -194,7 +208,8 @@
                 </div>
                 <div style="flex:1; min-width:120px;">
                     <label class="form-label">التصنيف</label>
-                    <select id="p-cat" class="form-input">                        <option value="ملابس">ملابس</option>
+                    <select id="p-cat" class="form-input">
+                        <option value="ملابس">ملابس</option>
                         <option value="أحذية">أحذية</option>
                         <option value="إكسسوارات">إكسسوارات</option>
                         <option value="منزل">منزل وديكور</option>
@@ -228,8 +243,7 @@
 
             <div style="display:flex; gap:10px; margin-top:25px; flex-wrap:wrap;">
                 <button onclick="saveProduct()" class="btn btn-accent" style="flex:1; justify-content:center;">حفظ</button>
-                <button onclick="closeModal()" class="btn btn-danger" style="flex:1; justify-content:center;">إلغاء</button>
-            </div>
+                <button onclick="closeModal()" class="btn btn-danger" style="flex:1; justify-content:center;">إلغاء</button>            </div>
         </div>
     </div>
 
@@ -243,7 +257,8 @@
             <div id="order-details-content"></div>
             
             <!-- ✅ تغيير حالة الطلب -->
-            <div class="form-group" style="margin-top:15px;">                <label class="form-label">حالة الطلب:</label>
+            <div class="form-group" style="margin-top:15px;">
+                <label class="form-label">حالة الطلب:</label>
                 <select id="order-status-select" class="form-select" onchange="updateOrderStatus()">
                     <option value="pending">قيد الانتظار</option>
                     <option value="processing">قيد التجهيز</option>
@@ -277,8 +292,8 @@
         }
         
         let currentImages = [];
-        let currentColors = [];
-        let currentOrderId = null;
+        let currentColors = [];        let currentOrderId = null;
+        let shippingCost = 40; // ✅ ثمن الشحن الافتراضي
 
         // --- نظام الدخول ---
         function login() {
@@ -292,7 +307,8 @@
         }
 
         window.onload = function() {
-            if(localStorage.getItem('admin_auth') === 'true') {                document.getElementById('login-overlay').style.display = 'none';
+            if(localStorage.getItem('admin_auth') === 'true') {
+                document.getElementById('login-overlay').style.display = 'none';
                 init();
             }
         };
@@ -305,6 +321,7 @@
         function init() { 
             renderProducts(); 
             renderOrders(); 
+            loadSettings();
         }
 
         // --- إدارة الصور المتعددة ---
@@ -324,8 +341,7 @@
             const container = document.getElementById('preview-container');
             container.innerHTML = '';
             currentImages.forEach((img, idx) => {
-                container.innerHTML += `
-                    <div class="preview-box">
+                container.innerHTML += `                    <div class="preview-box">
                         <img src="${img}">
                         <div class="remove-img" onclick="removeImage(${idx})">✕</div>
                     </div>`;
@@ -341,7 +357,8 @@
             const color = document.getElementById('color-picker').value;
             if(!currentColors.includes(color)) {
                 currentColors.push(color);
-                renderColors();            }
+                renderColors();
+            }
         }
         function renderColors() {
             const container = document.getElementById('selected-colors');
@@ -373,8 +390,7 @@
                 dateAdded: Date.now() // ✅ إضافة تاريخ الإضافة
             };
 
-            if(id) {
-                const index = products.findIndex(p => p.id == id);
+            if(id) {                const index = products.findIndex(p => p.id == id);
                 if(index > -1) products[index] = product;
             } else {
                 products.push(product);
@@ -390,7 +406,8 @@
             const list = document.getElementById('prod-list');
             list.innerHTML = '';
             if(products.length === 0) {
-                list.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px;">لا توجد منتجات مضافة</td></tr>';                return;
+                list.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px;">لا توجد منتجات مضافة</td></tr>';
+                return;
             }
             products.forEach((p, i) => {
                 const colorsHtml = p.colors.map(c => `<span style="display:inline-block;width:15px;height:15px;background:${c};border-radius:50%;margin-left:3px;border:1px solid #ddd;"></span>`).join('');
@@ -423,7 +440,6 @@
             document.getElementById('modal-title').innerText = 'تعديل المنتج';
             document.getElementById('modal').style.display = 'flex';
         }
-
         function deleteProd(i) {
             if(confirm('حذف المنتج؟')) {
                 products.splice(i, 1);
@@ -439,7 +455,8 @@
             if(!orders.length) return list.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px">لا توجد طلبات</td></tr>';
             
             orders.forEach(o => {
-                const statusClass = o.status === 'pending' ? 'status-pending' :                                     o.status === 'processing' ? 'status-processing' :
+                const statusClass = o.status === 'pending' ? 'status-pending' : 
+                                    o.status === 'processing' ? 'status-processing' :
                                     o.status === 'shipped' ? 'status-shipped' : 'status-cancelled';
                 const statusText = o.status === 'pending' ? 'قيد الانتظار' : 
                                    o.status === 'processing' ? 'قيد التجهيز' :
@@ -471,8 +488,7 @@
             const content = document.getElementById('order-details-content');
             content.innerHTML = `
                 <div class="order-modal-content">
-                    <p><strong>العميل:</strong> ${order.customerName}</p>
-                    <p><strong>الهاتف:</strong> ${order.phone}</p>
+                    <p><strong>العميل:</strong> ${order.customerName}</p>                    <p><strong>الهاتف:</strong> ${order.phone}</p>
                     <p><strong>العنوان:</strong> ${order.address || 'غير محدد'}</p>
                     <p><strong>التاريخ:</strong> ${new Date(order.date).toLocaleDateString('ar-MA')}</p>
                 </div>
@@ -488,7 +504,8 @@
                     </div>
                 `).join('')}
                 <div style="margin-top:15px; text-align:left; font-weight:bold; font-size:1.2rem;">
-                    المجموع: ${order.total} MAD                </div>
+                    المجموع: ${order.total} MAD
+                </div>
             `;
             
             // تعيين الحالة الحالية في القائمة المنسدلة
@@ -520,8 +537,7 @@
         function printOrder() {
             if(!currentOrderId) return;
             const order = orders.find(o => o.id === currentOrderId);
-            
-            const printWindow = window.open('', '_blank');
+                        const printWindow = window.open('', '_blank');
             printWindow.document.write(`
                 <html dir="rtl">
                 <head>
@@ -529,15 +545,16 @@
                     <style>
                         body { font-family: 'Tajawal', Arial, sans-serif; padding: 20px; background: #fff; }
                         .invoice-container { max-width: 800px; margin: 0 auto; border: 1px solid #eee; padding: 30px; border-radius: 10px; }
-                        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #1e3a5f; padding-bottom: 20px; margin-bottom: 30px; }
-                        .brand { display: flex; align-items: center; gap: 15px; }
-                        .brand img { width: 60px; height: 60px; object-fit: contain; }
+                        .header { text-align: center; border-bottom: 2px solid #1e3a5f; padding-bottom: 20px; margin-bottom: 30px; }
+                        .brand { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+                        .brand img { width: 80px; height: 80px; object-fit: contain; }
                         .brand-text { font-size: 2rem; font-weight: 800; color: #1e3a5f; }
                         .brand-text span { color: #c9a96e; }
-                        .invoice-title { text-align: left; }
+                        .invoice-title { margin-top: 10px; }
                         .invoice-title h2 { margin: 0; color: #333; }
                         .info-section { display: flex; justify-content: space-between; margin-bottom: 30px; }
-                        .info-box { width: 48%; }                        .info-box h3 { color: #1e3a5f; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 10px; }
+                        .info-box { width: 48%; }
+                        .info-box h3 { color: #1e3a5f; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 10px; }
                         .info-box p { margin: 5px 0; color: #555; }
                         table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
                         th { background: #1e3a5f; color: white; padding: 12px; text-align: right; }
@@ -569,8 +586,7 @@
                             </div>
                             <div class="info-box">
                                 <h3>تفاصيل الطلب</h3>
-                                <p><strong>طريقة الدفع:</strong> ${order.payment === 'cod' ? 'نقداً عند الاستلام' : 'بطاقة بنكية'}</p>
-                                <p><strong>الحالة:</strong> ${order.status === 'pending' ? 'قيد الانتظار' : order.status === 'processing' ? 'قيد التجهيز' : order.status === 'shipped' ? 'تم الشحن' : 'ملغي'}</p>
+                                <p><strong>طريقة الدفع:</strong> ${order.payment === 'cod' ? 'نقداً عند الاستلام' : 'بطاقة بنكية'}</p>                                <p><strong>الحالة:</strong> ${order.status === 'pending' ? 'قيد الانتظار' : order.status === 'processing' ? 'قيد التجهيز' : order.status === 'shipped' ? 'تم الشحن' : 'ملغي'}</p>
                             </div>
                         </div>
 
@@ -586,14 +602,15 @@
                                 ${order.items.map(item => `
                                     <tr>
                                         <td>${item.name}</td>
-                                        <td>${item.selectedColor || '-'}</td>                                        <td>${item.price} MAD</td>
+                                        <td>${item.selectedColor || '-'}</td>
+                                        <td>${item.price} MAD</td>
                                     </tr>
                                 `).join('')}
                             </tbody>
                         </table>
 
                         <div class="total-section">
-                            <p>ثمن التوصيل: 40 MAD</p>
+                            <p>ثمن التوصيل: ${shippingCost} MAD</p>
                             <p style="font-size:1.5rem; color:#1e3a5f;">المجموع الكلي: ${order.total} MAD</p>
                         </div>
 
@@ -616,10 +633,26 @@
             }
         }
 
+        // --- الإعدادات ---
+        function loadSettings() {
+            const savedShipping = localStorage.getItem('shipping_cost');            if(savedShipping) {
+                shippingCost = parseInt(savedShipping);
+                document.getElementById('shipping-cost-input').value = shippingCost;
+            }
+        }
+
+        function saveSettings() {
+            const cost = document.getElementById('shipping-cost-input').value;
+            shippingCost = parseInt(cost);
+            localStorage.setItem('shipping_cost', cost);
+            alert('تم حفظ ثمن التوصيل: ' + cost + ' MAD');
+        }
+
         // --- واجهة ---
         function switchTab(tab) {
             document.getElementById('tab-products').style.display = tab==='products'?'block':'none';
             document.getElementById('tab-orders').style.display = tab==='orders'?'block':'none';
+            document.getElementById('tab-settings').style.display = tab==='settings'?'block':'none';
             document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
             event.currentTarget.classList.add('active');
         }
@@ -635,4 +668,5 @@
         }
         function closeModal() { document.getElementById('modal').style.display = 'none'; }
     </script>
-</body></html>
+</body>
+</html>
