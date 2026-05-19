@@ -263,8 +263,18 @@
         const KEY_PRODUCTS = 'oumay_products_v2';
         const KEY_ORDERS = 'oumay_orders_v2';
         
-        let products = JSON.parse(localStorage.getItem(KEY_PRODUCTS)) || [];
-        let orders = JSON.parse(localStorage.getItem(KEY_ORDERS)) || [];
+        // ✅ تحميل آمن للبيانات لتجنب توقف الصفحة
+        let products = [];
+        let orders = [];
+        
+        try {
+            products = JSON.parse(localStorage.getItem(KEY_PRODUCTS)) || [];
+            orders = JSON.parse(localStorage.getItem(KEY_ORDERS)) || [];
+        } catch(e) {
+            console.error("Error loading data", e);
+            products = [];
+            orders = [];
+        }
         
         let currentImages = [];
         let currentColors = [];
@@ -280,19 +290,30 @@
                 document.getElementById('login-err').style.display = 'block';
             }
         }
-        if(localStorage.getItem('admin_auth') === 'true') {
-            document.getElementById('login-overlay').style.display = 'none';
-            init();
-        }
-        function logout() { localStorage.removeItem('admin_auth'); location.reload(); }
 
-        function init() { renderProducts(); renderOrders(); }
+        // التحقق من تسجيل الدخول عند تحميل الصفحة
+        window.onload = function() {            if(localStorage.getItem('admin_auth') === 'true') {
+                document.getElementById('login-overlay').style.display = 'none';
+                init();
+            }
+        };
+
+        function logout() { 
+            localStorage.removeItem('admin_auth'); 
+            location.reload(); 
+        }
+
+        function init() { 
+            renderProducts(); 
+            renderOrders(); 
+        }
 
         // --- إدارة الصور المتعددة ---
         function handleFiles(input) {
             if (input.files) {
                 Array.from(input.files).forEach(file => {
-                    const reader = new FileReader();                    reader.onload = (e) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
                         currentImages.push(e.target.result);
                         renderPreviews();
                     };
@@ -320,8 +341,7 @@
         function addColor() {
             const color = document.getElementById('color-picker').value;
             if(!currentColors.includes(color)) {
-                currentColors.push(color);
-                renderColors();
+                currentColors.push(color);                renderColors();
             }
         }
         function renderColors() {
@@ -341,7 +361,8 @@
             const id = document.getElementById('edit-prod-id').value;
             const name = document.getElementById('p-name').value;
             const price = document.getElementById('p-price').value;
-            const cat = document.getElementById('p-cat').value;            const desc = document.getElementById('p-desc').value;
+            const cat = document.getElementById('p-cat').value;
+            const desc = document.getElementById('p-desc').value;
 
             if(!name || !price) return alert('الاسم والسعر مطلوبان');
 
@@ -354,7 +375,7 @@
 
             if(id) {
                 const index = products.findIndex(p => p.id == id);
-                products[index] = product;
+                if(index > -1) products[index] = product;
             } else {
                 products.push(product);
             }
@@ -368,12 +389,15 @@
         function renderProducts() {
             const list = document.getElementById('prod-list');
             list.innerHTML = '';
+            if(products.length === 0) {
+                list.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px;">لا توجد منتجات مضافة</td></tr>';                return;
+            }
             products.forEach((p, i) => {
                 const colorsHtml = p.colors.map(c => `<span style="display:inline-block;width:15px;height:15px;background:${c};border-radius:50%;margin-left:3px;border:1px solid #ddd;"></span>`).join('');
                 
                 list.innerHTML += `
                     <tr>
-                        <td><img src="${p.images[0]}" class="prod-thumb"></td>
+                        <td><img src="${p.images[0]}" class="prod-thumb" onerror="this.src='https://placehold.co/50'"></td>
                         <td><strong>${p.name}</strong><br><small style="color:#888">${p.cat}</small></td>
                         <td>${p.price} MAD</td>
                         <td>${colorsHtml}</td>
@@ -390,7 +414,8 @@
             document.getElementById('edit-prod-id').value = p.id;
             document.getElementById('p-name').value = p.name;
             document.getElementById('p-price').value = p.price;
-            document.getElementById('p-cat').value = p.cat;            document.getElementById('p-desc').value = p.desc;
+            document.getElementById('p-cat').value = p.cat;
+            document.getElementById('p-desc').value = p.desc;
             currentImages = [...p.images];
             currentColors = [...p.colors];
             renderPreviews();
@@ -414,8 +439,7 @@
             if(!orders.length) return list.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px">لا توجد طلبات</td></tr>';
             
             orders.forEach(o => {
-                const statusClass = o.status === 'pending' ? 'status-pending' : 
-                                    o.status === 'processing' ? 'status-processing' :
+                const statusClass = o.status === 'pending' ? 'status-pending' :                                     o.status === 'processing' ? 'status-processing' :
                                     o.status === 'shipped' ? 'status-shipped' : 'status-cancelled';
                 const statusText = o.status === 'pending' ? 'قيد الانتظار' : 
                                    o.status === 'processing' ? 'قيد التجهيز' :
@@ -439,7 +463,8 @@
             });
         }
 
-        function viewOrderDetails(id) {            const order = orders.find(o => o.id === id);
+        function viewOrderDetails(id) {
+            const order = orders.find(o => o.id === id);
             if(!order) return;
             currentOrderId = id;
 
@@ -463,8 +488,7 @@
                     </div>
                 `).join('')}
                 <div style="margin-top:15px; text-align:left; font-weight:bold; font-size:1.2rem;">
-                    المجموع: ${order.total} MAD
-                </div>
+                    المجموع: ${order.total} MAD                </div>
             `;
             
             // تعيين الحالة الحالية في القائمة المنسدلة
@@ -488,7 +512,8 @@
         }
 
         function closeOrderModal() {
-            document.getElementById('order-modal').style.display = 'none';            currentOrderId = null;
+            document.getElementById('order-modal').style.display = 'none';
+            currentOrderId = null;
         }
 
         // ✅ دالة الطباعة الاحترافية
@@ -512,8 +537,7 @@
                         .info-section { display: flex; justify-content: space-between; margin-bottom: 30px; }
                         .info-box { width: 48%; }
                         .info-box h3 { color: #1e3a5f; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 10px; }
-                        .info-box p { margin: 5px 0; color: #555; }
-                        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+                        .info-box p { margin: 5px 0; color: #555; }                        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
                         th { background: #1e3a5f; color: white; padding: 12px; text-align: right; }
                         td { padding: 12px; border-bottom: 1px solid #eee; text-align: right; }
                         .total-section { text-align: left; font-size: 1.2rem; font-weight: bold; margin-top: 20px; }
@@ -537,7 +561,8 @@
                                 <p><strong>الاسم:</strong> ${order.customerName}</p>
                                 <p><strong>الهاتف:</strong> ${order.phone}</p>
                                 <p><strong>العنوان:</strong> ${order.address || '-'}</p>
-                            </div>                            <div class="info-box">
+                            </div>
+                            <div class="info-box">
                                 <h3>تفاصيل الطلب</h3>
                                 <p><strong>طريقة الدفع:</strong> ${order.payment === 'cod' ? 'نقداً عند الاستلام' : 'بطاقة بنكية'}</p>
                                 <p><strong>الحالة:</strong> ${order.status === 'pending' ? 'قيد الانتظار' : order.status === 'processing' ? 'قيد التجهيز' : order.status === 'shipped' ? 'تم الشحن' : 'ملغي'}</p>
@@ -562,7 +587,6 @@
                                 `).join('')}
                             </tbody>
                         </table>
-
                         <div class="total-section">
                             المجموع الكلي: ${order.total} MAD
                         </div>
@@ -586,7 +610,8 @@
             }
         }
 
-        // --- واجهة ---        function switchTab(tab) {
+        // --- واجهة ---
+        function switchTab(tab) {
             document.getElementById('tab-products').style.display = tab==='products'?'block':'none';
             document.getElementById('tab-orders').style.display = tab==='orders'?'block':'none';
             document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
