@@ -116,7 +116,7 @@
 
         /* ✅ Hero Slider - تكبير الصور */
         .hero-slider {
-            margin: 15px; border-radius: 20px; overflow: hidden; height: 250px; /* ✅ زيادة الارتفاع */
+            margin: 15px; border-radius: 20px; overflow: hidden; height: 250px;
             position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
         .slide {
@@ -181,12 +181,12 @@
             display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px;
         }
         .main-image-box {
-            width: 100%; height: 350px; /* ✅ صورة كبيرة */
+            width: 100%; height: 350px;
             background: #f9f9f9; border-radius: 15px; overflow: hidden;
             display: flex; align-items: center; justify-content: center;
         }
         .main-image-box img {
-            width: 100%; height: 100%; object-fit: contain; /* ✅ تظهر كاملة */
+            width: 100%; height: 100%; object-fit: contain;
         }
         .thumbnails-row {
             display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px;
@@ -428,7 +428,7 @@
                 <input type="text" id="cust-name" class="form-input" placeholder="الاسم الكامل" data-i18n-ph="full_name">
                 <input type="tel" id="cust-phone" class="form-input" placeholder="رقم الهاتف" data-i18n-ph="phone_number">
                 
-                <!-- ✅ قائمة المدن المغربية -->
+                <!-- ✅ قائمة المدن المغربية + مدينة أخرى -->
                 <select id="cust-city" class="form-select" data-i18n-ph="city">
                     <option value="" disabled selected>اختر المدينة</option>
                     <option value="الدار البيضاء">الدار البيضاء</option>
@@ -455,6 +455,7 @@
                     <option value="زاكورة">زاكورة</option>
                     <option value="العيون">العيون</option>
                     <option value="الداخلة">الداخلة</option>
+                    <option value="أخرى">مدينة أخرى</option>
                 </select>
 
                 <input type="text" id="cust-address" class="form-input" placeholder="العنوان التفصيلي" data-i18n-ph="address">
@@ -487,8 +488,8 @@
         const KEY_ORDERS = 'oumay_orders_v2';
         const KEY_REVIEWS = 'oumay_reviews_v2';
         const KEY_WISHLIST = 'oumay_wishlist_v2';
-
-        let cart = JSON.parse(localStorage.getItem(KEY_CART)) || [];        let wishlist = JSON.parse(localStorage.getItem(KEY_WISHLIST)) || [];
+        let cart = JSON.parse(localStorage.getItem(KEY_CART)) || [];
+        let wishlist = JSON.parse(localStorage.getItem(KEY_WISHLIST)) || [];
         let reviews = JSON.parse(localStorage.getItem(KEY_REVIEWS)) || {};
         let currentProduct = null;
         let selectedColor = null;
@@ -536,8 +537,8 @@
 
         function startApp(lang) {
             currentLang = lang;
-            document.documentElement.lang = lang;
-            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';            
+            document.documentElement.lang = lang;            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+            
             applyTranslations();
 
             document.getElementById('splash-screen').style.opacity = '0';
@@ -585,8 +586,8 @@
         function filterCategory(cat) {
             toggleSidebar();
             const container = document.getElementById('products-container');
-            const title = document.getElementById('section-title');
-            container.innerHTML = '';            
+            const title = document.getElementById('section-title');            container.innerHTML = '';
+            
             let filtered = allProducts;
             if(cat !== 'all') {
                 filtered = allProducts.filter(p => p.cat === cat);
@@ -634,8 +635,8 @@
             allProducts = JSON.parse(localStorage.getItem(KEY_PRODUCTS));
             if (!allProducts || allProducts.length === 0) {
                 allProducts = [
-                    {id: 1, name: "فستان صيفي أنيق", price: 250, cat: "ملابس", desc: "فستان خفيف مناسب للصيف.", images: ["https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=600", "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=600"], colors: ["#FFC0CB", "#FFFFFF"]},
-                    {id: 2, name: "حقيبة يد جلدية", price: 180, cat: "إكسسوارات", desc: "حقيبة عملية بتصميم عصري.", images: ["https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=600"], colors: ["#8B4513"]},                    {id: 3, name: "نظارة شمسية", price: 120, cat: "إكسسوارات", desc: "حماية كاملة من الشمس.", images: ["https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=600"], colors: []},
+                    {id: 1, name: "فستان صيفي أنيق", price: 250, cat: "ملابس", desc: "فستان خفيف مناسب للصيف.", images: ["https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=600", "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=600"], colors: ["#FFC0CB", "#FFFFFF"]},                    {id: 2, name: "حقيبة يد جلدية", price: 180, cat: "إكسسوارات", desc: "حقيبة عملية بتصميم عصري.", images: ["https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=600"], colors: ["#8B4513"]},
+                    {id: 3, name: "نظارة شمسية", price: 120, cat: "إكسسوارات", desc: "حماية كاملة من الشمس.", images: ["https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=600"], colors: []},
                     {id: 4, name: "حذاء كعب عالي", price: 300, cat: "أحذية", desc: "مريح وأنيق للمناسبات.", images: ["https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=600"], colors: ["#FF0000"]}
                 ];
                 localStorage.setItem(KEY_PRODUCTS, JSON.stringify(allProducts));
@@ -683,8 +684,8 @@
             } else {
                 wishlist.push(product);
                 btn.classList.add('active');
-                btn.innerHTML = '<i class="fa-solid fa-heart"></i>';
-            }            localStorage.setItem(KEY_WISHLIST, JSON.stringify(wishlist));
+                btn.innerHTML = '<i class="fa-solid fa-heart"></i>';            }
+            localStorage.setItem(KEY_WISHLIST, JSON.stringify(wishlist));
         }
 
         function showDetails(id) {
@@ -732,8 +733,8 @@
                 `<img src="${img}" class="thumb-img ${idx === 0 ? 'active' : ''}" onclick="changeMainImage('${img}', this)">`
             ).join('');
         }
-
-        function changeMainImage(src, thumb) {            document.getElementById('main-det-img').src = src;
+        function changeMainImage(src, thumb) {
+            document.getElementById('main-det-img').src = src;
             document.querySelectorAll('.thumb-img').forEach(t => t.classList.remove('active'));
             thumb.classList.add('active');
         }
@@ -781,8 +782,8 @@
             localStorage.setItem(KEY_REVIEWS, JSON.stringify(reviews));
             
             document.getElementById('reviewer-name').value = '';
-            document.getElementById('review-text').value = '';
-            document.querySelectorAll('input[name="rating"]').forEach(i => i.checked = false);            loadReviews(currentProduct.id);
+            document.getElementById('review-text').value = '';            document.querySelectorAll('input[name="rating"]').forEach(i => i.checked = false);
+            loadReviews(currentProduct.id);
             alert('شكراً لتقييمك!');
         }
 
@@ -830,8 +831,8 @@
                     </div>`;
             });
             // ✅ إضافة ثمن التوصيل للمجموع
-            let finalTotal = total + (total > 0 ? shippingCost : 0);
-            document.getElementById('cart-total').innerText = finalTotal + ' MAD';        }
+            let finalTotal = total + (total > 0 ? shippingCost : 0);            document.getElementById('cart-total').innerText = finalTotal + ' MAD';
+        }
 
         function removeFromCart(idx) { cart.splice(idx, 1); saveCart(); }
         function toggleCart() {
@@ -879,8 +880,8 @@
                 message += `- ${item.name} (${item.price} MAD)%0a`;
             });
             message += `---------------------------%0a`;
-            message += `🚚 *التوصيل:* ${shippingCost} MAD%0a`;
-            message += `💰 *المجموع:* ${total} MAD`;            
+            message += `🚚 *التوصيل:* ${shippingCost} MAD%0a`;            message += `💰 *المجموع:* ${total} MAD`;
+            
             window.open(`https://wa.me/${STORE_WHATSAPP}?text=${message}`, '_blank');
             
             cart = []; saveCart(); toggleCart();
