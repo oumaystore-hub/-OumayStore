@@ -25,8 +25,8 @@
         /* Forms */
         .form-group { margin-bottom: 20px; }
         .form-label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; color: var(--primary); }
-        .form-input { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 10px; outline: none; background: #f8fafc; transition: 0.3s; }
-        .form-input:focus { border-color: var(--accent); background: #fff; box-shadow: 0 0 0 3px rgba(201,169,110,0.1); }
+        .form-input, .form-select { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 10px; outline: none; background: #f8fafc; transition: 0.3s; }
+        .form-input:focus, .form-select:focus { border-color: var(--accent); background: #fff; box-shadow: 0 0 0 3px rgba(201,169,110,0.1); }
         
         /* Image Upload Multi */
         .upload-area { border: 2px dashed #cbd5e1; padding: 30px; text-align: center; border-radius: 12px; cursor: pointer; transition: 0.3s; background: #fdfdfd; }
@@ -77,26 +77,33 @@
         .order-item-row { display: flex; gap: 10px; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
         .order-item-row img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; }
         
-        /* ✅ زر الطباعة */
+        /* ✅ زر الطباعة وحالة الطلب */
         .print-btn {
             background: var(--primary); color: white; border: none;
             padding: 10px 20px; border-radius: 8px; cursor: pointer;
             display: inline-flex; align-items: center; gap: 8px; margin-top: 15px;
         }
+        .status-badge {
+            padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; font-weight: bold;
+        }
+        .status-pending { background: #fef3c7; color: #d97706; }
+        .status-processing { background: #dbeafe; color: #1e40af; }
+        .status-shipped { background: #d1fae5; color: #065f46; }
+        .status-cancelled { background: #fee2e2; color: #991b1b; }
 
         @media(max-width: 768px) {
             .sidebar { width: 70px; padding: 10px; }
             .sidebar span, .logo span { display: none; }
             .main-content { margin-right: 70px; padding: 15px; }
             .menu-item { justify-content: center; }
-            .header { flex-direction: column; align-items: stretch; }
-            .btn { width: 100%; margin-bottom: 5px; }
+            .header { flex-direction: column; align-items: stretch; }            .btn { width: 100%; margin-bottom: 5px; }
             th, td { padding: 10px; font-size: 0.8rem; }
             .prod-thumb { width: 40px; height: 40px; }
         }
     </style>
 </head>
 <body>
+
     <!-- تسجيل الدخول -->
     <div id="login-overlay">
         <div class="login-card">
@@ -113,7 +120,6 @@
         <div class="logo">OUMAY<span>STORE</span></div>
         <div class="menu-item active" onclick="switchTab('products')"><i class="fa-solid fa-box-open"></i> <span>المنتجات</span></div>
         <div class="menu-item" onclick="switchTab('orders')"><i class="fa-solid fa-truck-fast"></i> <span>الطلبات</span></div>
-        <div class="menu-item" onclick="switchTab('settings')"><i class="fa-solid fa-gear"></i> <span>الإعدادات</span></div>
         <div class="menu-item" onclick="window.open('index.html', '_blank')"><i class="fa-solid fa-store"></i> <span>عرض المتجر</span></div>
         <div class="menu-item" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> <span>خروج</span></div>
     </div>
@@ -139,13 +145,13 @@
                             <th>إجراءات</th>
                         </tr>
                     </thead>
-                    <tbody id="prod-list"></tbody>
-                </table>
+                    <tbody id="prod-list"></tbody>                </table>
             </div>
         </div>
 
         <!-- قسم الطلبات -->
-        <div id="tab-orders" style="display:none;">            <div class="header">
+        <div id="tab-orders" style="display:none;">
+            <div class="header">
                 <h2 style="color:var(--primary)">🛒 الطلبات الواردة</h2>
                 <button onclick="clearOrders()" class="btn btn-danger">حذف الكل</button>
             </div>
@@ -156,25 +162,12 @@
                             <th>رقم الطلب</th>
                             <th>معلومات العميل</th>
                             <th>المبلغ الإجمالي</th>
+                            <th>الحالة</th>
                             <th>التفاصيل</th>
                         </tr>
                     </thead>
                     <tbody id="order-list"></tbody>
                 </table>
-            </div>
-        </div>
-
-        <!-- قسم الإعدادات -->
-        <div id="tab-settings" style="display:none;">
-            <div class="header">
-                <h2 style="color:var(--primary)">⚙️ إعدادات المتجر</h2>
-            </div>
-            <div class="card">
-                <div class="form-group">
-                    <label class="form-label">ثمن التوصيل (MAD)</label>
-                    <input type="number" id="shipping-cost-input" class="form-input" value="30">
-                </div>
-                <button onclick="saveSettings()" class="btn btn-primary">حفظ الإعدادات</button>
             </div>
         </div>
     </div>
@@ -194,14 +187,14 @@
                 <input type="text" id="p-name" class="form-input">
             </div>
 
-            <div class="form-group" style="display:flex; gap:15px; flex-wrap:wrap;">                <div style="flex:1; min-width:120px;">
+            <div class="form-group" style="display:flex; gap:15px; flex-wrap:wrap;">
+                <div style="flex:1; min-width:120px;">
                     <label class="form-label">السعر (MAD)</label>
                     <input type="number" id="p-price" class="form-input">
                 </div>
                 <div style="flex:1; min-width:120px;">
                     <label class="form-label">التصنيف</label>
-                    <select id="p-cat" class="form-input">
-                        <option value="ملابس">ملابس</option>
+                    <select id="p-cat" class="form-input">                        <option value="ملابس">ملابس</option>
                         <option value="أحذية">أحذية</option>
                         <option value="إكسسوارات">إكسسوارات</option>
                         <option value="منزل">منزل وديكور</option>
@@ -243,10 +236,22 @@
     <!-- نافذة تفاصيل الطلب -->
     <div id="order-modal" class="modal-overlay">
         <div class="modal-sheet">
-            <div style="display:flex; justify-content:space-between; margin-bottom:15px; align-items:center;">                <h3 style="color:var(--primary)">تفاصيل الطلب</h3>
+            <div style="display:flex; justify-content:space-between; margin-bottom:15px; align-items:center;">
+                <h3 style="color:var(--primary)">تفاصيل الطلب</h3>
                 <button onclick="closeOrderModal()" style="background:none; border:none; font-size:1.5rem; cursor:pointer; color:#888;">✕</button>
             </div>
             <div id="order-details-content"></div>
+            
+            <!-- ✅ تغيير حالة الطلب -->
+            <div class="form-group" style="margin-top:15px;">                <label class="form-label">حالة الطلب:</label>
+                <select id="order-status-select" class="form-select" onchange="updateOrderStatus()">
+                    <option value="pending">قيد الانتظار</option>
+                    <option value="processing">قيد التجهيز</option>
+                    <option value="shipped">تم الشحن</option>
+                    <option value="cancelled">ملغي</option>
+                </select>
+            </div>
+
             <!-- ✅ زر الطباعة -->
             <button onclick="printOrder()" class="print-btn">
                 <i class="fa-solid fa-print"></i> طباعة الفاتورة
@@ -281,18 +286,18 @@
         }
         function logout() { localStorage.removeItem('admin_auth'); location.reload(); }
 
-        function init() { renderProducts(); renderOrders(); loadSettings(); }
+        function init() { renderProducts(); renderOrders(); }
 
         // --- إدارة الصور المتعددة ---
         function handleFiles(input) {
             if (input.files) {
                 Array.from(input.files).forEach(file => {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
+                    const reader = new FileReader();                    reader.onload = (e) => {
                         currentImages.push(e.target.result);
                         renderPreviews();
                     };
-                    reader.readAsDataURL(file);                });
+                    reader.readAsDataURL(file);
+                });
             }
         }
         function renderPreviews() {
@@ -336,12 +341,12 @@
             const id = document.getElementById('edit-prod-id').value;
             const name = document.getElementById('p-name').value;
             const price = document.getElementById('p-price').value;
-            const cat = document.getElementById('p-cat').value;
-            const desc = document.getElementById('p-desc').value;
+            const cat = document.getElementById('p-cat').value;            const desc = document.getElementById('p-desc').value;
 
             if(!name || !price) return alert('الاسم والسعر مطلوبان');
 
-            const product = {                id: id ? parseInt(id) : Date.now(),
+            const product = {
+                id: id ? parseInt(id) : Date.now(),
                 name, price: parseInt(price), cat, desc,
                 images: currentImages.length ? currentImages : ['https://placehold.co/400'],
                 colors: currentColors
@@ -385,12 +390,12 @@
             document.getElementById('edit-prod-id').value = p.id;
             document.getElementById('p-name').value = p.name;
             document.getElementById('p-price').value = p.price;
-            document.getElementById('p-cat').value = p.cat;
-            document.getElementById('p-desc').value = p.desc;
+            document.getElementById('p-cat').value = p.cat;            document.getElementById('p-desc').value = p.desc;
             currentImages = [...p.images];
             currentColors = [...p.colors];
             renderPreviews();
-            renderColors();            document.getElementById('modal-title').innerText = 'تعديل المنتج';
+            renderColors();
+            document.getElementById('modal-title').innerText = 'تعديل المنتج';
             document.getElementById('modal').style.display = 'flex';
         }
 
@@ -406,9 +411,16 @@
         function renderOrders() {
             const list = document.getElementById('order-list');
             list.innerHTML = '';
-            if(!orders.length) return list.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px">لا توجد طلبات</td></tr>';
+            if(!orders.length) return list.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px">لا توجد طلبات</td></tr>';
             
             orders.forEach(o => {
+                const statusClass = o.status === 'pending' ? 'status-pending' : 
+                                    o.status === 'processing' ? 'status-processing' :
+                                    o.status === 'shipped' ? 'status-shipped' : 'status-cancelled';
+                const statusText = o.status === 'pending' ? 'قيد الانتظار' : 
+                                   o.status === 'processing' ? 'قيد التجهيز' :
+                                   o.status === 'shipped' ? 'تم الشحن' : 'ملغي';
+
                 list.innerHTML += `
                     <tr>
                         <td>#${o.id.toString().slice(-4)}</td>
@@ -417,6 +429,7 @@
                             <div style="font-size:0.85rem;color:#64748b">${o.phone}</div>
                         </td>
                         <td style="color:var(--accent);font-weight:bold">${o.total} MAD</td>
+                        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
                         <td>
                             <button onclick="viewOrderDetails(${o.id})" class="btn btn-primary" style="padding:5px 10px; font-size:0.8rem;">
                                 <i class="fa-solid fa-eye"></i> عرض
@@ -426,8 +439,7 @@
             });
         }
 
-        function viewOrderDetails(id) {
-            const order = orders.find(o => o.id === id);
+        function viewOrderDetails(id) {            const order = orders.find(o => o.id === id);
             if(!order) return;
             currentOrderId = id;
 
@@ -439,7 +451,8 @@
                     <p><strong>العنوان:</strong> ${order.address || 'غير محدد'}</p>
                     <p><strong>التاريخ:</strong> ${new Date(order.date).toLocaleDateString('ar-MA')}</p>
                 </div>
-                <h4 style="margin-bottom:10px;">المنتجات:</h4>                ${order.items.map(item => `
+                <h4 style="margin-bottom:10px;">المنتجات:</h4>
+                ${order.items.map(item => `
                     <div class="order-item-row">
                         <img src="${item.images[0]}" onerror="this.src='https://placehold.co/50'">
                         <div>
@@ -453,15 +466,32 @@
                     المجموع: ${order.total} MAD
                 </div>
             `;
+            
+            // تعيين الحالة الحالية في القائمة المنسدلة
+            document.getElementById('order-status-select').value = order.status || 'pending';
+            
             document.getElementById('order-modal').style.display = 'flex';
         }
 
-        function closeOrderModal() {
-            document.getElementById('order-modal').style.display = 'none';
-            currentOrderId = null;
+        // ✅ تحديث حالة الطلب
+        function updateOrderStatus() {
+            if(!currentOrderId) return;
+            const newStatus = document.getElementById('order-status-select').value;
+            const orderIndex = orders.findIndex(o => o.id === currentOrderId);
+            
+            if(orderIndex > -1) {
+                orders[orderIndex].status = newStatus;
+                localStorage.setItem(KEY_ORDERS, JSON.stringify(orders));
+                renderOrders();
+                alert('تم تحديث حالة الطلب بنجاح');
+            }
         }
 
-        // ✅ دالة الطباعة
+        function closeOrderModal() {
+            document.getElementById('order-modal').style.display = 'none';            currentOrderId = null;
+        }
+
+        // ✅ دالة الطباعة الاحترافية
         function printOrder() {
             if(!currentOrderId) return;
             const order = orders.find(o => o.id === currentOrderId);
@@ -472,42 +502,75 @@
                 <head>
                     <title>فاتورة طلب #${order.id}</title>
                     <style>
-                        body { font-family: 'Tajawal', Arial, sans-serif; padding: 20px; }
-                        .header { text-align: center; border-bottom: 2px solid #1e3a5f; padding-bottom: 10px; margin-bottom: 20px; }
-                        .header h1 { color: #1e3a5f; margin: 0; }
-                        .info { margin-bottom: 20px; }
-                        .info p { margin: 5px 0; }
-                        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-                        th, td { padding: 10px; border: 1px solid #ddd; text-align: right; }
-                        th { background: #f0f0f0; }
-                        .total { margin-top: 20px; text-align: left; font-size: 1.2rem; font-weight: bold; }
+                        body { font-family: 'Tajawal', Arial, sans-serif; padding: 20px; background: #fff; }
+                        .invoice-container { max-width: 800px; margin: 0 auto; border: 1px solid #eee; padding: 30px; border-radius: 10px; }
+                        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #1e3a5f; padding-bottom: 20px; margin-bottom: 30px; }
+                        .brand { font-size: 2rem; font-weight: 800; color: #1e3a5f; }
+                        .brand span { color: #c9a96e; }
+                        .invoice-title { text-align: left; }
+                        .invoice-title h2 { margin: 0; color: #333; }
+                        .info-section { display: flex; justify-content: space-between; margin-bottom: 30px; }
+                        .info-box { width: 48%; }
+                        .info-box h3 { color: #1e3a5f; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 10px; }
+                        .info-box p { margin: 5px 0; color: #555; }
+                        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+                        th { background: #1e3a5f; color: white; padding: 12px; text-align: right; }
+                        td { padding: 12px; border-bottom: 1px solid #eee; text-align: right; }
+                        .total-section { text-align: left; font-size: 1.2rem; font-weight: bold; margin-top: 20px; }
+                        .footer { text-align: center; margin-top: 40px; color: #888; font-size: 0.9rem; border-top: 1px solid #eee; padding-top: 20px; }
                     </style>
                 </head>
                 <body>
-                    <div class="header">
-                        <h1>OUMAYSTORE</h1>
-                        <p>فاتورة طلب رقم #${order.id.toString().slice(-4)}</p>
-                    </div>
-                    <div class="info">                        <p><strong>العميل:</strong> ${order.customerName}</p>
-                        <p><strong>الهاتف:</strong> ${order.phone}</p>
-                        <p><strong>العنوان:</strong> ${order.address || '-'}</p>
-                        <p><strong>التاريخ:</strong> ${new Date(order.date).toLocaleString('ar-MA')}</p>
-                    </div>
-                    <table>
-                        <thead>
-                            <tr><th>المنتج</th><th>اللون</th><th>السعر</th></tr>
-                        </thead>
-                        <tbody>
-                            ${order.items.map(item => `
+                    <div class="invoice-container">
+                        <div class="header">
+                            <div class="brand">OUMAY<span>STORE</span></div>
+                            <div class="invoice-title">
+                                <h2>فاتورة طلب</h2>
+                                <p>رقم: #${order.id.toString().slice(-4)}</p>
+                                <p>التاريخ: ${new Date(order.date).toLocaleDateString('ar-MA')}</p>
+                            </div>
+                        </div>
+                        
+                        <div class="info-section">
+                            <div class="info-box">
+                                <h3>معلومات العميل</h3>
+                                <p><strong>الاسم:</strong> ${order.customerName}</p>
+                                <p><strong>الهاتف:</strong> ${order.phone}</p>
+                                <p><strong>العنوان:</strong> ${order.address || '-'}</p>
+                            </div>                            <div class="info-box">
+                                <h3>تفاصيل الطلب</h3>
+                                <p><strong>طريقة الدفع:</strong> ${order.payment === 'cod' ? 'نقداً عند الاستلام' : 'بطاقة بنكية'}</p>
+                                <p><strong>الحالة:</strong> ${order.status === 'pending' ? 'قيد الانتظار' : order.status === 'processing' ? 'قيد التجهيز' : order.status === 'shipped' ? 'تم الشحن' : 'ملغي'}</p>
+                            </div>
+                        </div>
+
+                        <table>
+                            <thead>
                                 <tr>
-                                    <td>${item.name}</td>
-                                    <td>${item.selectedColor || '-'}</td>
-                                    <td>${item.price} MAD</td>
+                                    <th>المنتج</th>
+                                    <th>اللون</th>
+                                    <th>السعر</th>
                                 </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
-                    <div class="total">المجموع الكلي: ${order.total} MAD</div>
+                            </thead>
+                            <tbody>
+                                ${order.items.map(item => `
+                                    <tr>
+                                        <td>${item.name}</td>
+                                        <td>${item.selectedColor || '-'}</td>
+                                        <td>${item.price} MAD</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+
+                        <div class="total-section">
+                            المجموع الكلي: ${order.total} MAD
+                        </div>
+
+                        <div class="footer">
+                            شكراً لتسوقكم من OUMAYSTORE
+                        </div>
+                    </div>
                 </body>
                 </html>
             `);
@@ -523,21 +586,10 @@
             }
         }
 
-        // --- الإعدادات ---
-        function loadSettings() {
-            // يمكن إضافة تحميل الإعدادات هنا إذا أردت حفظها
-        }
-        function saveSettings() {
-            const cost = document.getElementById('shipping-cost-input').value;
-            localStorage.setItem('shipping_cost', cost);
-            alert('تم حفظ ثمن التوصيل: ' + cost + ' MAD');
-        }
-
-        // --- واجهة ---
-        function switchTab(tab) {
+        // --- واجهة ---        function switchTab(tab) {
             document.getElementById('tab-products').style.display = tab==='products'?'block':'none';
             document.getElementById('tab-orders').style.display = tab==='orders'?'block':'none';
-            document.getElementById('tab-settings').style.display = tab==='settings'?'block':'none';            document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
             event.currentTarget.classList.add('active');
         }
         function openModal() {
