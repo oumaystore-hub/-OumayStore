@@ -101,6 +101,14 @@
         }
         .sidebar-link:hover {color: var(--gold); background: #f9f9f9;}
         .sidebar-link i {width: 25px; text-align: center; color: var(--navy);}
+
+        /* زر الواتساب في القائمة */
+        .whatsapp-link {
+            background: #25D366; color: white !important; border-radius: 10px; margin: 10px;
+            justify-content: center; border: none !important;
+        }
+        .whatsapp-link:hover {background: #128C7E; color: white !important;}
+        .whatsapp-link i {color: white !important;}
         
         .overlay-bg {
             position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 2000;
@@ -137,15 +145,22 @@
         }
         .product-card {
             background: white; border-radius: 16px; overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.03); transition: transform 0.2s;
-            display: flex; flex-direction: column;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03); transition: transform 0.2s;            display: flex; flex-direction: column; position: relative;
         }
         .product-card:active {transform: scale(0.98);}
         .p-img-box {height: 150px; background: #f0f0f0; position: relative; overflow: hidden;}
         .p-img-box img {width: 100%; height: 100%; object-fit: cover;}
+        .wishlist-btn {
+            position: absolute; top: 10px; left: 10px; background: rgba(255,255,255,0.9);
+            width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; cursor: pointer; z-index: 10; border: none; font-size: 1.1rem;
+            color: #ccc; transition: 0.3s;
+        }
+        .wishlist-btn.active {color: #ef4444;}
         .p-details {padding: 12px; flex: 1; display: flex; flex-direction: column;}
         .p-name {font-size: 0.9rem; font-weight: 700; margin-bottom: 5px; color: var(--dark); line-height: 1.3;}
-        .p-price {color: var(--gold); font-weight: 800; font-size: 1.1rem; margin-top: auto;}        .add-btn {
+        .p-price {color: var(--gold); font-weight: 800; font-size: 1.1rem; margin-top: auto;}
+        .add-btn {
             background: var(--navy); color: white; border: none;
             padding: 8px; border-radius: 10px; font-size: 0.85rem;
             margin-top: 8px; cursor: pointer; width: 100%;
@@ -169,18 +184,17 @@
         .det-title {font-size: 1.3rem; font-weight: 800; color: var(--navy); line-height: 1.3;}
         .det-price {font-size: 1.2rem; color: var(--gold); font-weight: 700; margin-top: 5px;}
         
-        /* ✅ تكبير منطقة الصور بشكل كبير */
+        /* ✅ زيادة مساحة الصور بشكل كبير */
         .img-scroller {
             display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; scroll-snap-type: x mandatory;
-            margin-bottom: 15px; height: 380px; /* ✅ زيادة الارتفاع بشكل كبير */
+            margin-bottom: 15px; height: 400px; /* ✅ زيادة كبيرة في الارتفاع */
             background: #ffffff; border-radius: 15px; border: 1px solid #eee;
         }
         .img-scroller img {
             width: 100%; min-width: 100%; height: 100%; 
-            object-fit: cover; /* ✅ تغيير إلى cover لملء المساحة */
+            object-fit: cover;
             border-radius: 15px; scroll-snap-align: center;
-        }
-        
+        }        
         .colors-row {display: flex; gap: 10px; margin: 10px 0;}
         .color-circle {
             width: 30px; height: 30px; border-radius: 50%; border: 2px solid #eee; cursor: pointer; position: relative;
@@ -190,11 +204,12 @@
             content: '✓'; color: white; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 12px;
         }
 
-        /* ✅ تصغير قسم التقييمات أكثر */
+        /* Reviews Section */
         .reviews-section {margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px;}
         .reviews-section h4 {font-size: 0.9rem !important; margin-bottom: 8px !important;}
         
-        .review-form {background: #f9f9f9; padding: 8px !important; border-radius: 12px; margin-bottom: 8px;}        .star-rating-input {display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 5px; margin-bottom: 5px;}
+        .review-form {background: #f9f9f9; padding: 8px !important; border-radius: 12px; margin-bottom: 8px;}
+        .star-rating-input {display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 5px; margin-bottom: 5px;}
         .star-rating-input input {display: none;}
         .star-rating-input label {font-size: 1.1rem; color: #ddd; cursor: pointer;}
         .star-rating-input input:checked ~ label, .star-rating-input label:hover, .star-rating-input label:hover ~ label {color: var(--gold);}
@@ -209,6 +224,15 @@
         .cart-item img {width: 60px; height: 60px; border-radius: 10px; object-fit: cover;}
         .form-input {width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 12px; background: #f9f9f9; outline: none;}
         .checkout-btn {background: var(--gold); color: white; border: none; padding: 15px; border-radius: 15px; font-weight: bold; font-size: 1.1rem; margin-top: 10px; width: 100%;}
+        
+        /* ✅ زر الطباعة */
+        .print-btn {
+            background: var(--navy); color: white; border: none; padding: 10px 20px;
+            border-radius: 10px; cursor: pointer; font-size: 0.9rem;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            margin-top: 10px; width: 100%;
+        }
+        .print-btn:hover {background: #162d4a;}
 
         /* Store Info Section */
         .store-info {
@@ -217,6 +241,19 @@
         }
         .info-item {margin-bottom: 15px; display: flex; align-items: center; justify-content: center; gap: 10px; color: #555;}
         .info-item i {color: var(--gold); font-size: 1.2rem;}
+
+        /* ✅ أزرار التواصل الاجتماعي */
+        .social-buttons {            display: flex; justify-content: center; gap: 15px; margin-top: 20px;
+        }
+        .social-btn {
+            width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; color: white; font-size: 1.2rem; transition: 0.3s;
+            text-decoration: none;
+        }
+        .social-btn:hover {transform: scale(1.1);}
+        .social-btn.instagram {background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);}
+        .social-btn.facebook {background: #1877F2;}
+        .social-btn.whatsapp {background: #25D366;}
 
         @keyframes slideUp {from{transform:translateY(100%)} to{transform:translateY(0)}}
         @keyframes zoomIn {from{transform:scale(0.8);opacity:0} to{transform:scale(1);opacity:1}}
@@ -238,12 +275,13 @@
                 <i class="fa-solid fa-chevron-left"></i>
             </div>
             <div class="lang-btn" onclick="startApp('en')">
-                <span class="flag">🇬🇧</span>
+                <span class="flag">🇬</span>
                 <div class="lang-info"><span class="lang-name">English</span><span class="lang-sub">English</span></div>
                 <i class="fa-solid fa-chevron-right"></i>
             </div>
             <div class="lang-btn" onclick="startApp('fr')">
-                <span class="flag">🇫🇷</span>                <div class="lang-info"><span class="lang-name">Français</span><span class="lang-sub">French</span></div>
+                <span class="flag">🇫🇷</span>
+                <div class="lang-info"><span class="lang-name">Français</span><span class="lang-sub">French</span></div>
                 <i class="fa-solid fa-chevron-right"></i>
             </div>
         </div>
@@ -254,8 +292,7 @@
         <header>
             <div class="header-left">
                 <div class="menu-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></div>
-                <div class="brand-container">
-                    <img src="logo.png" id="header-logo" class="brand-logo-img active-element" onerror="this.style.display='none'">
+                <div class="brand-container">                    <img src="logo.png" id="header-logo" class="brand-logo-img active-element" onerror="this.style.display='none'">
                     <div id="header-text" class="brand-text">OUMAY<span>STORE</span></div>
                 </div>
             </div>
@@ -277,9 +314,12 @@
                 <div class="sidebar-link" onclick="filterCategory('ملابس')"><i class="fa-solid fa-shirt"></i> <span data-i18n="clothes">ملابس</span></div>
                 <div class="sidebar-link" onclick="filterCategory('أحذية')"><i class="fa-solid fa-shoe-prints"></i> <span data-i18n="shoes">أحذية</span></div>
                 <div class="sidebar-link" onclick="filterCategory('إكسسوارات')"><i class="fa-solid fa-gem"></i> <span data-i18n="accessories">إكسسوارات</span></div>
-                <div style="margin: 15px 0; border-top: 1px solid #eee;"></div>
-                <div class="sidebar-link" onclick="showWishlist()"><i class="fa-solid fa-heart"></i> <span data-i18n="wishlist">قائمة الأمنيات</span></div>
-                <div class="sidebar-link" onclick="alert('Coming Soon!')"><i class="fa-solid fa-user"></i> <span data-i18n="account">حسابي</span></div>
+                <div class="sidebar-link" onclick="filterCategory('منزل')"><i class="fa-solid fa-couch"></i> <span>منزل وديكور</span></div>
+                <div class="sidebar-link" onclick="showWishlist()"><i class="fa-solid fa-heart"></i> <span data-i18n="wishlist">قائمة المفضلة</span></div>
+                <!-- ✅ زر واتساب في القائمة -->
+                <a href="https://wa.me/212600000000" target="_blank" class="sidebar-link whatsapp-link">
+                    <i class="fa-brands fa-whatsapp"></i> <span>تواصل عبر واتساب</span>
+                </a>
             </div>
         </div>
 
@@ -292,7 +332,8 @@
                         <div class="slide-desc" data-i18n="latest_trends">اكتشف أحدث الصيحات العصرية</div>
                     </div>
                 </div>
-                <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1484788984921-03950022c9ef?w=800');">                    <div class="slide-overlay">
+                <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1484788984921-03950022c9ef?w=800');">
+                    <div class="slide-overlay">
                         <div class="slide-title" data-i18n="luxury_acc">إكسسوارات فاخرة</div>
                         <div class="slide-desc" data-i18n="elegance_touch">لمسة من الأناقة والجمال</div>
                     </div>
@@ -300,8 +341,7 @@
             </div>
 
             <!-- Products -->
-            <div style="padding: 0 15px; font-weight: 800; color: var(--navy); margin-bottom:10px; font-size:1.2rem;" id="section-title" data-i18n="new_arrivals">وصل حديثاً</div>
-            <div class="products-grid" id="products-container"></div>
+            <div style="padding: 0 15px; font-weight: 800; color: var(--navy); margin-bottom:10px; font-size:1.2rem;" id="section-title" data-i18n="new_arrivals">وصل حديثاً</div>            <div class="products-grid" id="products-container"></div>
             <div id="empty-msg" style="text-align:center; padding:40px; color:#999; display:none;">
                 <i class="fa-solid fa-box-open" style="font-size:3rem; margin-bottom:10px; opacity:0.3;"></i><br>
                 <span data-i18n="no_products">لا توجد منتجات حالياً</span>
@@ -313,10 +353,11 @@
                 <div class="info-item"><i class="fa-solid fa-location-dot"></i> <span>الدار البيضاء، المغرب</span></div>
                 <div class="info-item"><i class="fa-solid fa-phone"></i> <span>+212 600 000 000</span></div>
                 <div class="info-item"><i class="fa-solid fa-envelope"></i> <span>contact@oumaystore.com</span></div>
-                <div style="margin-top:20px; display:flex; justify-content:center; gap:15px;">
-                    <a href="#" style="color:var(--navy); font-size:1.5rem;"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" style="color:var(--navy); font-size:1.5rem;"><i class="fa-brands fa-facebook"></i></a>
-                    <a href="#" style="color:var(--navy); font-size:1.5rem;"><i class="fa-brands fa-whatsapp"></i></a>
+                <!-- ✅ أزرار التواصل الاجتماعي كروابط -->
+                <div class="social-buttons">
+                    <a href="https://instagram.com/oumaystore" target="_blank" class="social-btn instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://facebook.com/oumaystore" target="_blank" class="social-btn facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://wa.me/212600000000" target="_blank" class="social-btn whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
                 </div>
             </div>
 
@@ -338,18 +379,18 @@
                 <button onclick="closeDetails()" style="background:none; border:none; font-size:1.8rem; cursor:pointer; color:#888; padding:5px;">✕</button>
             </div>
             
-            <!-- ✅ منطقة الصور تكبر تلقائياً هنا -->
+            <!-- ✅ منطقة الصور أكبر -->
             <div class="img-scroller" id="det-slider"></div>
             <p style="color:#666; line-height:1.6; margin-bottom:15px; font-size:0.95rem;" id="det-desc">وصف المنتج...</p>
-                        <div style="font-weight:bold; margin-bottom:8px; font-size:0.9rem;" data-i18n="choose_color">اختر اللون:</div>
+            
+            <div style="font-weight:bold; margin-bottom:8px; font-size:0.9rem;" data-i18n="choose_color">اختر اللون:</div>
             <div class="colors-row" id="det-colors"></div>
 
             <button class="add-btn" style="padding:12px; margin-top:15px; font-size:1rem;" onclick="addToCartFromDetails()">
                 <i class="fa-solid fa-cart-plus"></i> <span data-i18n="add_to_cart">أضف للسلة</span>
             </button>
 
-            <!-- قسم التقييمات (مصغر الآن) -->
-            <div class="reviews-section">
+            <!-- قسم التقييمات -->            <div class="reviews-section">
                 <h4 style="margin-bottom:10px; color:var(--navy); font-size:0.9rem;" data-i18n="reviews">تقييمات المشترين</h4>
                 <div class="review-form">
                     <div class="star-rating-input">
@@ -388,27 +429,36 @@
                     <span id="cart-total" style="color:var(--gold)">0 MAD</span>
                 </div>
                 <button class="checkout-btn" onclick="submitOrder()" data-i18n="confirm_order">تأكيد الطلب</button>
+                <!-- ✅ زر الطباعة -->
+                <button class="print-btn" onclick="printOrder()">
+                    <i class="fa-solid fa-print"></i> طباعة الطلب
+                </button>
             </div>
         </div>
     </div>
+
     <script>
         const KEY_PRODUCTS = 'oumay_products_v2'; 
-        const KEY_CART = 'oumay_cart_v2';
-        const KEY_ORDERS = 'oumay_orders_v2';
+        const KEY_CART = 'oumay_cart_v2';        const KEY_ORDERS = 'oumay_orders_v2';
         const KEY_REVIEWS = 'oumay_reviews_v2';
+        const KEY_WISHLIST = 'oumay_wishlist_v2'; // ✅ مفتاح المفضلة
 
         let cart = JSON.parse(localStorage.getItem(KEY_CART)) || [];
+        let wishlist = JSON.parse(localStorage.getItem(KEY_WISHLIST)) || []; // ✅ تحميل المفضلة
         let reviews = JSON.parse(localStorage.getItem(KEY_REVIEWS)) || {};
         let currentProduct = null;
         let selectedColor = null;
         let allProducts = [];
         let currentLang = 'ar';
 
+        // رقم الواتساب (غيّره إلى رقمك)
+        const STORE_WHATSAPP = "212600000000";
+
         // قاموس الترجمة
         const translations = {
             ar: {
                 menu: "القائمة", home: "الرئيسية", clothes: "ملابس", shoes: "أحذية", accessories: "إكسسوارات",
-                wishlist: "قائمة الأمنيات", account: "حسابي", summer_fashion: "أزياء الصيف", latest_trends: "اكتشف أحدث الصيحات العصرية",
+                wishlist: "قائمة المفضلة", wishlistEmpty: "قائمة المفضلة فارغة", summer_fashion: "أزياء الصيف", latest_trends: "اكتشف أحدث الصيحات العصرية",
                 luxury_acc: "إكسسوارات فاخرة", elegance_touch: "لمسة من الأناقة والجمال", new_arrivals: "وصل حديثاً",
                 no_products: "لا توجد منتجات حالياً", contact_us: "معلومات المتجر", choose_color: "اختر اللون:",
                 add_to_cart: "أضف للسلة", reviews: "تقييمات المشترين", your_name: "اسمك", your_comment: "تعليقك...",
@@ -417,7 +467,7 @@
             },
             en: {
                 menu: "Menu", home: "Home", clothes: "Clothes", shoes: "Shoes", accessories: "Accessories",
-                wishlist: "Wishlist", account: "My Account", summer_fashion: "Summer Fashion", latest_trends: "Discover Latest Trends",
+                wishlist: "Wishlist", wishlistEmpty: "Wishlist is empty", summer_fashion: "Summer Fashion", latest_trends: "Discover Latest Trends",
                 luxury_acc: "Luxury Accessories", elegance_touch: "Touch of Elegance", new_arrivals: "New Arrivals",
                 no_products: "No products available", contact_us: "Store Info", choose_color: "Choose Color:",
                 add_to_cart: "Add to Cart", reviews: "Customer Reviews", your_name: "Your Name", your_comment: "Your Comment...",
@@ -426,7 +476,7 @@
             },
             fr: {
                 menu: "Menu", home: "Accueil", clothes: "Vêtements", shoes: "Chaussures", accessories: "Accessoires",
-                wishlist: "Liste de souhaits", account: "Mon Compte", summer_fashion: "Mode Été", latest_trends: "Découvrez les Tendances",
+                wishlist: "Liste de souhaits", wishlistEmpty: "Liste vide", summer_fashion: "Mode Été", latest_trends: "Découvrez les Tendances",
                 luxury_acc: "Accessoires de Luxe", elegance_touch: "Touche d'Élégance", new_arrivals: "Nouveaux Arrivages",
                 no_products: "Aucun produit disponible", contact_us: "Infos Magasin", choose_color: "Choisir Couleur:",
                 add_to_cart: "Ajouter au Panier", reviews: "Avis Clients", your_name: "Votre Nom", your_comment: "Votre Commentaire...",
@@ -438,8 +488,8 @@
         function startApp(lang) {
             currentLang = lang;
             document.documentElement.lang = lang;
-            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-                        applyTranslations();
+            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';            
+            applyTranslations();
 
             document.getElementById('splash-screen').style.opacity = '0';
             setTimeout(() => {
@@ -487,8 +537,8 @@
             toggleSidebar();
             const container = document.getElementById('products-container');
             const title = document.getElementById('section-title');
-            container.innerHTML = '';
-                        let filtered = allProducts;
+            container.innerHTML = '';            
+            let filtered = allProducts;
             if(cat !== 'all') {
                 filtered = allProducts.filter(p => p.cat === cat);
                 title.innerText = cat;
@@ -506,9 +556,25 @@
             });
         }
 
+        // ✅ عرض قائمة المفضلة
         function showWishlist() {
             toggleSidebar();
-            alert('Coming Soon!');
+            const container = document.getElementById('products-container');
+            const title = document.getElementById('section-title');
+            title.innerText = translations[currentLang].wishlist;
+            
+            if(wishlist.length === 0) {
+                container.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:40px; color:#999;">
+                    <i class="fa-regular fa-heart" style="font-size:3rem; margin-bottom:10px;"></i><br>
+                    ${translations[currentLang].wishlistEmpty}
+                </div>`;
+                return;
+            }
+            
+            container.innerHTML = '';
+            wishlist.forEach(p => {
+                container.innerHTML += createProductCard(p);
+            });
         }
 
         function startSlider() {
@@ -520,7 +586,6 @@
                 slides[currentSlide].classList.add('active');
             }, 4000);
         }
-
         function loadProducts() {
             allProducts = JSON.parse(localStorage.getItem(KEY_PRODUCTS));
             if (!allProducts || allProducts.length === 0) {
@@ -537,14 +602,19 @@
 
         function renderGrid(products) {
             const container = document.getElementById('products-container');
-            container.innerHTML = '';            products.forEach(p => {
+            container.innerHTML = '';
+            products.forEach(p => {
                 container.innerHTML += createProductCard(p);
             });
         }
 
         function createProductCard(p) {
+            const isWished = wishlist.some(w => w.id === p.id);
             return `
                 <div class="product-card">
+                    <button class="wishlist-btn ${isWished ? 'active' : ''}" onclick="toggleWishlist(${p.id}, this)">
+                        <i class="fa-${isWished ? 'solid' : 'regular'} fa-heart"></i>
+                    </button>
                     <div class="p-img-box" onclick="showDetails(${p.id})">
                         <img src="${p.images[0]}" onerror="this.src='https://placehold.co/400'">
                     </div>
@@ -558,6 +628,23 @@
                 </div>`;
         }
 
+        // ✅ إضافة/إزالة من المفضلة
+        function toggleWishlist(id, btn) {
+            const product = allProducts.find(p => p.id === id);
+            if(!product) return;
+            
+            const index = wishlist.findIndex(w => w.id === id);
+            if(index > -1) {
+                wishlist.splice(index, 1);                btn.classList.remove('active');
+                btn.innerHTML = '<i class="fa-regular fa-heart"></i>';
+            } else {
+                wishlist.push(product);
+                btn.classList.add('active');
+                btn.innerHTML = '<i class="fa-solid fa-heart"></i>';
+            }
+            localStorage.setItem(KEY_WISHLIST, JSON.stringify(wishlist));
+        }
+
         function showDetails(id) {
             currentProduct = allProducts.find(p => p.id === id);
             if(!currentProduct) return;
@@ -567,7 +654,6 @@
             document.getElementById('det-desc').innerText = currentProduct.desc || 'منتج عالي الجودة.';
             
             const slider = document.getElementById('det-slider');
-            // هنا نضع الصورة الاحتياطية القوية
             const defaultImg = 'https://placehold.co/600x400?text=No+Image';
             slider.innerHTML = currentProduct.images.map(img => `<img src="${img}" onerror="this.onerror=null; this.src='${defaultImg}'">`).join('');
 
@@ -586,7 +672,8 @@
             document.getElementById('details-modal').style.display = 'flex';
         }
 
-        function selectColor(el, color) {            document.querySelectorAll('.color-circle').forEach(c => c.classList.remove('selected'));
+        function selectColor(el, color) {
+            document.querySelectorAll('.color-circle').forEach(c => c.classList.remove('selected'));
             el.classList.add('selected');
             selectedColor = color;
         }
@@ -597,8 +684,7 @@
             const list = document.getElementById('reviews-list');
             list.innerHTML = '';
             const prodReviews = reviews[prodId] || [];
-            if(prodReviews.length === 0) {
-                list.innerHTML = `<p style="text-align:center; color:#999; font-size:0.85rem;">${translations[currentLang].no_reviews || 'لا توجد تقييمات بعد.'}</p>`;
+            if(prodReviews.length === 0) {                list.innerHTML = `<p style="text-align:center; color:#999; font-size:0.85rem;">${translations[currentLang].no_reviews || 'لا توجد تقييمات بعد.'}</p>`;
             } else {
                 prodReviews.forEach(r => {
                     let starsHtml = '';
@@ -635,7 +721,8 @@
         }
 
         function quickAdd(id) {
-            const p = allProducts.find(x => x.id === id);            if(p) {
+            const p = allProducts.find(x => x.id === id);
+            if(p) {
                 cart.push({...p, selectedColor: null});
                 saveCart();
                 const btn = event.target.closest('button');
@@ -646,8 +733,7 @@
         }
 
         function addToCartFromDetails() {
-            if(!currentProduct) return;
-            cart.push({...currentProduct, selectedColor: selectedColor});
+            if(!currentProduct) return;            cart.push({...currentProduct, selectedColor: selectedColor});
             saveCart();
             closeDetails();
             toggleCart();
@@ -685,6 +771,57 @@
             m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
             updateCartUI();
         }
+
+        // ✅ دالة الطباعة
+        function printOrder() {
+            const name = document.getElementById('cust-name').value || 'غير محدد';
+            const phone = document.getElementById('cust-phone').value || 'غير محدد';
+            const address = document.getElementById('cust-address').value || 'غير محدد';
+            const total = document.getElementById('cart-total').innerText;
+            
+            let itemsHtml = '';
+            cart.forEach(item => {
+                itemsHtml += `<li>${item.name} - ${item.price} MAD</li>`;
+            });            
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html dir="rtl">
+                <head>
+                    <title>طلب OUMAYSTORE</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 20px; }
+                        .header { text-align: center; border-bottom: 2px solid #1e3a5f; padding-bottom: 10px; margin-bottom: 20px; }
+                        .header h1 { color: #1e3a5f; margin: 0; }
+                        .info { margin-bottom: 20px; }
+                        .info p { margin: 5px 0; }
+                        .total { font-size: 1.2rem; font-weight: bold; margin-top: 20px; }
+                        ul { list-style: none; padding: 0; }
+                        li { padding: 5px 0; border-bottom: 1px solid #eee; }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>OUMAYSTORE</h1>
+                        <p>طلب جديد</p>
+                    </div>
+                    <div class="info">
+                        <p><strong>العميل:</strong> ${name}</p>
+                        <p><strong>الهاتف:</strong> ${phone}</p>
+                        <p><strong>العنوان:</strong> ${address}</p>
+                        <p><strong>التاريخ:</strong> ${new Date().toLocaleDateString('ar-MA')}</p>
+                    </div>
+                    <div class="items">
+                        <h3>المنتجات:</h3>
+                        <ul>${itemsHtml}</ul>
+                    </div>
+                    <div class="total">المجموع: ${total}</div>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
         function submitOrder() {
             if(cart.length === 0) return alert('السلة فارغة!');
             const name = document.getElementById('cust-name').value;
@@ -694,15 +831,31 @@
 
             const orders = JSON.parse(localStorage.getItem(KEY_ORDERS)) || [];
             orders.push({
-                id: Date.now(), date: new Date().toISOString(), customerName: name, phone: phone, address: address,
-                items: cart, total: cart.reduce((a,b)=>a+b.price, 0), status: 'pending'
+                id: Date.now(), date: new Date().toISOString(), customerName: name, phone: phone, address: address,                items: cart, total: cart.reduce((a,b)=>a+b.price, 0), status: 'pending'
             });
             localStorage.setItem(KEY_ORDERS, JSON.stringify(orders));
+            
+            // إرسال الطلب عبر واتساب
+            let message = `*طلب جديد من OUMAYSTORE*%0a`;
+            message += `---------------------------%0a`;
+            message += `👤 *العميل:* ${name}%0a`;
+            message += `📞 *الهاتف:* ${phone}%0a`;
+            message += `📍 *العنوان:* ${address}%0a`;
+            message += `---------------------------%0a`;
+            message += `*المنتجات:*%0a`;
+            cart.forEach(item => {
+                message += `- ${item.name} (${item.price} MAD)%0a`;
+            });
+            message += `---------------------------%0a`;
+            message += `💰 *المجموع:* ${document.getElementById('cart-total').innerText}`;
+            
+            window.open(`https://wa.me/${STORE_WHATSAPP}?text=${message}`, '_blank');
+            
             cart = []; saveCart(); toggleCart();
             document.getElementById('cust-name').value = '';
             document.getElementById('cust-phone').value = '';
             document.getElementById('cust-address').value = '';
-            alert('✅ شكراً لك! تم استلام طلبك بنجاح.');
+            alert('✅ تم إرسال طلبك عبر واتساب!');
         }
     </script>
 </body>
