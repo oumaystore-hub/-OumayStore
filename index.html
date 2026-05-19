@@ -134,6 +134,27 @@
         .slide-title {color: white; font-size: 1.8rem; font-weight: 800; margin-bottom: 5px; text-shadow: 0 2px 5px rgba(0,0,0,0.5);}
         .slide-desc {color: var(--gold); font-size: 1.1rem; text-shadow: 0 2px 5px rgba(0,0,0,0.5);}
 
+        /* ✅ شريط العروض التحفيزية */
+        .promo-bar {
+            background: var(--gold); color: white; padding: 8px; text-align: center;
+            font-size: 0.9rem; font-weight: bold; overflow: hidden; white-space: nowrap;
+        }
+        .promo-text {
+            display: inline-block; animation: marquee 15s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        /* ✅ بانر عرض خاص */
+        .special-offer-banner {
+            margin: 15px; border-radius: 15px; overflow: hidden; position: relative;
+            background: linear-gradient(45deg, #1e3a5f, #c9a96e); color: white;
+            padding: 20px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .special-offer-banner h3 {font-size: 1.5rem; margin-bottom: 5px;}
+        .special-offer-banner p {font-size: 1rem; opacity: 0.9;}
+
         /* Products Grid */
         .products-grid {
             display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 15px;
@@ -145,7 +166,8 @@
         }
         .product-card:active {transform: scale(0.98);}
         .p-img-box {height: 150px; background: #f0f0f0; position: relative; overflow: hidden;}
-        .p-img-box img {width: 100%; height: 100%; object-fit: cover;}        
+        .p-img-box img {width: 100%; height: 100%; object-fit: cover;}
+        
         /* ✅ شارة جديد */
         .new-badge {
             position: absolute; top: 10px; right: 10px; background: #ef4444; color: white;
@@ -172,8 +194,7 @@
 
         /* Modals (Details & Cart) */
         .modal-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 3000;
-            display: none; align-items: flex-end; backdrop-filter: blur(4px);
+            position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 3000;            display: none; align-items: flex-end; backdrop-filter: blur(4px);
         }
         .modal-sheet {
             background: white; width: 100%; max-height: 95vh; border-radius: 25px 25px 0 0;
@@ -194,7 +215,8 @@
         .main-image-box {
             width: 100%; height: 350px;
             background: #f9f9f9; border-radius: 15px; overflow: hidden;
-            display: flex; align-items: center; justify-content: center;        }
+            display: flex; align-items: center; justify-content: center;
+        }
         .main-image-box img {
             width: 100%; height: 100%; object-fit: contain;
         }
@@ -221,8 +243,7 @@
         .reviews-section h4 {font-size: 0.9rem !important; margin-bottom: 8px !important;}
         
         .review-form {background: #f9f9f9; padding: 8px !important; border-radius: 12px; margin-bottom: 8px;}
-        .star-rating-input {display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 5px; margin-bottom: 5px;}
-        .star-rating-input input {display: none;}
+        .star-rating-input {display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 5px; margin-bottom: 5px;}        .star-rating-input input {display: none;}
         .star-rating-input label {font-size: 1.1rem; color: #ddd; cursor: pointer;}
         .star-rating-input input:checked ~ label, .star-rating-input label:hover, .star-rating-input label:hover ~ label {color: var(--gold);}
         
@@ -243,7 +264,8 @@
             flex: 1; padding: 10px; border: 2px solid #ddd; border-radius: 10px;
             text-align: center; cursor: pointer; font-size: 0.9rem; transition: 0.3s;
         }
-        .payment-option.active {border-color: var(--gold); background: #fff9e6; font-weight: bold;}        .payment-option i {display: block; font-size: 1.2rem; margin-bottom: 5px; color: var(--navy);}
+        .payment-option.active {border-color: var(--gold); background: #fff9e6; font-weight: bold;}
+        .payment-option i {display: block; font-size: 1.2rem; margin-bottom: 5px; color: var(--navy);}
 
         /* Store Info Section */
         .store-info {
@@ -270,8 +292,7 @@
         @keyframes slideUp {from{transform:translateY(100%)} to{transform:translateY(0)}}
         @keyframes zoomIn {from{transform:scale(0.8);opacity:0} to{transform:scale(1);opacity:1}}
     </style>
-</head>
-<body>
+</head><body>
 
     <!-- 1. شاشة البداية -->
     <div id="splash-screen">
@@ -292,7 +313,8 @@
                 <i class="fa-solid fa-chevron-right"></i>
             </div>
             <div class="lang-btn" onclick="startApp('fr')">
-                <span class="flag">🇫🇷</span>                <div class="lang-info"><span class="lang-name">Français</span><span class="lang-sub">French</span></div>
+                <span class="flag">🇫🇷</span>
+                <div class="lang-info"><span class="lang-name">Français</span><span class="lang-sub">French</span></div>
                 <i class="fa-solid fa-chevron-right"></i>
             </div>
         </div>
@@ -300,6 +322,11 @@
 
     <!-- 2. واجهة المتجر -->
     <div id="app-interface">
+        <!-- ✅ شريط العروض -->
+        <div class="promo-bar">
+            <span class="promo-text">🎉 خصم 20% على جميع الملابس الصيفية! | 🚚 توصيل مجاني للطلبات فوق 500 درهم | 🎁 هدية مفاجئة مع كل طلب</span>
+        </div>
+
         <header>
             <div class="header-left">
                 <div class="menu-btn" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></div>
@@ -314,8 +341,7 @@
             </div>
         </header>
 
-        <!-- القائمة الجانبية -->
-        <div class="overlay-bg" id="overlay-bg" onclick="toggleSidebar()"></div>
+        <!-- القائمة الجانبية -->        <div class="overlay-bg" id="overlay-bg" onclick="toggleSidebar()"></div>
         <div class="sidebar-menu" id="sidebar-menu">
             <div class="sidebar-header">
                 <h3 data-i18n="menu">القائمة</h3>
@@ -341,7 +367,8 @@
                     <div class="slide-overlay">
                         <div class="slide-title" data-i18n="summer_fashion">أزياء الصيف</div>
                         <div class="slide-desc" data-i18n="latest_trends">اكتشف أحدث الصيحات العصرية</div>
-                    </div>                </div>
+                    </div>
+                </div>
                 <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1484788984921-03950022c9ef?w=800');">
                     <div class="slide-overlay">
                         <div class="slide-title" data-i18n="luxury_acc">إكسسوارات فاخرة</div>
@@ -350,9 +377,19 @@
                 </div>
             </div>
 
+            <!-- ✅ بانر عرض خاص -->
+            <div class="special-offer-banner">
+                <h3>🔥 عرض خاص لفترة محدودة!</h3>
+                <p>احصل على خصم 15% عند استخدام كود: OUMAY15</p>
+            </div>
+
             <!-- Products -->
             <div style="padding: 0 15px; font-weight: 800; color: var(--navy); margin-bottom:10px; font-size:1.2rem;" id="section-title" data-i18n="new_arrivals">وصل حديثاً</div>
             <div class="products-grid" id="products-container"></div>
+            
+            <!-- ✅ قسم أحسن المنتجات -->
+            <div style="padding: 0 15px; font-weight: 800; color: var(--navy); margin:20px 0 10px; font-size:1.2rem;">⭐ أحسن المنتجات</div>
+            <div class="products-grid" id="best-products-container"></div>
             <div id="empty-msg" style="text-align:center; padding:40px; color:#999; display:none;">
                 <i class="fa-solid fa-box-open" style="font-size:3rem; margin-bottom:10px; opacity:0.3;"></i><br>
                 <span data-i18n="no_products">لا توجد منتجات حالياً</span>
@@ -390,7 +427,8 @@
             </div>
             
             <!-- ✅ معرض صور احترافي -->
-            <div class="gallery-container">                <div class="main-image-box">
+            <div class="gallery-container">
+                <div class="main-image-box">
                     <img id="main-det-img" src="" onerror="this.src='https://placehold.co/600x600'">
                 </div>
                 <div class="thumbnails-row" id="det-thumbnails"></div>
@@ -401,8 +439,7 @@
             <div style="font-weight:bold; margin-bottom:8px; font-size:0.9rem;" data-i18n="choose_color">اختر اللون:</div>
             <div class="colors-row" id="det-colors"></div>
 
-            <button class="add-btn" style="padding:12px; margin-top:15px; font-size:1rem;" onclick="addToCartFromDetails()">
-                <i class="fa-solid fa-cart-plus"></i> <span data-i18n="add_to_cart">أضف للسلة</span>
+            <button class="add-btn" style="padding:12px; margin-top:15px; font-size:1rem;" onclick="addToCartFromDetails()">                <i class="fa-solid fa-cart-plus"></i> <span data-i18n="add_to_cart">أضف للسلة</span>
             </button>
 
             <!-- قسم التقييمات -->
@@ -439,7 +476,8 @@
                 <input type="text" id="cust-name" class="form-input" placeholder="الاسم الكامل" data-i18n-ph="full_name">
                 <input type="tel" id="cust-phone" class="form-input" placeholder="رقم الهاتف" data-i18n-ph="phone_number">
                 
-                <!-- ✅ قائمة المدن المغربية + مدينة أخرى -->                <select id="cust-city" class="form-select" data-i18n-ph="city">
+                <!-- ✅ قائمة المدن المغربية + مدينة أخرى -->
+                <select id="cust-city" class="form-select" data-i18n-ph="city">
                     <option value="" disabled selected>اختر المدينة</option>
                     <option value="الدار البيضاء">الدار البيضاء</option>
                     <option value="الرباط">الرباط</option>
@@ -450,8 +488,7 @@
                     <option value="مكناس">مكناس</option>
                     <option value="وجدة">وجدة</option>
                     <option value="القنيطرة">القنيطرة</option>
-                    <option value="تطوان">تطوان</option>
-                    <option value="آسفي">آسفي</option>
+                    <option value="تطوان">تطوان</option>                    <option value="آسفي">آسفي</option>
                     <option value="الجديدة">الجديدة</option>
                     <option value="بني ملال">بني ملال</option>
                     <option value="خريبكة">خريبكة</option>
@@ -488,6 +525,7 @@
                 <div style="background:#fff9e6; padding:10px; border-radius:8px; margin-bottom:15px; text-align:center; font-size:0.9rem; color:#d97706;">
                     <i class="fa-solid fa-truck-fast"></i> ثمن التوصيل: <strong>40 درهم</strong>
                 </div>
+
                 <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:1.2rem; margin:15px 0;">
                     <span data-i18n="total">المجموع:</span>
                     <span id="cart-total" style="color:var(--gold)">0 MAD</span>
@@ -499,8 +537,7 @@
 
     <script>
         const KEY_PRODUCTS = 'oumay_products_v2'; 
-        const KEY_CART = 'oumay_cart_v2';
-        const KEY_ORDERS = 'oumay_orders_v2';
+        const KEY_CART = 'oumay_cart_v2';        const KEY_ORDERS = 'oumay_orders_v2';
         const KEY_REVIEWS = 'oumay_reviews_v2';
         const KEY_WISHLIST = 'oumay_wishlist_v2';
 
@@ -537,7 +574,8 @@
                 add_to_cart: "Add to Cart", reviews: "Customer Reviews", your_name: "Your Name", your_comment: "Your Comment...",
                 post_review: "Post Review", shopping_cart: "Shopping Cart", full_name: "Full Name", phone_number: "Phone Number",
                 address: "Detailed Address", total: "Total:", confirm_order: "Confirm Order", city: "Select City",
-                payment_method: "Payment Method:", cod: "Cash on Delivery", card: "Credit Card"            },
+                payment_method: "Payment Method:", cod: "Cash on Delivery", card: "Credit Card"
+            },
             fr: {
                 menu: "Menu", home: "Accueil", clothes: "Vêtements", shoes: "Chaussures", accessories: "Accessoires",
                 wishlist: "Liste de souhaits", wishlistEmpty: "Liste vide", summer_fashion: "Mode Été", latest_trends: "Découvrez les Tendances",
@@ -549,7 +587,6 @@
                 payment_method: "Méthode de paiement:", cod: "Paiement à la livraison", card: "Carte Bancaire"
             }
         };
-
         function startApp(lang) {
             currentLang = lang;
             document.documentElement.lang = lang;
@@ -586,7 +623,8 @@
             setInterval(() => {
                 if(logo.classList.contains('active-element')) {
                     logo.classList.remove('active-element');
-                    text.classList.add('active-element');                } else {
+                    text.classList.add('active-element');
+                } else {
                     text.classList.remove('active-element');
                     logo.classList.add('active-element');
                 }
@@ -597,7 +635,6 @@
             document.getElementById('sidebar-menu').classList.toggle('open');
             document.getElementById('overlay-bg').classList.toggle('active');
         }
-
         function filterCategory(cat) {
             toggleSidebar();
             const container = document.getElementById('products-container');
@@ -617,7 +654,7 @@
                 return;
             }
 
-            renderGrid(filtered);
+            renderGrid(filtered, container);
         }
 
         function showWishlist() {
@@ -634,8 +671,9 @@
                 return;
             }
             
-            renderGrid(wishlist);
+            renderGrid(wishlist, container);
         }
+
         function startSlider() {
             const slides = document.querySelectorAll('.slide');
             let currentSlide = 0;
@@ -646,26 +684,36 @@
             }, 4000);
         }
 
-        function loadProducts() {
-            allProducts = JSON.parse(localStorage.getItem(KEY_PRODUCTS));
+        function loadProducts() {            allProducts = JSON.parse(localStorage.getItem(KEY_PRODUCTS));
             if (!allProducts || allProducts.length === 0) {
                 allProducts = [
-                    {id: 1, name: "فستان صيفي أنيق", price: 250, cat: "ملابس", desc: "فستان خفيف مناسب للصيف.", images: ["https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=600"], colors: ["#FFC0CB", "#FFFFFF"], dateAdded: Date.now()},
-                    {id: 2, name: "حقيبة يد جلدية", price: 180, cat: "إكسسوارات", desc: "حقيبة عملية بتصميم عصري.", images: ["https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=600"], colors: ["#8B4513"], dateAdded: Date.now() - 86400000 * 2},
-                    {id: 3, name: "نظارة شمسية", price: 120, cat: "إكسسوارات", desc: "حماية كاملة من الشمس.", images: ["https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=600"], colors: [], dateAdded: Date.now() - 86400000 * 10},
-                    {id: 4, name: "حذاء كعب عالي", price: 300, cat: "أحذية", desc: "مريح وأنيق للمناسبات.", images: ["https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=600"], colors: ["#FF0000"], dateAdded: Date.now()}
+                    {id: 1, name: "فستان صيفي أنيق", price: 250, cat: "ملابس", desc: "فستان خفيف مناسب للصيف.", images: ["https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=600"], colors: ["#FFC0CB", "#FFFFFF"], dateAdded: Date.now(), isBestSeller: true},
+                    {id: 2, name: "حقيبة يد جلدية", price: 180, cat: "إكسسوارات", desc: "حقيبة عملية بتصميم عصري.", images: ["https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=600"], colors: ["#8B4513"], dateAdded: Date.now() - 86400000 * 2, isBestSeller: false},
+                    {id: 3, name: "نظارة شمسية", price: 120, cat: "إكسسوارات", desc: "حماية كاملة من الشمس.", images: ["https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=600"], colors: [], dateAdded: Date.now() - 86400000 * 10, isBestSeller: true},
+                    {id: 4, name: "حذاء كعب عالي", price: 300, cat: "أحذية", desc: "مريح وأنيق للمناسبات.", images: ["https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=600"], colors: ["#FF0000"], dateAdded: Date.now(), isBestSeller: false}
                 ];
                 localStorage.setItem(KEY_PRODUCTS, JSON.stringify(allProducts));
             }
-            renderGrid(allProducts);
+            renderGrid(allProducts, document.getElementById('products-container'));
+            renderBestSellers();
         }
 
-        function renderGrid(products) {
-            const container = document.getElementById('products-container');
+        function renderGrid(products, container) {
             container.innerHTML = '';
             products.forEach(p => {
                 container.innerHTML += createProductCard(p);
             });
+        }
+
+        // ✅ عرض أحسن المنتجات
+        function renderBestSellers() {
+            const container = document.getElementById('best-products-container');
+            const bestSellers = allProducts.filter(p => p.isBestSeller);
+            if(bestSellers.length > 0) {
+                renderGrid(bestSellers, container);
+            } else {
+                container.innerHTML = '<div style="grid-column:1/-1; text-align:center; color:#999;">لا توجد منتجات مميزة حالياً</div>';
+            }
         }
 
         function createProductCard(p) {
@@ -684,8 +732,8 @@
                     </div>
                     <div class="p-details">
                         <div class="p-name" onclick="showDetails(${p.id})">${p.name}</div>
-                        <div class="p-price">${p.price} MAD</div>                        <button class="add-btn" onclick="quickAdd(${p.id})">
-                            <i class="fa-solid fa-plus"></i> ${translations[currentLang].add_to_cart.split(' ')[0]}
+                        <div class="p-price">${p.price} MAD</div>
+                        <button class="add-btn" onclick="quickAdd(${p.id})">                            <i class="fa-solid fa-plus"></i> ${translations[currentLang].add_to_cart.split(' ')[0]}
                         </button>
                     </div>
                 </div>`;
@@ -733,8 +781,8 @@
             loadReviews(id);
             document.getElementById('details-modal').style.display = 'flex';
         }
-        // ✅ دالة إعداد المعرض
-        function setupGallery() {
+
+        // ✅ دالة إعداد المعرض        function setupGallery() {
             const mainImg = document.getElementById('main-det-img');
             const thumbsContainer = document.getElementById('det-thumbnails');
             
@@ -782,8 +830,8 @@
                             <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
                                 <strong>${r.name}</strong>
                                 <span class="user-review-stars">${starsHtml}</span>
-                            </div>                            <p style="font-size:0.85rem; color:#555;">${r.text}</p>
-                        </div>`;
+                            </div>
+                            <p style="font-size:0.85rem; color:#555;">${r.text}</p>                        </div>`;
                 });
             }
         }
@@ -831,8 +879,8 @@
             localStorage.setItem(KEY_CART, JSON.stringify(cart));
             updateCartUI();
         }
-        function updateCartUI() {
-            document.getElementById('cart-count').innerText = cart.length;
+
+        function updateCartUI() {            document.getElementById('cart-count').innerText = cart.length;
             const list = document.getElementById('cart-items-list');
             list.innerHTML = '';
             let total = 0;
@@ -880,8 +928,8 @@
             let subtotal = cart.reduce((a,b)=>a+b.price, 0);
             let total = subtotal + shippingCost;
 
-            orders.push({                id: Date.now(), date: new Date().toISOString(), customerName: name, phone: phone, city: city, address: address,
-                items: cart, total: total, payment: selectedPaymentMethod, status: 'pending'
+            orders.push({
+                id: Date.now(), date: new Date().toISOString(), customerName: name, phone: phone, city: city, address: address,                items: cart, total: total, payment: selectedPaymentMethod, status: 'pending'
             });
             localStorage.setItem(KEY_ORDERS, JSON.stringify(orders));
             
