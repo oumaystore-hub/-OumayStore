@@ -588,22 +588,27 @@
             }
         };
         function startApp(lang) {
-            currentLang = lang;
-            document.documentElement.lang = lang;
-            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-            
-            applyTranslations();
+            try {
+                currentLang = lang;
+                document.documentElement.lang = lang;
+                document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+                
+                applyTranslations();
 
-            document.getElementById('splash-screen').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('splash-screen').style.display = 'none';
-                document.getElementById('app-interface').style.display = 'flex';
-                loadProducts();
-                updateCartUI();
-                startSlider();
-                startHeaderToggle();
-            }, 600);
-            localStorage.setItem('oumay_lang', lang);
+                document.getElementById('splash-screen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('splash-screen').style.display = 'none';
+                    document.getElementById('app-interface').style.display = 'flex';
+                    loadProducts();
+                    updateCartUI();
+                    startSlider();
+                    startHeaderToggle();
+                }, 600);
+                localStorage.setItem('oumay_lang', lang);
+            } catch(e) {
+                console.error("Error starting app:", e);
+                alert("حدث خطأ أثناء تحميل التطبيق، يرجى تحديث الصفحة.");
+            }
         }
 
         function applyTranslations() {
@@ -630,11 +635,11 @@
                 }
             }, 30000);
         }
-
         function toggleSidebar() {
             document.getElementById('sidebar-menu').classList.toggle('open');
             document.getElementById('overlay-bg').classList.toggle('active');
         }
+
         function filterCategory(cat) {
             toggleSidebar();
             const container = document.getElementById('products-container');
@@ -679,12 +684,17 @@
             let currentSlide = 0;
             setInterval(() => {
                 slides[currentSlide].classList.remove('active');
-                currentSlide = (currentSlide + 1) % slides.length;
-                slides[currentSlide].classList.add('active');
+                currentSlide = (currentSlide + 1) % slides.length;                slides[currentSlide].classList.add('active');
             }, 4000);
         }
 
-        function loadProducts() {            allProducts = JSON.parse(localStorage.getItem(KEY_PRODUCTS));
+        function loadProducts() {
+            try {
+                allProducts = JSON.parse(localStorage.getItem(KEY_PRODUCTS));
+            } catch(e) {
+                allProducts = [];
+            }
+
             if (!allProducts || allProducts.length === 0) {
                 allProducts = [
                     {id: 1, name: "فستان صيفي أنيق", price: 250, cat: "ملابس", desc: "فستان خفيف مناسب للصيف.", images: ["https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=600"], colors: ["#FFC0CB", "#FFFFFF"], dateAdded: Date.now(), isBestSeller: true},
@@ -709,7 +719,7 @@
         function renderBestSellers() {
             const container = document.getElementById('best-products-container');
             const bestSellers = allProducts.filter(p => p.isBestSeller);
-            if(bestSellers.length > 0) {
+            if(bestSellers && bestSellers.length > 0) {
                 renderGrid(bestSellers, container);
             } else {
                 container.innerHTML = '<div style="grid-column:1/-1; text-align:center; color:#999;">لا توجد منتجات مميزة حالياً</div>';
@@ -723,8 +733,7 @@
             
             return `
                 <div class="product-card">
-                    ${isNew ? '<div class="new-badge">جديد</div>' : ''}
-                    <button class="wishlist-btn ${isWished ? 'active' : ''}" onclick="toggleWishlist(${p.id}, this)">
+                    ${isNew ? '<div class="new-badge">جديد</div>' : ''}                    <button class="wishlist-btn ${isWished ? 'active' : ''}" onclick="toggleWishlist(${p.id}, this)">
                         <i class="fa-${isWished ? 'solid' : 'regular'} fa-heart"></i>
                     </button>
                     <div class="p-img-box" onclick="showDetails(${p.id})">
@@ -733,7 +742,8 @@
                     <div class="p-details">
                         <div class="p-name" onclick="showDetails(${p.id})">${p.name}</div>
                         <div class="p-price">${p.price} MAD</div>
-                        <button class="add-btn" onclick="quickAdd(${p.id})">                            <i class="fa-solid fa-plus"></i> ${translations[currentLang].add_to_cart.split(' ')[0]}
+                        <button class="add-btn" onclick="quickAdd(${p.id})">
+                            <i class="fa-solid fa-plus"></i> ${translations[currentLang].add_to_cart.split(' ')[0]}
                         </button>
                     </div>
                 </div>`;
@@ -772,8 +782,7 @@
             selectedColor = null;
             if(currentProduct.colors && currentProduct.colors.length > 0) {
                 currentProduct.colors.forEach(c => {
-                    colorsDiv.innerHTML += `<div class="color-circle" style="background:${c}" onclick="selectColor(this, '${c}')"></div>`;
-                });
+                    colorsDiv.innerHTML += `<div class="color-circle" style="background:${c}" onclick="selectColor(this, '${c}')"></div>`;                });
             } else {
                 colorsDiv.innerHTML = '<span style="color:#888; font-size:0.9rem;">لون موحد</span>';
             }
@@ -782,7 +791,8 @@
             document.getElementById('details-modal').style.display = 'flex';
         }
 
-        // ✅ دالة إعداد المعرض        function setupGallery() {
+        // ✅ دالة إعداد المعرض
+        function setupGallery() {
             const mainImg = document.getElementById('main-det-img');
             const thumbsContainer = document.getElementById('det-thumbnails');
             
@@ -821,8 +831,7 @@
             const prodReviews = reviews[prodId] || [];
             if(prodReviews.length === 0) {
                 list.innerHTML = `<p style="text-align:center; color:#999; font-size:0.85rem;">${translations[currentLang].no_reviews || 'لا توجد تقييمات بعد.'}</p>`;
-            } else {
-                prodReviews.forEach(r => {
+            } else {                prodReviews.forEach(r => {
                     let starsHtml = '';
                     for(let i=0; i<5; i++) starsHtml += i < r.rating ? '<i class="fa-solid fa-star"></i>' : '<i class="fa-regular fa-star"></i>';
                     list.innerHTML += `
@@ -831,7 +840,8 @@
                                 <strong>${r.name}</strong>
                                 <span class="user-review-stars">${starsHtml}</span>
                             </div>
-                            <p style="font-size:0.85rem; color:#555;">${r.text}</p>                        </div>`;
+                            <p style="font-size:0.85rem; color:#555;">${r.text}</p>
+                        </div>`;
                 });
             }
         }
@@ -870,8 +880,7 @@
         function addToCartFromDetails() {
             if(!currentProduct) return;
             cart.push({...currentProduct, selectedColor: selectedColor});
-            saveCart();
-            closeDetails();
+            saveCart();            closeDetails();
             toggleCart();
         }
 
@@ -880,7 +889,8 @@
             updateCartUI();
         }
 
-        function updateCartUI() {            document.getElementById('cart-count').innerText = cart.length;
+        function updateCartUI() {
+            document.getElementById('cart-count').innerText = cart.length;
             const list = document.getElementById('cart-items-list');
             list.innerHTML = '';
             let total = 0;
@@ -919,8 +929,7 @@
         function submitOrder() {
             if(cart.length === 0) return alert('السلة فارغة!');
             const name = document.getElementById('cust-name').value;
-            const phone = document.getElementById('cust-phone').value;
-            const city = document.getElementById('cust-city').value;
+            const phone = document.getElementById('cust-phone').value;            const city = document.getElementById('cust-city').value;
             const address = document.getElementById('cust-address').value;
             if(!name || !phone || !city) return alert('يرجى إدخال الاسم ورقم الهاتف والمدينة');
 
@@ -929,7 +938,8 @@
             let total = subtotal + shippingCost;
 
             orders.push({
-                id: Date.now(), date: new Date().toISOString(), customerName: name, phone: phone, city: city, address: address,                items: cart, total: total, payment: selectedPaymentMethod, status: 'pending'
+                id: Date.now(), date: new Date().toISOString(), customerName: name, phone: phone, city: city, address: address,
+                items: cart, total: total, payment: selectedPaymentMethod, status: 'pending'
             });
             localStorage.setItem(KEY_ORDERS, JSON.stringify(orders));
             
