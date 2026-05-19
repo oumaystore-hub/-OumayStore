@@ -263,7 +263,7 @@
         const KEY_PRODUCTS = 'oumay_products_v2';
         const KEY_ORDERS = 'oumay_orders_v2';
         
-        // ✅ تحميل آمن للبيانات لتجنب توقف الصفحة
+        // ✅ تحميل آمن للبيانات
         let products = [];
         let orders = [];
         
@@ -291,9 +291,8 @@
             }
         }
 
-        // التحقق من تسجيل الدخول عند تحميل الصفحة
-        window.onload = function() {            if(localStorage.getItem('admin_auth') === 'true') {
-                document.getElementById('login-overlay').style.display = 'none';
+        window.onload = function() {
+            if(localStorage.getItem('admin_auth') === 'true') {                document.getElementById('login-overlay').style.display = 'none';
                 init();
             }
         };
@@ -341,8 +340,8 @@
         function addColor() {
             const color = document.getElementById('color-picker').value;
             if(!currentColors.includes(color)) {
-                currentColors.push(color);                renderColors();
-            }
+                currentColors.push(color);
+                renderColors();            }
         }
         function renderColors() {
             const container = document.getElementById('selected-colors');
@@ -370,7 +369,8 @@
                 id: id ? parseInt(id) : Date.now(),
                 name, price: parseInt(price), cat, desc,
                 images: currentImages.length ? currentImages : ['https://placehold.co/400'],
-                colors: currentColors
+                colors: currentColors,
+                dateAdded: Date.now() // ✅ إضافة تاريخ الإضافة
             };
 
             if(id) {
@@ -516,7 +516,7 @@
             currentOrderId = null;
         }
 
-        // ✅ دالة الطباعة الاحترافية
+        // ✅ دالة الطباعة الاحترافية (مع الشعار وثمن الشحن المحدث)
         function printOrder() {
             if(!currentOrderId) return;
             const order = orders.find(o => o.id === currentOrderId);
@@ -530,14 +530,16 @@
                         body { font-family: 'Tajawal', Arial, sans-serif; padding: 20px; background: #fff; }
                         .invoice-container { max-width: 800px; margin: 0 auto; border: 1px solid #eee; padding: 30px; border-radius: 10px; }
                         .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #1e3a5f; padding-bottom: 20px; margin-bottom: 30px; }
-                        .brand { font-size: 2rem; font-weight: 800; color: #1e3a5f; }
-                        .brand span { color: #c9a96e; }
+                        .brand { display: flex; align-items: center; gap: 15px; }
+                        .brand img { width: 60px; height: 60px; object-fit: contain; }
+                        .brand-text { font-size: 2rem; font-weight: 800; color: #1e3a5f; }
+                        .brand-text span { color: #c9a96e; }
                         .invoice-title { text-align: left; }
                         .invoice-title h2 { margin: 0; color: #333; }
                         .info-section { display: flex; justify-content: space-between; margin-bottom: 30px; }
-                        .info-box { width: 48%; }
-                        .info-box h3 { color: #1e3a5f; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 10px; }
-                        .info-box p { margin: 5px 0; color: #555; }                        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+                        .info-box { width: 48%; }                        .info-box h3 { color: #1e3a5f; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 10px; }
+                        .info-box p { margin: 5px 0; color: #555; }
+                        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
                         th { background: #1e3a5f; color: white; padding: 12px; text-align: right; }
                         td { padding: 12px; border-bottom: 1px solid #eee; text-align: right; }
                         .total-section { text-align: left; font-size: 1.2rem; font-weight: bold; margin-top: 20px; }
@@ -547,7 +549,10 @@
                 <body>
                     <div class="invoice-container">
                         <div class="header">
-                            <div class="brand">OUMAY<span>STORE</span></div>
+                            <div class="brand">
+                                <img src="logo.png" onerror="this.style.display='none'">
+                                <div class="brand-text">OUMAY<span>STORE</span></div>
+                            </div>
                             <div class="invoice-title">
                                 <h2>فاتورة طلب</h2>
                                 <p>رقم: #${order.id.toString().slice(-4)}</p>
@@ -581,14 +586,15 @@
                                 ${order.items.map(item => `
                                     <tr>
                                         <td>${item.name}</td>
-                                        <td>${item.selectedColor || '-'}</td>
-                                        <td>${item.price} MAD</td>
+                                        <td>${item.selectedColor || '-'}</td>                                        <td>${item.price} MAD</td>
                                     </tr>
                                 `).join('')}
                             </tbody>
                         </table>
+
                         <div class="total-section">
-                            المجموع الكلي: ${order.total} MAD
+                            <p>ثمن التوصيل: 40 MAD</p>
+                            <p style="font-size:1.5rem; color:#1e3a5f;">المجموع الكلي: ${order.total} MAD</p>
                         </div>
 
                         <div class="footer">
@@ -629,5 +635,4 @@
         }
         function closeModal() { document.getElementById('modal').style.display = 'none'; }
     </script>
-</body>
-</html>
+</body></html>
