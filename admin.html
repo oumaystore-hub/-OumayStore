@@ -6,6 +6,8 @@
     <title>لوحة التحكم - OUMAYSTORE</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- ✅ مكتبة QR Code -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         :root { --primary: #1e3a5f; --accent: #c9a96e; --bg: #f8fafc; --white: #ffffff; --text: #334155; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
@@ -45,9 +47,9 @@
 
         /* Buttons & Tables */
         .btn { padding: 12px 24px; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; transition: 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-accent { background: var(--accent); color: white; }
-        .btn-danger { background: #ef4444; color: white; }        .btn-success { background: #10b981; color: white; }
+        .btn-primary { background: var(--primary); color: white; }        .btn-accent { background: var(--accent); color: white; }
+        .btn-danger { background: #ef4444; color: white; }
+        .btn-success { background: #10b981; color: white; }
         .btn:hover { transform: translateY(-2px); opacity: 0.9; }
 
         table { width: 100%; border-collapse: collapse; margin-top: 15px; }
@@ -94,9 +96,9 @@
         @media(max-width: 768px) {
             .sidebar { width: 70px; padding: 10px; }
             .sidebar span, .logo span { display: none; }
-            .main-content { margin-right: 70px; padding: 15px; }
-            .menu-item { justify-content: center; }
-            .header { flex-direction: column; align-items: stretch; }            .btn { width: 100%; margin-bottom: 5px; }
+            .main-content { margin-right: 70px; padding: 15px; }            .menu-item { justify-content: center; }
+            .header { flex-direction: column; align-items: stretch; }
+            .btn { width: 100%; margin-bottom: 5px; }
             th, td { padding: 10px; font-size: 0.8rem; }
             .prod-thumb { width: 40px; height: 40px; }
         }
@@ -120,7 +122,6 @@
         <div class="logo">OUMAY<span>STORE</span></div>
         <div class="menu-item active" onclick="switchTab('products')"><i class="fa-solid fa-box-open"></i> <span>المنتجات</span></div>
         <div class="menu-item" onclick="switchTab('orders')"><i class="fa-solid fa-truck-fast"></i> <span>الطلبات</span></div>
-        <div class="menu-item" onclick="switchTab('settings')"><i class="fa-solid fa-gear"></i> <span>الإعدادات</span></div>
         <div class="menu-item" onclick="window.open('index.html', '_blank')"><i class="fa-solid fa-store"></i> <span>عرض المتجر</span></div>
         <div class="menu-item" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> <span>خروج</span></div>
     </div>
@@ -144,8 +145,8 @@
                             <th>السعر</th>
                             <th>الألوان</th>
                             <th>إجراءات</th>
-                        </tr>
-                    </thead>                    <tbody id="prod-list"></tbody>
+                        </tr>                    </thead>
+                    <tbody id="prod-list"></tbody>
                 </table>
             </div>
         </div>
@@ -171,20 +172,6 @@
                 </table>
             </div>
         </div>
-
-        <!-- ✅ قسم الإعدادات -->
-        <div id="tab-settings" style="display:none;">
-            <div class="header">
-                <h2 style="color:var(--primary)">⚙️ إعدادات المتجر</h2>
-            </div>
-            <div class="card">
-                <div class="form-group">
-                    <label class="form-label">ثمن التوصيل (MAD)</label>
-                    <input type="number" id="shipping-cost-input" class="form-input" value="40">
-                </div>
-                <button onclick="saveSettings()" class="btn btn-primary">حفظ الإعدادات</button>
-            </div>
-        </div>
     </div>
 
     <!-- نافذة إضافة/تعديل منتج -->
@@ -194,7 +181,8 @@
                 <h3 style="color:var(--primary)" id="modal-title">بيانات المنتج</h3>
                 <button onclick="closeModal()" style="background:none; border:none; font-size:1.5rem; cursor:pointer; color:#888;">✕</button>
             </div>
-                        <input type="hidden" id="edit-prod-id">
+            
+            <input type="hidden" id="edit-prod-id">
 
             <div class="form-group">
                 <label class="form-label">اسم المنتج</label>
@@ -206,8 +194,7 @@
                     <label class="form-label">السعر (MAD)</label>
                     <input type="number" id="p-price" class="form-input">
                 </div>
-                <div style="flex:1; min-width:120px;">
-                    <label class="form-label">التصنيف</label>
+                <div style="flex:1; min-width:120px;">                    <label class="form-label">التصنيف</label>
                     <select id="p-cat" class="form-input">
                         <option value="ملابس">ملابس</option>
                         <option value="أحذية">أحذية</option>
@@ -243,7 +230,8 @@
 
             <div style="display:flex; gap:10px; margin-top:25px; flex-wrap:wrap;">
                 <button onclick="saveProduct()" class="btn btn-accent" style="flex:1; justify-content:center;">حفظ</button>
-                <button onclick="closeModal()" class="btn btn-danger" style="flex:1; justify-content:center;">إلغاء</button>            </div>
+                <button onclick="closeModal()" class="btn btn-danger" style="flex:1; justify-content:center;">إلغاء</button>
+            </div>
         </div>
     </div>
 
@@ -255,8 +243,7 @@
                 <button onclick="closeOrderModal()" style="background:none; border:none; font-size:1.5rem; cursor:pointer; color:#888;">✕</button>
             </div>
             <div id="order-details-content"></div>
-            
-            <!-- ✅ تغيير حالة الطلب -->
+                        <!-- ✅ تغيير حالة الطلب -->
             <div class="form-group" style="margin-top:15px;">
                 <label class="form-label">حالة الطلب:</label>
                 <select id="order-status-select" class="form-select" onchange="updateOrderStatus()">
@@ -292,8 +279,8 @@
         }
         
         let currentImages = [];
-        let currentColors = [];        let currentOrderId = null;
-        let shippingCost = 40; // ✅ ثمن الشحن الافتراضي
+        let currentColors = [];
+        let currentOrderId = null;
 
         // --- نظام الدخول ---
         function login() {
@@ -305,7 +292,6 @@
                 document.getElementById('login-err').style.display = 'block';
             }
         }
-
         window.onload = function() {
             if(localStorage.getItem('admin_auth') === 'true') {
                 document.getElementById('login-overlay').style.display = 'none';
@@ -321,7 +307,6 @@
         function init() { 
             renderProducts(); 
             renderOrders(); 
-            loadSettings();
         }
 
         // --- إدارة الصور المتعددة ---
@@ -341,7 +326,8 @@
             const container = document.getElementById('preview-container');
             container.innerHTML = '';
             currentImages.forEach((img, idx) => {
-                container.innerHTML += `                    <div class="preview-box">
+                container.innerHTML += `
+                    <div class="preview-box">
                         <img src="${img}">
                         <div class="remove-img" onclick="removeImage(${idx})">✕</div>
                     </div>`;
@@ -355,8 +341,7 @@
         // --- إدارة الألوان ---
         function addColor() {
             const color = document.getElementById('color-picker').value;
-            if(!currentColors.includes(color)) {
-                currentColors.push(color);
+            if(!currentColors.includes(color)) {                currentColors.push(color);
                 renderColors();
             }
         }
@@ -387,10 +372,12 @@
                 name, price: parseInt(price), cat, desc,
                 images: currentImages.length ? currentImages : ['https://placehold.co/400'],
                 colors: currentColors,
-                dateAdded: Date.now() // ✅ إضافة تاريخ الإضافة
+                dateAdded: Date.now(),
+                isBestSeller: false // يمكن تعديلها لاحقاً
             };
 
-            if(id) {                const index = products.findIndex(p => p.id == id);
+            if(id) {
+                const index = products.findIndex(p => p.id == id);
                 if(index > -1) products[index] = product;
             } else {
                 products.push(product);
@@ -403,8 +390,7 @@
         }
 
         function renderProducts() {
-            const list = document.getElementById('prod-list');
-            list.innerHTML = '';
+            const list = document.getElementById('prod-list');            list.innerHTML = '';
             if(products.length === 0) {
                 list.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px;">لا توجد منتجات مضافة</td></tr>';
                 return;
@@ -440,6 +426,7 @@
             document.getElementById('modal-title').innerText = 'تعديل المنتج';
             document.getElementById('modal').style.display = 'flex';
         }
+
         function deleteProd(i) {
             if(confirm('حذف المنتج؟')) {
                 products.splice(i, 1);
@@ -452,8 +439,7 @@
         function renderOrders() {
             const list = document.getElementById('order-list');
             list.innerHTML = '';
-            if(!orders.length) return list.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px">لا توجد طلبات</td></tr>';
-            
+            if(!orders.length) return list.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px">لا توجد طلبات</td></tr>';            
             orders.forEach(o => {
                 const statusClass = o.status === 'pending' ? 'status-pending' : 
                                     o.status === 'processing' ? 'status-processing' :
@@ -488,7 +474,8 @@
             const content = document.getElementById('order-details-content');
             content.innerHTML = `
                 <div class="order-modal-content">
-                    <p><strong>العميل:</strong> ${order.customerName}</p>                    <p><strong>الهاتف:</strong> ${order.phone}</p>
+                    <p><strong>العميل:</strong> ${order.customerName}</p>
+                    <p><strong>الهاتف:</strong> ${order.phone}</p>
                     <p><strong>العنوان:</strong> ${order.address || 'غير محدد'}</p>
                     <p><strong>التاريخ:</strong> ${new Date(order.date).toLocaleDateString('ar-MA')}</p>
                 </div>
@@ -501,8 +488,7 @@
                             <div style="font-size:0.85rem; color:#666">${item.selectedColor ? 'لون: '+item.selectedColor : ''}</div>
                             <div style="color:var(--accent)">${item.price} MAD</div>
                         </div>
-                    </div>
-                `).join('')}
+                    </div>                `).join('')}
                 <div style="margin-top:15px; text-align:left; font-weight:bold; font-size:1.2rem;">
                     المجموع: ${order.total} MAD
                 </div>
@@ -533,15 +519,17 @@
             currentOrderId = null;
         }
 
-        // ✅ دالة الطباعة الاحترافية (مع الشعار وثمن الشحن المحدث)
+        // ✅ دالة الطباعة الاحترافية (مع الشعار و QR Code)
         function printOrder() {
             if(!currentOrderId) return;
             const order = orders.find(o => o.id === currentOrderId);
-                        const printWindow = window.open('', '_blank');
+            
+            const printWindow = window.open('', '_blank');
             printWindow.document.write(`
                 <html dir="rtl">
                 <head>
                     <title>فاتورة طلب #${order.id}</title>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"><\/script>
                     <style>
                         body { font-family: 'Tajawal', Arial, sans-serif; padding: 20px; background: #fff; }
                         .invoice-container { max-width: 800px; margin: 0 auto; border: 1px solid #eee; padding: 30px; border-radius: 10px; }
@@ -549,8 +537,7 @@
                         .brand { display: flex; flex-direction: column; align-items: center; gap: 10px; }
                         .brand img { width: 80px; height: 80px; object-fit: contain; }
                         .brand-text { font-size: 2rem; font-weight: 800; color: #1e3a5f; }
-                        .brand-text span { color: #c9a96e; }
-                        .invoice-title { margin-top: 10px; }
+                        .brand-text span { color: #c9a96e; }                        .invoice-title { margin-top: 10px; }
                         .invoice-title h2 { margin: 0; color: #333; }
                         .info-section { display: flex; justify-content: space-between; margin-bottom: 30px; }
                         .info-box { width: 48%; }
@@ -561,6 +548,7 @@
                         td { padding: 12px; border-bottom: 1px solid #eee; text-align: right; }
                         .total-section { text-align: left; font-size: 1.2rem; font-weight: bold; margin-top: 20px; }
                         .footer { text-align: center; margin-top: 40px; color: #888; font-size: 0.9rem; border-top: 1px solid #eee; padding-top: 20px; }
+                        .qr-code { margin-top: 20px; display: flex; justify-content: center; }
                     </style>
                 </head>
                 <body>
@@ -586,7 +574,8 @@
                             </div>
                             <div class="info-box">
                                 <h3>تفاصيل الطلب</h3>
-                                <p><strong>طريقة الدفع:</strong> ${order.payment === 'cod' ? 'نقداً عند الاستلام' : 'بطاقة بنكية'}</p>                                <p><strong>الحالة:</strong> ${order.status === 'pending' ? 'قيد الانتظار' : order.status === 'processing' ? 'قيد التجهيز' : order.status === 'shipped' ? 'تم الشحن' : 'ملغي'}</p>
+                                <p><strong>طريقة الدفع:</strong> ${order.payment === 'cod' ? 'نقداً عند الاستلام' : 'بطاقة بنكية'}</p>
+                                <p><strong>الحالة:</strong> ${order.status === 'pending' ? 'قيد الانتظار' : order.status === 'processing' ? 'قيد التجهيز' : order.status === 'shipped' ? 'تم الشحن' : 'ملغي'}</p>
                             </div>
                         </div>
 
@@ -597,8 +586,7 @@
                                     <th>اللون</th>
                                     <th>السعر</th>
                                 </tr>
-                            </thead>
-                            <tbody>
+                            </thead>                            <tbody>
                                 ${order.items.map(item => `
                                     <tr>
                                         <td>${item.name}</td>
@@ -610,49 +598,50 @@
                         </table>
 
                         <div class="total-section">
-                            <p>ثمن التوصيل: ${shippingCost} MAD</p>
+                            <p>ثمن التوصيل: 40 MAD</p>
                             <p style="font-size:1.5rem; color:#1e3a5f;">المجموع الكلي: ${order.total} MAD</p>
                         </div>
+
+                        <!-- ✅ QR Code -->
+                        <div class="qr-code" id="qrcode"></div>
+                        <p style="text-align:center; font-size:0.8rem; color:#666;">امسح الرمز لتتبع الطلب</p>
 
                         <div class="footer">
                             شكراً لتسوقكم من OUMAYSTORE
                         </div>
                     </div>
+                    <script>
+                        // توليد QR Code
+                        new QRCode(document.getElementById("qrcode"), {
+                            text: "https://oumaystore.com/track/${order.id}",
+                            width: 128,
+                            height: 128,
+                            colorDark : "#1e3a5f",
+                            colorLight : "#ffffff",
+                            correctLevel : QRCode.CorrectLevel.H
+                        });
+                    <\/script>
                 </body>
                 </html>
             `);
             printWindow.document.close();
-            printWindow.print();
+            // تأخير بسيط لضمان تحميل المكتبة قبل الطباعة
+            setTimeout(() => {
+                printWindow.print();
+            }, 1000);
         }
 
         function clearOrders() {
             if(confirm('حذف كل الطلبات؟')) {
                 orders = [];
                 localStorage.setItem(KEY_ORDERS, JSON.stringify(orders));
-                renderOrders();
-            }
-        }
-
-        // --- الإعدادات ---
-        function loadSettings() {
-            const savedShipping = localStorage.getItem('shipping_cost');            if(savedShipping) {
-                shippingCost = parseInt(savedShipping);
-                document.getElementById('shipping-cost-input').value = shippingCost;
-            }
-        }
-
-        function saveSettings() {
-            const cost = document.getElementById('shipping-cost-input').value;
-            shippingCost = parseInt(cost);
-            localStorage.setItem('shipping_cost', cost);
-            alert('تم حفظ ثمن التوصيل: ' + cost + ' MAD');
+                renderOrders();            }
         }
 
         // --- واجهة ---
         function switchTab(tab) {
             document.getElementById('tab-products').style.display = tab==='products'?'block':'none';
             document.getElementById('tab-orders').style.display = tab==='orders'?'block':'none';
-            document.getElementById('tab-settings').style.display = tab==='settings'?'block':'none';
             document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
             event.currentTarget.classList.add('active');
         }
