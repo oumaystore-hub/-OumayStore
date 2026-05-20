@@ -149,6 +149,28 @@
         .slide-title {color: white; font-size: 1.8rem; font-weight: 800; margin-bottom: 5px; text-shadow: 0 2px 5px rgba(0,0,0,0.5);}
         .slide-desc {color: var(--gold); font-size: 1.1rem; text-shadow: 0 2px 5px rgba(0,0,0,0.5);}
 
+        /* ✅ شريط العروض التحفيزية */
+        .promo-bar {
+            background: var(--gold); color: white; padding: 8px; text-align: center;
+            font-size: 0.9rem; font-weight: bold; overflow: hidden; white-space: nowrap;
+        }
+        .promo-text {
+            display: inline-block; animation: marquee 15s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* ✅ بانر عرض خاص */
+        .special-offer-banner {
+            margin: 15px; border-radius: 15px; overflow: hidden; position: relative;
+            background: linear-gradient(45deg, #1e3a5f, #c9a96e); color: white;
+            padding: 20px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .special-offer-banner h3 {font-size: 1.5rem; margin-bottom: 5px;}
+        .special-offer-banner p {font-size: 1rem; opacity: 0.9;}
+
         /* Products Grid */
         .products-grid {
             display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 15px;
@@ -172,8 +194,7 @@
         .wishlist-btn {
             position: absolute; top: 10px; left: 10px; background: rgba(255,255,255,0.9);
             width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center;
-            justify-content: center; cursor: pointer; z-index: 10; border: none; font-size: 1.1rem;
-            color: #ccc; transition: 0.3s;
+            justify-content: center; cursor: pointer; z-index: 10; border: none; font-size: 1.1rem;            color: #ccc; transition: 0.3s;
         }
         .wishlist-btn.active {color: #ef4444;}
         .p-details {padding: 12px; flex: 1; display: flex; flex-direction: column;}
@@ -194,7 +215,8 @@
         .modal-sheet {
             background: white; width: 100%; max-height: 95vh; border-radius: 25px 25px 0 0;
             padding: 20px; animation: slideUp 0.3s ease; display: flex; flex-direction: column;
-            overflow-y: auto; box-shadow: 0 -5px 20px rgba(0,0,0,0.1);            -webkit-overflow-scrolling: touch; 
+            overflow-y: auto; box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+            -webkit-overflow-scrolling: touch; 
         }
         
         /* Product Details Styles */
@@ -221,8 +243,7 @@
             width: 70px; height: 70px; border-radius: 10px; object-fit: cover;
             border: 2px solid transparent; cursor: pointer; opacity: 0.7; transition: 0.3s;
         }
-        .thumb-img.active {border-color: var(--gold); opacity: 1;}
-        
+        .thumb-img.active {border-color: var(--gold); opacity: 1;}        
         .colors-row {display: flex; gap: 10px; margin: 10px 0;}
         .color-circle {
             width: 30px; height: 30px; border-radius: 50%; border: 2px solid #eee; cursor: pointer; position: relative;
@@ -243,7 +264,8 @@
         .star-rating-input input:checked ~ label, .star-rating-input label:hover, .star-rating-input label:hover ~ label {color: var(--gold);}
         
         .review-input-field {width: 100%; padding: 6px; border: 1px solid #ddd; border-radius: 6px; margin-bottom: 6px; outline: none; font-size: 0.85rem;}
-        .submit-review-btn {background: var(--navy); color: white; border: none; padding: 6px; border-radius: 6px; cursor: pointer; width: 100%; font-size: 0.85rem;}        .user-review-item {background: white; border: 1px solid #eee; padding: 6px; border-radius: 6px; margin-bottom: 6px; font-size: 0.85rem;}
+        .submit-review-btn {background: var(--navy); color: white; border: none; padding: 6px; border-radius: 6px; cursor: pointer; width: 100%; font-size: 0.85rem;}
+        .user-review-item {background: white; border: 1px solid #eee; padding: 6px; border-radius: 6px; margin-bottom: 6px; font-size: 0.85rem;}
         .user-review-stars {color: var(--gold); font-size: 0.7rem;}
 
         /* Cart Styles */
@@ -270,8 +292,7 @@
             background: #f9f9f9; padding: 15px; border-radius: 12px; margin-bottom: 15px;
             border-right: 4px solid var(--gold);
         }
-        .testimonial-text {font-style: italic; color: #555; margin-bottom: 10px; font-size: 0.9rem;}
-        .testimonial-author {font-weight: bold; color: var(--navy); font-size: 0.9rem;}
+        .testimonial-text {font-style: italic; color: #555; margin-bottom: 10px; font-size: 0.9rem;}        .testimonial-author {font-weight: bold; color: var(--navy); font-size: 0.9rem;}
 
         /* Store Info Section */
         .store-info {
@@ -292,7 +313,8 @@
         }
         .social-btn:hover {transform: scale(1.1);}
         .social-btn.instagram {background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);}
-        .social-btn.facebook {background: #1877F2;}        .social-btn.whatsapp {background: #25D366;}
+        .social-btn.facebook {background: #1877F2;}
+        .social-btn.whatsapp {background: #25D366;}
 
         @keyframes slideUp {from{transform:translateY(100%)} to{transform:translateY(0)}}
         @keyframes zoomIn {from{transform:scale(0.8);opacity:0} to{transform:scale(1);opacity:1}}
@@ -319,8 +341,7 @@
                 <i class="fa-solid fa-chevron-right"></i>
             </div>
             <div class="lang-btn" onclick="startApp('fr')">
-                <span class="flag">🇫🇷</span>
-                <div class="lang-info"><span class="lang-name">Français</span><span class="lang-sub">French</span></div>
+                <span class="flag">🇫🇷</span>                <div class="lang-info"><span class="lang-name">Français</span><span class="lang-sub">French</span></div>
                 <i class="fa-solid fa-chevron-right"></i>
             </div>
         </div>
@@ -328,6 +349,11 @@
 
     <!-- 2. واجهة المتجر -->
     <div id="app-interface">
+        <!-- ✅ شريط العروض المتحرك -->
+        <div class="promo-bar">
+            <span class="promo-text">🎉 خصم 20% على جميع الملابس الصيفية! | 🚚 توصيل مجاني للطلبات فوق 500 درهم | 🎁 هدية مفاجئة مع كل طلب</span>
+        </div>
+
         <!-- ✅ خانة البحث -->
         <div class="search-overlay" id="searchOverlay">
             <input type="text" class="search-input" placeholder="ابحث عن منتج..." id="searchInput" onkeyup="filterSearch()">
@@ -341,7 +367,8 @@
                     <img src="logo.png" id="header-logo" class="brand-logo-img active-element" onerror="this.style.display='none'">
                     <div id="header-text" class="brand-text">OUMAY<span>STORE</span></div>
                 </div>
-            </div>            <div style="display:flex; gap:15px; align-items:center;">
+            </div>
+            <div style="display:flex; gap:15px; align-items:center;">
                 <i class="fa-solid fa-magnifying-glass" style="font-size:1.2rem; cursor:pointer; color:var(--navy);" onclick="toggleSearch()"></i>
                 <div class="cart-icon" onclick="toggleCart()">
                     <i class="fa-solid fa-bag-shopping"></i>
@@ -363,8 +390,7 @@
                 <div class="sidebar-link" onclick="filterCategory('أحذية')"><i class="fa-solid fa-shoe-prints"></i> <span data-i18n="shoes">أحذية</span></div>
                 <div class="sidebar-link" onclick="filterCategory('إكسسوارات')"><i class="fa-solid fa-gem"></i> <span data-i18n="accessories">إكسسوارات</span></div>
                 <div class="sidebar-link" onclick="filterCategory('منزل')"><i class="fa-solid fa-couch"></i> <span>منزل وديكور</span></div>
-                <div class="sidebar-link" onclick="showWishlist()"><i class="fa-solid fa-heart"></i> <span data-i18n="wishlist">قائمة المفضلة</span></div>
-                <a href="https://wa.me/212600000000" target="_blank" class="sidebar-link whatsapp-link">
+                <div class="sidebar-link" onclick="showWishlist()"><i class="fa-solid fa-heart"></i> <span data-i18n="wishlist">قائمة المفضلة</span></div>                <a href="https://wa.me/212600000000" target="_blank" class="sidebar-link whatsapp-link">
                     <i class="fa-brands fa-whatsapp"></i> <span>تواصل عبر واتساب</span>
                 </a>
             </div>
@@ -387,10 +413,17 @@
                 </div>
             </div>
 
+            <!-- ✅ بانر عرض خاص -->
+            <div class="special-offer-banner">
+                <h3>🔥 عرض خاص لفترة محدودة!</h3>
+                <p>احصل على خصم 15% عند استخدام كود: OUMAY15</p>
+            </div>
+
             <!-- Products -->
             <div style="padding: 0 15px; font-weight: 800; color: var(--navy); margin-bottom:10px; font-size:1.2rem;" id="section-title" data-i18n="new_arrivals">وصل حديثاً</div>
             <div class="products-grid" id="products-container"></div>
-                        <!-- ✅ قسم أحسن المنتجات -->
+            
+            <!-- ✅ قسم أحسن المنتجات -->
             <div style="padding: 0 15px; font-weight: 800; color: var(--navy); margin:20px 0 10px; font-size:1.2rem;">⭐ أحسن المنتجات</div>
             <div class="products-grid" id="best-products-container"></div>
 
@@ -406,8 +439,7 @@
                     <p class="testimonial-text">"منتجات رائعة والجودة ممتازة، التوصيل كان سريعاً جداً."</p>
                     <div class="testimonial-author">- سارة م.</div>
                 </div>
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"تعامل راقي وأسعار منافسة، أنصح الجميع بالتعامل معهم."</p>
+                <div class="testimonial-card">                    <p class="testimonial-text">"تعامل راقي وأسعار منافسة، أنصح الجميع بالتعامل معهم."</p>
                     <div class="testimonial-author">- أحمد ك.</div>
                 </div>
                 <div class="testimonial-card">
@@ -439,7 +471,8 @@
     <!-- نافذة تفاصيل المنتج -->
     <div class="modal-overlay" id="details-modal" onclick="if(event.target === this) closeDetails()">
         <div class="modal-sheet">
-            <div class="det-header">                <div>
+            <div class="det-header">
+                <div>
                     <div class="det-title" id="det-name">اسم المنتج</div>
                     <div class="det-price" id="det-price">0 MAD</div>
                 </div>
@@ -455,8 +488,7 @@
             </div>
 
             <p style="color:#666; line-height:1.6; margin-bottom:15px; font-size:0.95rem;" id="det-desc">وصف المنتج...</p>
-            
-            <div style="font-weight:bold; margin-bottom:8px; font-size:0.9rem;" data-i18n="choose_color">اختر اللون:</div>
+                        <div style="font-weight:bold; margin-bottom:8px; font-size:0.9rem;" data-i18n="choose_color">اختر اللون:</div>
             <div class="colors-row" id="det-colors"></div>
 
             <button class="add-btn" style="padding:12px; margin-top:15px; font-size:1rem;" onclick="addToCartFromDetails()">
@@ -488,7 +520,8 @@
         <div class="modal-sheet">
             <div class="det-header">
                 <div class="det-title" data-i18n="shopping_cart">سلة المشتريات</div>
-                <button onclick="toggleCart()" style="background:none; border:none; font-size:1.8rem; cursor:pointer; padding:5px;">✕</button>            </div>
+                <button onclick="toggleCart()" style="background:none; border:none; font-size:1.8rem; cursor:pointer; padding:5px;">✕</button>
+            </div>
             
             <div id="cart-items-list" style="flex:1; overflow-y:auto; margin-bottom:20px;"></div>
             
@@ -504,8 +537,7 @@
                     <option value="مراكش">مراكش</option>
                     <option value="فاس">فاس</option>
                     <option value="طنجة">طنجة</option>
-                    <option value="أكادير">أكادير</option>
-                    <option value="مكناس">مكناس</option>
+                    <option value="أكادير">أكادير</option>                    <option value="مكناس">مكناس</option>
                     <option value="وجدة">وجدة</option>
                     <option value="القنيطرة">القنيطرة</option>
                     <option value="تطوان">تطوان</option>
@@ -537,7 +569,8 @@
                         <span data-i18n="cod">عند الاستلام</span>
                     </div>
                     <div class="payment-option" onclick="selectPayment('card', this)">
-                        <i class="fa-solid fa-credit-card"></i>                        <span data-i18n="card">بطاقة بنكية</span>
+                        <i class="fa-solid fa-credit-card"></i>
+                        <span data-i18n="card">بطاقة بنكية</span>
                     </div>
                 </div>
 
@@ -554,7 +587,6 @@
             </div>
         </div>
     </div>
-
     <script>
         const KEY_PRODUCTS = 'oumay_products_v2'; 
         const KEY_CART = 'oumay_cart_v2';
@@ -586,7 +618,8 @@
                 post_review: "نشر التقييم", shopping_cart: "سلة المشتريات", full_name: "الاسم الكامل", phone_number: "رقم الهاتف",
                 address: "العنوان التفصيلي", total: "المجموع:", confirm_order: "تأكيد الطلب", city: "اختر المدينة",
                 payment_method: "طريقة الدفع:", cod: "عند الاستلام", card: "بطاقة بنكية", search_placeholder: "ابحث عن منتج..."
-            },            en: {
+            },
+            en: {
                 menu: "Menu", home: "Home", clothes: "Clothes", shoes: "Shoes", accessories: "Accessories",
                 wishlist: "Wishlist", wishlistEmpty: "Wishlist is empty", summer_fashion: "Summer Fashion", latest_trends: "Discover Latest Trends",
                 luxury_acc: "Luxury Accessories", elegance_touch: "Touch of Elegance", new_arrivals: "New Arrivals",
@@ -602,8 +635,7 @@
                 luxury_acc: "Accessoires de Luxe", elegance_touch: "Touche d'Élégance", new_arrivals: "Nouveaux Arrivages",
                 no_products: "Aucun produit disponible", contact_us: "Infos Magasin", choose_color: "Choisir Couleur:",
                 add_to_cart: "Ajouter au Panier", reviews: "Avis Clients", your_name: "Votre Nom", your_comment: "Votre Commentaire...",
-                post_review: "Publier Avis", shopping_cart: "Panier", full_name: "Nom Complet", phone_number: "Numéro de Téléphone",
-                address: "Adresse Détaillée", total: "Total:", confirm_order: "Confirmer Commande", city: "Choisir Ville",
+                post_review: "Publier Avis", shopping_cart: "Panier", full_name: "Nom Complet", phone_number: "Numéro de Téléphone",                address: "Adresse Détaillée", total: "Total:", confirm_order: "Confirmer Commande", city: "Choisir Ville",
                 payment_method: "Méthode de paiement:", cod: "Paiement à la livraison", card: "Carte Bancaire", search_placeholder: "Rechercher..."
             }
         };
@@ -635,7 +667,8 @@
         function applyTranslations() {
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
-                if(translations[currentLang][key]) el.innerText = translations[currentLang][key];            });
+                if(translations[currentLang][key]) el.innerText = translations[currentLang][key];
+            });
             document.querySelectorAll('[data-i18n-ph]').forEach(el => {
                 const key = el.getAttribute('data-i18n-ph');
                 if(translations[currentLang][key]) el.placeholder = translations[currentLang][key];
@@ -651,8 +684,7 @@
                 if(logo.classList.contains('active-element')) {
                     logo.classList.remove('active-element');
                     text.classList.add('active-element');
-                } else {
-                    text.classList.remove('active-element');
+                } else {                    text.classList.remove('active-element');
                     logo.classList.add('active-element');
                 }
             }, 5000); // كل 5 ثواني
@@ -684,7 +716,8 @@
 
             title.innerText = 'نتائج البحث';
             const filtered = allProducts.filter(p => p.name.toLowerCase().includes(query));
-            renderGrid(filtered, container);        }
+            renderGrid(filtered, container);
+        }
 
         function filterCategory(cat) {
             toggleSidebar();
@@ -700,8 +733,7 @@
                 title.innerText = translations[currentLang].new_arrivals;
             }
 
-            if(filtered.length === 0) {
-                container.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:20px;">${translations[currentLang].no_products}</div>`;
+            if(filtered.length === 0) {                container.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:20px;">${translations[currentLang].no_products}</div>`;
                 return;
             }
 
@@ -734,6 +766,7 @@
                 slides[currentSlide].classList.add('active');
             }, 4000);
         }
+
         function loadProducts() {
             try {
                 allProducts = JSON.parse(localStorage.getItem(KEY_PRODUCTS));
@@ -749,8 +782,7 @@
                     {id: 4, name: "حذاء كعب عالي", price: 300, cat: "أحذية", desc: "مريح وأنيق للمناسبات.", images: ["https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=600"], colors: ["#FF0000"], dateAdded: Date.now(), isBestSeller: false}
                 ];
                 localStorage.setItem(KEY_PRODUCTS, JSON.stringify(allProducts));
-            }
-            renderGrid(allProducts, document.getElementById('products-container'));
+            }            renderGrid(allProducts, document.getElementById('products-container'));
             renderBestSellers();
         }
 
@@ -782,7 +814,8 @@
                     ${isNew ? '<div class="new-badge">جديد</div>' : ''}
                     <button class="wishlist-btn ${isWished ? 'active' : ''}" onclick="toggleWishlist(${p.id}, this)">
                         <i class="fa-${isWished ? 'solid' : 'regular'} fa-heart"></i>
-                    </button>                    <div class="p-img-box" onclick="showDetails(${p.id})">
+                    </button>
+                    <div class="p-img-box" onclick="showDetails(${p.id})">
                         <img src="${p.images[0]}" onerror="this.src='https://placehold.co/400'">
                     </div>
                     <div class="p-details">
@@ -798,8 +831,7 @@
         function toggleWishlist(id, btn) {
             const product = allProducts.find(p => p.id === id);
             if(!product) return;
-            
-            const index = wishlist.findIndex(w => w.id === id);
+                        const index = wishlist.findIndex(w => w.id === id);
             if(index > -1) {
                 wishlist.splice(index, 1);
                 btn.classList.remove('active');
@@ -831,7 +863,8 @@
                     colorsDiv.innerHTML += `<div class="color-circle" style="background:${c}" onclick="selectColor(this, '${c}')"></div>`;
                 });
             } else {
-                colorsDiv.innerHTML = '<span style="color:#888; font-size:0.9rem;">لون موحد</span>';            }
+                colorsDiv.innerHTML = '<span style="color:#888; font-size:0.9rem;">لون موحد</span>';
+            }
 
             loadReviews(id);
             document.getElementById('details-modal').style.display = 'flex';
@@ -847,7 +880,6 @@
                 thumbsContainer.innerHTML = '';
                 return;
             }
-
             // تعيين الصورة الأولى كرئيسية
             mainImg.src = currentProduct.images[0];
             
@@ -880,7 +912,8 @@
             } else {
                 prodReviews.forEach(r => {
                     let starsHtml = '';
-                    for(let i=0; i<5; i++) starsHtml += i < r.rating ? '<i class="fa-solid fa-star"></i>' : '<i class="fa-regular fa-star"></i>';                    list.innerHTML += `
+                    for(let i=0; i<5; i++) starsHtml += i < r.rating ? '<i class="fa-solid fa-star"></i>' : '<i class="fa-regular fa-star"></i>';
+                    list.innerHTML += `
                         <div class="user-review-item">
                             <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
                                 <strong>${r.name}</strong>
@@ -896,8 +929,7 @@
             const ratingInput = document.querySelector('input[name="rating"]:checked');
             const name = document.getElementById('reviewer-name').value;
             const text = document.getElementById('review-text').value;
-            if(!ratingInput) return alert('يرجى اختيار عدد النجوم');
-            if(!name || !text) return alert('يرجى كتابة الاسم والتعليق');
+            if(!ratingInput) return alert('يرجى اختيار عدد النجوم');            if(!name || !text) return alert('يرجى كتابة الاسم والتعليق');
 
             const newReview = { name, rating: parseInt(ratingInput.value), text, date: new Date().toISOString() };
             if(!reviews[currentProduct.id]) reviews[currentProduct.id] = [];
@@ -930,6 +962,7 @@
             closeDetails();
             toggleCart();
         }
+
         function saveCart() {
             localStorage.setItem(KEY_CART, JSON.stringify(cart));
             updateCartUI();
@@ -945,8 +978,7 @@
                 list.innerHTML += `
                     <div class="cart-item">
                         <img src="${item.images[0]}" onerror="this.src='https://placehold.co/100'">
-                        <div style="flex:1">
-                            <div style="font-weight:bold">${item.name}</div>
+                        <div style="flex:1">                            <div style="font-weight:bold">${item.name}</div>
                             <div style="font-size:0.8rem; color:#666">${item.selectedColor ? 'اللون المختار' : ''}</div>
                             <div style="color:var(--gold); font-weight:bold;">${item.price} MAD</div>
                         </div>
@@ -979,6 +1011,7 @@
             const city = document.getElementById('cust-city').value;
             const address = document.getElementById('cust-address').value;
             if(!name || !phone || !city) return alert('يرجى إدخال الاسم ورقم الهاتف والمدينة');
+
             const orders = JSON.parse(localStorage.getItem(KEY_ORDERS)) || [];
             let subtotal = cart.reduce((a,b)=>a+b.price, 0);
             let total = subtotal + shippingCost;
@@ -994,8 +1027,7 @@
             message += `---------------------------%0a`;
             message += `👤 *العميل:* ${name}%0a`;
             message += `📞 *الهاتف:* ${phone}%0a`;
-            message += `🏙️ *المدينة:* ${city}%0a`;
-            message += `📍 *العنوان:* ${address}%0a`;
+            message += `🏙️ *المدينة:* ${city}%0a`;            message += `📍 *العنوان:* ${address}%0a`;
             message += `💳 *الدفع:* ${selectedPaymentMethod === 'cod' ? 'عند الاستلام' : 'بطاقة بنكية'}%0a`;
             message += `---------------------------%0a`;
             message += `*المنتجات:*%0a`;
