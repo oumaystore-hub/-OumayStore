@@ -48,6 +48,10 @@
         .selected-colors { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
         .color-dot { width: 30px; height: 30px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: relative; cursor: pointer; }
         .color-dot:hover::after { content: '×'; position: absolute; inset: 0; background: rgba(0,0,0,0.5); color: white; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 12px; }
+        /* Sizes Input */
+        .sizes-input-wrapper { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+        .size-checkbox { display: flex; align-items: center; gap: 5px; cursor: pointer; }
+
         /* Buttons & Tables */
         .btn { padding: 12px 24px; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; transition: 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
         .btn-primary { background: var(--primary); color: white; }
@@ -92,15 +96,23 @@
         .status-badge {
             padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; font-weight: bold;
         }
-        .status-pending { background: #fef3c7; color: #d97706; }
-        .status-processing { background: #dbeafe; color: #1e40af; }
+        .status-pending { background: #fef3c7; color: #d97706; }        .status-processing { background: #dbeafe; color: #1e40af; }
         .status-shipped { background: #d1fae5; color: #065f46; }
         .status-cancelled { background: #fee2e2; color: #991b1b; }
+
         /* ✅ Stats Cards */
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
         .stat-card { background: white; padding: 20px; border-radius: 12px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .stat-card h3 { color: #666; font-size: 0.9rem; margin-bottom: 10px; }
         .stat-card .value { font-size: 1.8rem; font-weight: 800; color: var(--primary); }
+
+        /* ✅ Hamburger Button Smaller */
+        .hamburger-btn {
+            position:fixed; top:20px; right:20px; z-index:200; 
+            background:var(--primary); color:white; width:35px; height:35px; /* ✅ تقليص الحجم */
+            border-radius:50%; display:flex; align-items:center; justify-content:center; 
+            cursor:pointer; box-shadow:0 2px 10px rgba(0,0,0,0.2); font-size: 1rem;
+        }
 
         @media(max-width: 768px) {
             .sidebar { width: 260px; right: -260px; }
@@ -126,17 +138,17 @@
         </div>
     </div>
 
-    <!-- ✅ زر الهمبرغر -->
-    <div style="position:fixed; top:20px; right:20px; z-index:200; background:var(--primary); color:white; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 2px 10px rgba(0,0,0,0.2);" onclick="toggleSidebar()">
+    <!-- ✅ زر الهمبرغر الأصغر -->
+    <div class="hamburger-btn" onclick="toggleSidebar()">
         <i class="fa-solid fa-bars"></i>
     </div>
 
     <!-- القائمة الجانبية -->
     <div class="sidebar" id="sidebar">
-        <div class="logo">OUMAY<span>STORE</span></div>
-        <div class="menu-item active" onclick="switchTab('dashboard')"><i class="fa-solid fa-chart-line"></i> <span>الإحصائيات</span></div>
+        <div class="logo">OUMAY<span>STORE</span></div>        <div class="menu-item active" onclick="switchTab('dashboard')"><i class="fa-solid fa-chart-line"></i> <span>الإحصائيات</span></div>
         <div class="menu-item" onclick="switchTab('products')"><i class="fa-solid fa-box-open"></i> <span>المنتجات</span></div>
         <div class="menu-item" onclick="switchTab('orders')"><i class="fa-solid fa-truck-fast"></i> <span>الطلبات</span></div>
+        <div class="menu-item" onclick="switchTab('settings')"><i class="fa-solid fa-gear"></i> <span>الإعدادات</span></div>
         <div class="menu-item" onclick="window.open('index.html', '_blank')"><i class="fa-solid fa-store"></i> <span>عرض المتجر</span></div>
         <div class="menu-item" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> <span>خروج</span></div>
     </div>
@@ -145,7 +157,8 @@
     <div class="main-content">
         
         <!-- ✅ قسم الإحصائيات -->
-        <div id="tab-dashboard">            <div class="header">
+        <div id="tab-dashboard">
+            <div class="header">
                 <h2 style="color:var(--primary)">📊 إحصائيات المتجر</h2>
             </div>
             <div class="stats-grid">
@@ -181,8 +194,8 @@
                         <tr>
                             <th>صورة</th>
                             <th>الاسم</th>
-                            <th>السعر</th>
-                            <th>الألوان</th>
+                            <th>السعر</th>                            <th>الألوان</th>
+                            <th>المقاسات</th>
                             <th>إجراءات</th>
                         </tr>
                     </thead>
@@ -194,7 +207,8 @@
         <!-- قسم الطلبات -->
         <div id="tab-orders" style="display:none;">
             <div class="header">
-                <h2 style="color:var(--primary)">🛒 الطلبات الواردة</h2>                <button onclick="clearOrders()" class="btn btn-danger">حذف الكل</button>
+                <h2 style="color:var(--primary)">🛒 الطلبات الواردة</h2>
+                <button onclick="clearOrders()" class="btn btn-danger">حذف الكل</button>
             </div>
             <div class="card" style="overflow-x: auto;">
                 <table>
@@ -211,8 +225,25 @@
                 </table>
             </div>
         </div>
-    </div>
 
+        <!-- ✅ قسم الإعدادات -->
+        <div id="tab-settings" style="display:none;">
+            <div class="header">
+                <h2 style="color:var(--primary)">⚙️ إعدادات المتجر</h2>
+            </div>
+            <div class="card">
+                <div class="form-group">
+                    <label class="form-label">ثمن التوصيل (MAD)</label>
+                    <input type="number" id="setting-shipping-cost" class="form-input" value="40">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">نص العروض الترويجية (الشريط العلوي)</label>
+                    <input type="text" id="setting-promo-text" class="form-input" value="🎉 خصم 20% على جميع الملابس الصيفية! | 🚚 توصيل مجاني للطلبات فوق 500 درهم">
+                </div>
+                <button onclick="saveSettings()" class="btn btn-primary">حفظ الإعدادات</button>
+            </div>
+        </div>
+    </div>
     <!-- نافذة إضافة/تعديل منتج -->
     <div id="modal" class="modal-overlay">
         <div class="modal-sheet">
@@ -243,6 +274,7 @@
                     </select>
                 </div>
             </div>
+
             <div class="form-group">
                 <label class="form-label">صور المنتج</label>
                 <div class="upload-area" onclick="document.getElementById('p-files').click()">
@@ -254,12 +286,28 @@
             </div>
 
             <div class="form-group">
-                <label class="form-label">الألوان المتاحة</label>
+                <label class="form-label">الألوان المتاحة (الاسم + اللون)</label>
                 <div class="color-picker-wrapper">
+                    <input type="text" id="color-name-input" placeholder="اسم اللون (مثال: أحمر)" class="form-input" style="flex:1;">
                     <input type="color" id="color-picker" value="#1e3a5f">
-                    <button onclick="addColor()" class="btn btn-primary" style="padding:8px 15px; font-size:0.8rem;">+ إضافة لون</button>
+                    <button onclick="addColor()" class="btn btn-primary" style="padding:8px 15px; font-size:0.8rem;">+ إضافة</button>
                 </div>
-                <div id="selected-colors" class="selected-colors"></div>
+                <div id="selected-colors" class="selected-colors"></div>            </div>
+
+            <div class="form-group">
+                <label class="form-label">المقاسات المتاحة</label>
+                <div class="sizes-input-wrapper">
+                    <label class="size-checkbox"><input type="checkbox" value="S"> S</label>
+                    <label class="size-checkbox"><input type="checkbox" value="M"> M</label>
+                    <label class="size-checkbox"><input type="checkbox" value="L"> L</label>
+                    <label class="size-checkbox"><input type="checkbox" value="XL"> XL</label>
+                    <label class="size-checkbox"><input type="checkbox" value="XXL"> XXL</label>
+                    <label class="size-checkbox"><input type="checkbox" value="36"> 36</label>
+                    <label class="size-checkbox"><input type="checkbox" value="37"> 37</label>
+                    <label class="size-checkbox"><input type="checkbox" value="38"> 38</label>
+                    <label class="size-checkbox"><input type="checkbox" value="39"> 39</label>
+                    <label class="size-checkbox"><input type="checkbox" value="40"> 40</label>
+                </div>
             </div>
 
             <div class="form-group">
@@ -303,14 +351,18 @@
     <script>
         const KEY_PRODUCTS = 'oumay_products_v2';
         const KEY_ORDERS = 'oumay_orders_v2';
+        const KEY_SETTINGS = 'oumay_settings_v2';
         
         // ✅ تحميل آمن للبيانات
         let products = [];
         let orders = [];
+        let settings = { shippingCost: 40, promoText: "🎉 خصم 20% على جميع الملابس الصيفية!" };
         
         try {
             products = JSON.parse(localStorage.getItem(KEY_PRODUCTS)) || [];
             orders = JSON.parse(localStorage.getItem(KEY_ORDERS)) || [];
+            const savedSettings = JSON.parse(localStorage.getItem(KEY_SETTINGS));
+            if(savedSettings) settings = savedSettings;
         } catch(e) {
             console.error("Error loading data", e);
             products = [];
@@ -318,7 +370,8 @@
         }
         
         let currentImages = [];
-        let currentColors = [];
+        let currentColors = []; // Array of objects {name, hex}
+        let currentSizes = [];
         let currentOrderId = null;
 
         // --- نظام الدخول ---
@@ -338,15 +391,16 @@
                 init();
             }
         };
-
         function logout() { 
             localStorage.removeItem('admin_auth'); 
-            location.reload();         }
+            location.reload(); 
+        }
 
         function init() { 
             renderProducts(); 
             renderOrders(); 
             updateStats();
+            loadSettingsUI();
         }
 
         // ✅ فتح وإغلاق القائمة الجانبية
@@ -385,21 +439,38 @@
 
         // --- إدارة الألوان ---
         function addColor() {
-            const color = document.getElementById('color-picker').value;
-            if(!currentColors.includes(color)) {
-                currentColors.push(color);
-                renderColors();
-            }
-        }        function renderColors() {
+            const name = document.getElementById('color-name-input').value;            const hex = document.getElementById('color-picker').value;
+            if(!name) return alert('يرجى كتابة اسم اللون');
+            
+            currentColors.push({name, hex});
+            renderColors();
+            document.getElementById('color-name-input').value = '';
+        }
+        function renderColors() {
             const container = document.getElementById('selected-colors');
             container.innerHTML = '';
             currentColors.forEach((c, idx) => {
-                container.innerHTML += `<div class="color-dot" style="background:${c}" onclick="removeColor(${idx})"></div>`;
+                container.innerHTML += `
+                    <div class="color-dot" style="background:${c.hex}" title="${c.name}" onclick="removeColor(${idx})">
+                        <span style="position:absolute; bottom:-20px; left:50%; transform:translateX(-50%); font-size:10px; white-space:nowrap;">${c.name}</span>
+                    </div>`;
             });
         }
         function removeColor(idx) {
             currentColors.splice(idx, 1);
             renderColors();
+        }
+
+        // --- إدارة المقاسات ---
+        function getSelectedSizes() {
+            const checkboxes = document.querySelectorAll('.sizes-input-wrapper input[type="checkbox"]:checked');
+            return Array.from(checkboxes).map(cb => cb.value);
+        }
+        function setSelectedSizes(sizes) {
+            const checkboxes = document.querySelectorAll('.sizes-input-wrapper input[type="checkbox"]');
+            checkboxes.forEach(cb => {
+                cb.checked = sizes.includes(cb.value);
+            });
         }
 
         // --- حفظ وعرض المنتجات ---
@@ -409,6 +480,7 @@
             const price = document.getElementById('p-price').value;
             const cat = document.getElementById('p-cat').value;
             const desc = document.getElementById('p-desc').value;
+            const sizes = getSelectedSizes();
 
             if(!name || !price) return alert('الاسم والسعر مطلوبان');
 
@@ -416,9 +488,9 @@
                 id: id ? parseInt(id) : Date.now(),
                 name, price: parseInt(price), cat, desc,
                 images: currentImages.length ? currentImages : ['https://placehold.co/400'],
-                colors: currentColors,
+                colors: currentColors,                sizes: sizes,
                 dateAdded: Date.now(),
-                isBestSeller: false // يمكن تعديلها لاحقاً
+                isBestSeller: false
             };
 
             if(id) {
@@ -439,10 +511,12 @@
             const list = document.getElementById('prod-list');
             list.innerHTML = '';
             if(products.length === 0) {
-                list.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px;">لا توجد منتجات مضافة</td></tr>';                return;
+                list.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px;">لا توجد منتجات مضافة</td></tr>';
+                return;
             }
             products.forEach((p, i) => {
-                const colorsHtml = p.colors.map(c => `<span style="display:inline-block;width:15px;height:15px;background:${c};border-radius:50%;margin-left:3px;border:1px solid #ddd;"></span>`).join('');
+                const colorsHtml = p.colors.map(c => `<span style="display:inline-block;width:15px;height:15px;background:${c.hex};border-radius:50%;margin-left:3px;border:1px solid #ddd;" title="${c.name}"></span>`).join('');
+                const sizesHtml = p.sizes.join(', ');
                 
                 list.innerHTML += `
                     <tr>
@@ -450,6 +524,7 @@
                         <td><strong>${p.name}</strong><br><small style="color:#888">${p.cat}</small></td>
                         <td>${p.price} MAD</td>
                         <td>${colorsHtml}</td>
+                        <td>${sizesHtml || '-'}</td>
                         <td>
                             <button onclick="editProd(${i})" class="btn btn-primary" style="padding:5px 10px; font-size:0.8rem;">تعديل</button>
                             <button onclick="deleteProd(${i})" class="btn btn-danger" style="padding:5px 10px; font-size:0.8rem;">حذف</button>
@@ -462,13 +537,14 @@
             const p = products[i];
             document.getElementById('edit-prod-id').value = p.id;
             document.getElementById('p-name').value = p.name;
-            document.getElementById('p-price').value = p.price;
-            document.getElementById('p-cat').value = p.cat;
+            document.getElementById('p-price').value = p.price;            document.getElementById('p-cat').value = p.cat;
             document.getElementById('p-desc').value = p.desc;
             currentImages = [...p.images];
             currentColors = [...p.colors];
+            currentSizes = [...p.sizes];
             renderPreviews();
             renderColors();
+            setSelectedSizes(p.sizes);
             document.getElementById('modal-title').innerText = 'تعديل المنتج';
             document.getElementById('modal').style.display = 'flex';
         }
@@ -488,7 +564,8 @@
             list.innerHTML = '';
             if(!orders.length) return list.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px">لا توجد طلبات</td></tr>';
             
-            orders.forEach(o => {                const statusClass = o.status === 'pending' ? 'status-pending' : 
+            orders.forEach(o => {
+                const statusClass = o.status === 'pending' ? 'status-pending' : 
                                     o.status === 'processing' ? 'status-processing' :
                                     o.status === 'shipped' ? 'status-shipped' : 'status-cancelled';
                 const statusText = o.status === 'pending' ? 'قيد الانتظار' : 
@@ -509,8 +586,7 @@
                                 <i class="fa-solid fa-eye"></i> عرض
                             </button>
                         </td>
-                    </tr>`;
-            });
+                    </tr>`;            });
         }
 
         function viewOrderDetails(id) {
@@ -532,12 +608,16 @@
                         <img src="${item.images[0]}" onerror="this.src='https://placehold.co/50'">
                         <div>
                             <div style="font-weight:bold">${item.name}</div>
-                            <div style="font-size:0.85rem; color:#666">${item.selectedColor ? 'لون: '+item.selectedColor : ''}</div>
+                            <div style="font-size:0.85rem; color:#666">
+                                ${item.selectedColorName ? 'اللون: '+item.selectedColorName : ''} 
+                                ${item.selectedSize ? '| المقاس: '+item.selectedSize : ''}
+                            </div>
                             <div style="color:var(--accent)">${item.price} MAD</div>
                         </div>
                     </div>
                 `).join('')}
-                <div style="margin-top:15px; text-align:left; font-weight:bold; font-size:1.2rem;">                    المجموع: ${order.total} MAD
+                <div style="margin-top:15px; text-align:left; font-weight:bold; font-size:1.2rem;">
+                    المجموع: ${order.total} MAD
                 </div>
             `;
             
@@ -555,8 +635,7 @@
             
             if(orderIndex > -1) {
                 orders[orderIndex].status = newStatus;
-                localStorage.setItem(KEY_ORDERS, JSON.stringify(orders));
-                renderOrders();
+                localStorage.setItem(KEY_ORDERS, JSON.stringify(orders));                renderOrders();
                 alert('تم تحديث حالة الطلب بنجاح');
             }
         }
@@ -566,7 +645,7 @@
             currentOrderId = null;
         }
 
-        // ✅ دالة الطباعة الاحترافية (مع الشعار و QR Code)
+        // ✅ دالة الطباعة الاحترافية (مع الشعار و QR Code واسم اللون)
         function printOrder() {
             if(!currentOrderId) return;
             const order = orders.find(o => o.id === currentOrderId);
@@ -586,7 +665,8 @@
                         .brand-text { font-size: 2rem; font-weight: 800; color: #1e3a5f; }
                         .brand-text span { color: #c9a96e; }
                         .invoice-title { margin-top: 10px; }
-                        .invoice-title h2 { margin: 0; color: #333; }                        .info-section { display: flex; justify-content: space-between; margin-bottom: 30px; }
+                        .invoice-title h2 { margin: 0; color: #333; }
+                        .info-section { display: flex; justify-content: space-between; margin-bottom: 30px; }
                         .info-box { width: 48%; }
                         .info-box h3 { color: #1e3a5f; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 10px; }
                         .info-box p { margin: 5px 0; color: #555; }
@@ -596,6 +676,7 @@
                         .total-section { text-align: left; font-size: 1.2rem; font-weight: bold; margin-top: 20px; }
                         .footer { text-align: center; margin-top: 40px; color: #888; font-size: 0.9rem; border-top: 1px solid #eee; padding-top: 20px; }
                         .qr-code { margin-top: 20px; display: flex; justify-content: center; }
+                        .color-preview { display: inline-block; width: 15px; height: 15px; border-radius: 50%; vertical-align: middle; margin-left: 5px; border: 1px solid #ccc; }
                     </style>
                 </head>
                 <body>
@@ -603,8 +684,7 @@
                         <div class="header">
                             <div class="brand">
                                 <img src="logo.png" onerror="this.style.display='none'">
-                                <div class="brand-text">OUMAY<span>STORE</span></div>
-                            </div>
+                                <div class="brand-text">OUMAY<span>STORE</span></div>                            </div>
                             <div class="invoice-title">
                                 <h2>فاتورة طلب</h2>
                                 <p>رقم: #${order.id.toString().slice(-4)}</p>
@@ -630,14 +710,18 @@
                             <thead>
                                 <tr>
                                     <th>المنتج</th>
-                                    <th>اللون</th>
+                                    <th>التفاصيل</th>
                                     <th>السعر</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                ${order.items.map(item => `                                    <tr>
+                                ${order.items.map(item => `
+                                    <tr>
                                         <td>${item.name}</td>
-                                        <td>${item.selectedColor || '-'}</td>
+                                        <td>
+                                            ${item.selectedColorName ? `<span>اللون: ${item.selectedColorName} <span class="color-preview" style="background:${item.selectedColor}"></span></span><br>` : ''}
+                                            ${item.selectedSize ? `المقاس: ${item.selectedSize}` : ''}
+                                        </td>
                                         <td>${item.price} MAD</td>
                                     </tr>
                                 `).join('')}
@@ -645,12 +729,11 @@
                         </table>
 
                         <div class="total-section">
-                            <p>ثمن التوصيل: 40 MAD</p>
+                            <p>ثمن التوصيل: ${settings.shippingCost} MAD</p>
                             <p style="font-size:1.5rem; color:#1e3a5f;">المجموع الكلي: ${order.total} MAD</p>
                         </div>
 
-                        <!-- ✅ QR Code -->
-                        <div class="qr-code" id="qrcode"></div>
+                        <!-- ✅ QR Code -->                        <div class="qr-code" id="qrcode"></div>
                         <p style="text-align:center; font-size:0.8rem; color:#666;">امسح الرمز لتتبع الطلب</p>
 
                         <div class="footer">
@@ -684,7 +767,8 @@
                 localStorage.setItem(KEY_ORDERS, JSON.stringify(orders));
                 renderOrders();
                 updateStats();
-            }        }
+            }
+        }
 
         // ✅ تحديث الإحصائيات
         function updateStats() {
@@ -698,12 +782,25 @@
             const revenue = orders.reduce((sum, o) => sum + o.total, 0);
             document.getElementById('stat-revenue').innerText = revenue + ' MAD';
         }
+        // --- الإعدادات ---
+        function loadSettingsUI() {
+            document.getElementById('setting-shipping-cost').value = settings.shippingCost;
+            document.getElementById('setting-promo-text').value = settings.promoText;
+        }
+
+        function saveSettings() {
+            settings.shippingCost = parseInt(document.getElementById('setting-shipping-cost').value);
+            settings.promoText = document.getElementById('setting-promo-text').value;
+            localStorage.setItem(KEY_SETTINGS, JSON.stringify(settings));
+            alert('تم حفظ الإعدادات بنجاح');
+        }
 
         // --- واجهة ---
         function switchTab(tab) {
             document.getElementById('tab-dashboard').style.display = tab==='dashboard'?'block':'none';
             document.getElementById('tab-products').style.display = tab==='products'?'block':'none';
             document.getElementById('tab-orders').style.display = tab==='orders'?'block':'none';
+            document.getElementById('tab-settings').style.display = tab==='settings'?'block':'none';
             document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
             event.currentTarget.classList.add('active');
             
@@ -721,8 +818,9 @@
             document.getElementById('p-price').value = '';
             document.getElementById('p-desc').value = '';
             document.getElementById('modal-title').innerText = 'إضافة منتج جديد';
-            currentImages = []; currentColors = [];
+            currentImages = []; currentColors = []; currentSizes = [];
             renderPreviews(); renderColors();
+            setSelectedSizes([]);
         }
         function closeModal() { document.getElementById('modal').style.display = 'none'; }
     </script>
