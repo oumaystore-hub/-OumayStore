@@ -29,15 +29,15 @@
         .card { background: var(--white); padding: 25px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid #e2e8f0; overflow: hidden; margin-bottom: 20px; }
         
         /* Forms */
-        .form-group { margin-bottom: 20px; }
-        .form-label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 0.9rem; color: var(--primary); }
-        .form-input, .form-select { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 10px; outline: none; background: #f8fafc; transition: 0.3s; }
+        .form-group { margin-bottom: 15px; } /* ✅ تقليص المسافة */
+        .form-label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 0.9rem; color: var(--primary); }
+        .form-input, .form-select { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; outline: none; background: #f8fafc; transition: 0.3s; }
         .form-input:focus, .form-select:focus { border-color: var(--accent); background: #fff; box-shadow: 0 0 0 3px rgba(201,169,110,0.1); }
         
         /* Image Upload Multi */
-        .upload-area { border: 2px dashed #cbd5e1; padding: 30px; text-align: center; border-radius: 12px; cursor: pointer; transition: 0.3s; background: #fdfdfd; }
+        .upload-area { border: 2px dashed #cbd5e1; padding: 20px; text-align: center; border-radius: 12px; cursor: pointer; transition: 0.3s; background: #fdfdfd; }
         .upload-area:hover { border-color: var(--accent); background: #fffcf5; }
-        .preview-container { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 15px; }
+        .preview-container { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
         .preview-box { position: relative; width: 80px; height: 80px; border-radius: 8px; overflow: hidden; border: 1px solid #eee; }
         .preview-box img { width: 100%; height: 100%; object-fit: cover; }
         .remove-img { position: absolute; top: 2px; right: 2px; background: rgba(239,68,68,0.9); color: white; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 10px; }
@@ -50,10 +50,10 @@
         .color-dot:hover::after { content: '×'; position: absolute; inset: 0; background: rgba(0,0,0,0.5); color: white; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 12px; }
         /* Sizes Input */
         .sizes-input-wrapper { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
-        .size-checkbox { display: flex; align-items: center; gap: 5px; cursor: pointer; }
+        .size-checkbox { display: flex; align-items: center; gap: 5px; cursor: pointer; font-size: 0.9rem; }
 
         /* Buttons & Tables */
-        .btn { padding: 12px 24px; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; transition: 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.2s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
         .btn-primary { background: var(--primary); color: white; }
         .btn-accent { background: var(--accent); color: white; }
         .btn-danger { background: #ef4444; color: white; }
@@ -61,7 +61,7 @@
         .btn:hover { transform: translateY(-2px); opacity: 0.9; }
 
         table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th, td { padding: 15px; text-align: right; border-bottom: 1px solid #f1f5f9; }
+        th, td { padding: 12px; text-align: right; border-bottom: 1px solid #f1f5f9; }
         th { color: #64748b; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; }
         .prod-thumb { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; }
         
@@ -77,8 +77,9 @@
             backdrop-filter: blur(5px); padding: 20px; 
         }
         .modal-sheet { 
-            background: white; width: 100%; max-width: 600px; max-height: 90vh; 
-            border-radius: 16px; padding: 25px; overflow-y: auto; 
+            background: white; width: 100%; max-width: 550px; /* ✅ تقليص العرض قليلاً */
+            max-height: 90vh; 
+            border-radius: 16px; padding: 20px; overflow-y: auto; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.2); position: relative; 
         }
         
@@ -95,8 +96,8 @@
         }
         .status-badge {
             padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; font-weight: bold;
-        }
-        .status-pending { background: #fef3c7; color: #d97706; }        .status-processing { background: #dbeafe; color: #1e40af; }
+        }        .status-pending { background: #fef3c7; color: #d97706; }
+        .status-processing { background: #dbeafe; color: #1e40af; }
         .status-shipped { background: #d1fae5; color: #065f46; }
         .status-cancelled { background: #fee2e2; color: #991b1b; }
 
@@ -144,8 +145,8 @@
     </div>
 
     <!-- القائمة الجانبية -->
-    <div class="sidebar" id="sidebar">
-        <div class="logo">OUMAY<span>STORE</span></div>        <div class="menu-item active" onclick="switchTab('dashboard')"><i class="fa-solid fa-chart-line"></i> <span>الإحصائيات</span></div>
+    <div class="sidebar" id="sidebar">        <div class="logo">OUMAY<span>STORE</span></div>
+        <div class="menu-item active" onclick="switchTab('dashboard')"><i class="fa-solid fa-chart-line"></i> <span>الإحصائيات</span></div>
         <div class="menu-item" onclick="switchTab('products')"><i class="fa-solid fa-box-open"></i> <span>المنتجات</span></div>
         <div class="menu-item" onclick="switchTab('orders')"><i class="fa-solid fa-truck-fast"></i> <span>الطلبات</span></div>
         <div class="menu-item" onclick="switchTab('settings')"><i class="fa-solid fa-gear"></i> <span>الإعدادات</span></div>
@@ -193,8 +194,8 @@
                     <thead>
                         <tr>
                             <th>صورة</th>
-                            <th>الاسم</th>
-                            <th>السعر</th>                            <th>الألوان</th>
+                            <th>الاسم</th>                            <th>السعر</th>
+                            <th>الألوان</th>
                             <th>المقاسات</th>
                             <th>إجراءات</th>
                         </tr>
@@ -242,12 +243,12 @@
                 </div>
                 <button onclick="saveSettings()" class="btn btn-primary">حفظ الإعدادات</button>
             </div>
-        </div>
-    </div>
+        </div>    </div>
+
     <!-- نافذة إضافة/تعديل منتج -->
     <div id="modal" class="modal-overlay">
         <div class="modal-sheet">
-            <div style="display:flex; justify-content:space-between; margin-bottom:20px; align-items:center;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:15px; align-items:center;">
                 <h3 style="color:var(--primary)" id="modal-title">بيانات المنتج</h3>
                 <button onclick="closeModal()" style="background:none; border:none; font-size:1.5rem; cursor:pointer; color:#888;">✕</button>
             </div>
@@ -291,8 +292,8 @@
                     <input type="text" id="color-name-input" placeholder="اسم اللون (مثال: أحمر)" class="form-input" style="flex:1;">
                     <input type="color" id="color-picker" value="#1e3a5f">
                     <button onclick="addColor()" class="btn btn-primary" style="padding:8px 15px; font-size:0.8rem;">+ إضافة</button>
-                </div>
-                <div id="selected-colors" class="selected-colors"></div>            </div>
+                </div>                <div id="selected-colors" class="selected-colors"></div>
+            </div>
 
             <div class="form-group">
                 <label class="form-label">المقاسات المتاحة</label>
@@ -315,7 +316,7 @@
                 <textarea id="p-desc" class="form-input" rows="3"></textarea>
             </div>
 
-            <div style="display:flex; gap:10px; margin-top:25px; flex-wrap:wrap;">
+            <div style="display:flex; gap:10px; margin-top:20px; flex-wrap:wrap;">
                 <button onclick="saveProduct()" class="btn btn-accent" style="flex:1; justify-content:center;">حفظ</button>
                 <button onclick="closeModal()" class="btn btn-danger" style="flex:1; justify-content:center;">إلغاء</button>
             </div>
@@ -389,8 +390,8 @@
             if(localStorage.getItem('admin_auth') === 'true') {
                 document.getElementById('login-overlay').style.display = 'none';
                 init();
-            }
-        };
+            }        };
+
         function logout() { 
             localStorage.removeItem('admin_auth'); 
             location.reload(); 
@@ -438,8 +439,8 @@
         }
 
         // --- إدارة الألوان ---
-        function addColor() {
-            const name = document.getElementById('color-name-input').value;            const hex = document.getElementById('color-picker').value;
+        function addColor() {            const name = document.getElementById('color-name-input').value;
+            const hex = document.getElementById('color-picker').value;
             if(!name) return alert('يرجى كتابة اسم اللون');
             
             currentColors.push({name, hex});
@@ -487,8 +488,8 @@
             const product = {
                 id: id ? parseInt(id) : Date.now(),
                 name, price: parseInt(price), cat, desc,
-                images: currentImages.length ? currentImages : ['https://placehold.co/400'],
-                colors: currentColors,                sizes: sizes,
+                images: currentImages.length ? currentImages : ['https://placehold.co/400'],                colors: currentColors,
+                sizes: sizes,
                 dateAdded: Date.now(),
                 isBestSeller: false
             };
@@ -536,8 +537,8 @@
         function editProd(i) {
             const p = products[i];
             document.getElementById('edit-prod-id').value = p.id;
-            document.getElementById('p-name').value = p.name;
-            document.getElementById('p-price').value = p.price;            document.getElementById('p-cat').value = p.cat;
+            document.getElementById('p-name').value = p.name;            document.getElementById('p-price').value = p.price;
+            document.getElementById('p-cat').value = p.cat;
             document.getElementById('p-desc').value = p.desc;
             currentImages = [...p.images];
             currentColors = [...p.colors];
@@ -585,8 +586,8 @@
                             <button onclick="viewOrderDetails(${o.id})" class="btn btn-primary" style="padding:5px 10px; font-size:0.8rem;">
                                 <i class="fa-solid fa-eye"></i> عرض
                             </button>
-                        </td>
-                    </tr>`;            });
+                        </td>                    </tr>`;
+            });
         }
 
         function viewOrderDetails(id) {
@@ -634,8 +635,8 @@
             const orderIndex = orders.findIndex(o => o.id === currentOrderId);
             
             if(orderIndex > -1) {
-                orders[orderIndex].status = newStatus;
-                localStorage.setItem(KEY_ORDERS, JSON.stringify(orders));                renderOrders();
+                orders[orderIndex].status = newStatus;                localStorage.setItem(KEY_ORDERS, JSON.stringify(orders));
+                renderOrders();
                 alert('تم تحديث حالة الطلب بنجاح');
             }
         }
@@ -683,8 +684,8 @@
                     <div class="invoice-container">
                         <div class="header">
                             <div class="brand">
-                                <img src="logo.png" onerror="this.style.display='none'">
-                                <div class="brand-text">OUMAY<span>STORE</span></div>                            </div>
+                                <img src="logo.png" onerror="this.style.display='none'">                                <div class="brand-text">OUMAY<span>STORE</span></div>
+                            </div>
                             <div class="invoice-title">
                                 <h2>فاتورة طلب</h2>
                                 <p>رقم: #${order.id.toString().slice(-4)}</p>
@@ -732,8 +733,8 @@
                             <p>ثمن التوصيل: ${settings.shippingCost} MAD</p>
                             <p style="font-size:1.5rem; color:#1e3a5f;">المجموع الكلي: ${order.total} MAD</p>
                         </div>
-
-                        <!-- ✅ QR Code -->                        <div class="qr-code" id="qrcode"></div>
+                        <!-- ✅ QR Code -->
+                        <div class="qr-code" id="qrcode"></div>
                         <p style="text-align:center; font-size:0.8rem; color:#666;">امسح الرمز لتتبع الطلب</p>
 
                         <div class="footer">
