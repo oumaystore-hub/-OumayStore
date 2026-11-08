@@ -58,6 +58,12 @@ th,td{padding:12px;text-align:right;border-bottom:1px solid #f1f5f9;vertical-ali
 .login-card .form-input{margin-top:12px}
 .login-links{margin-top:14px}
 .login-links button{background:none;border:0;color:var(--primary);text-decoration:underline;cursor:pointer;padding:8px;font-size:1rem}
+input[type="password"],
+input[type="email"] {
+    direction: ltr !important;
+    text-align: left !important;
+    unicode-bidi: plaintext;
+}
 @media(max-width:768px){
 .main-content{padding:70px 15px 15px}
 .header{flex-direction:column;align-items:stretch}
@@ -70,7 +76,7 @@ th,td{padding:9px;font-size:.8rem}
 
 <div id="login-overlay">
  <div class="login-card">
-  <h2 style="color:var(--primary)">OUMAY ADMIN</h2>
+  <h2 style="color:var(--primary)">OUMAYSTORE ADMIN</h2>
   <p style="margin:15px 0;color:#64748b">تسجيل الدخول الآمن</p>
   <input type="email" id="login-email" class="form-input" placeholder="البريد الإلكتروني" autocomplete="username" value="oumaystore@gmail.com">
   <input type="password" id="pass-input" class="form-input" placeholder="كلمة المرور" autocomplete="current-password">
