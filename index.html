@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#142b49">
-<meta name="description" content="OUMAYSTORE - Fashion, accessories and lifestyle in Morocco.">
+<meta name="description" content="OUMAYSTORE - Fashion, accessories and lifestyle for everyone in Morocco.">
 <title>OUMAYSTORE | أناقتك تبدأ من هنا</title>
 <link rel="manifest" href="manifest.json">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -57,52 +57,57 @@ img{max-width:100%;display:block}
 /* شريط العروض المتحرك */
 .promo-bar{
  background:var(--navy);color:white;overflow:hidden;
- padding:10px 0;font-size:.88rem;white-space:nowrap;
+ padding:11px 0;font-size:.9rem;white-space:nowrap;
 }
 .promo-track{
  display:flex;width:max-content;align-items:center;
- animation:promoMove 28s linear infinite;
+ direction:ltr;
+ animation:promoMove 32s linear infinite;
+ will-change:transform;
 }
 .promo-content{
- display:flex;align-items:center;gap:35px;padding-inline:25px;
+ display:flex;flex:0 0 auto;align-items:center;gap:35px;
+ padding-inline:25px;direction:rtl;
 }
 .promo-content span{color:var(--gold2)}
 .promo-bar:hover .promo-track,
 .promo-bar:active .promo-track{animation-play-state:paused}
 @keyframes promoMove{
  from{transform:translateX(0)}
- to{transform:translateX(50%)}
+ to{transform:translateX(-50%)}
 }
 
 /* الرأس والشعار */
 header{
- min-height:82px;background:#ffffffed;backdrop-filter:blur(14px);
+ min-height:105px;background:#ffffffed;backdrop-filter:blur(14px);
  border-bottom:1px solid var(--line);
  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
- padding:7px max(3%,calc((100% - 1200px)/2));
- position:sticky;top:0;z-index:100;gap:10px;
+ padding:10px max(3%,calc((100% - 1200px)/2));
+ position:sticky;top:0;z-index:100;gap:12px;
 }
-.header-group{display:flex;align-items:center;gap:10px;min-width:0}
+.header-group{display:flex;align-items:center;gap:11px;min-width:0}
+.header-group:first-child{justify-content:flex-start}
 .header-group:last-child{justify-content:flex-end}
 .icon-btn{
- width:41px;height:41px;flex:0 0 41px;border:1px solid var(--line);
+ width:43px;height:43px;flex:0 0 43px;border:1px solid var(--line);
  border-radius:50%;background:white;color:var(--navy);
  font-size:1rem;display:grid;place-items:center;position:relative;
+ transition:.2s;
 }
 .icon-btn:hover{background:var(--navy);color:white}
 .brand{
  display:flex;flex-direction:column;align-items:center;justify-content:center;
- gap:0;min-width:130px;text-align:center;
+ gap:2px;min-width:160px;text-align:center;
 }
-.brand img{width:39px;height:39px;object-fit:contain}
-.brand-name{font-size:1.22rem;font-weight:900;color:var(--navy);white-space:nowrap;line-height:1.25}
+.brand img{width:52px;height:52px;object-fit:contain}
+.brand-name{font-size:1.5rem;font-weight:900;color:var(--navy);white-space:nowrap;line-height:1.2}
 .brand-name span{color:var(--gold)}
 .counter{
  position:absolute;top:-5px;inset-inline-end:-4px;background:var(--gold);
  color:white;min-width:19px;height:19px;border-radius:20px;
  font-size:.68rem;display:grid;place-items:center;padding:0 4px;
 }
-.desktop-nav{display:flex;align-items:center;gap:18px;justify-content:center}
+.desktop-nav{display:flex;align-items:center;gap:22px;justify-content:center}
 .desktop-nav button{border:0;background:none;color:#536174;font-weight:700;white-space:nowrap}
 .desktop-nav button:hover{color:var(--gold)}
 .search-panel{background:white;padding:14px 3%;border-bottom:1px solid var(--line);display:none}
@@ -372,16 +377,17 @@ html[dir=ltr] .sidebar-links button{text-align:left}
 /* تحسينات الهاتف */
 @media(max-width:650px){
  header{
-  min-height:75px;padding:7px 10px;
-  grid-template-columns:1fr auto 1fr;gap:4px;
+  min-height:78px;padding:7px 10px;
+  grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:5px;
  }
  .header-group{gap:6px}
  .header-group:first-child{justify-content:flex-start}
  .header-group:last-child{justify-content:flex-end}
  .header-group .icon-btn{width:36px;height:36px;flex-basis:36px;font-size:.88rem}
  .brand{min-width:0;gap:0}
- .brand img{width:32px;height:32px}
- .brand-name{font-size:.92rem}
+ .brand img{width:40px;height:40px}
+ .brand-name{font-size:1.05rem}
+ .language-header-btn{display:none}
  .desktop-nav{display:none}
  .hero{
   min-height:300px;margin:13px auto 18px;width:94%;
@@ -452,14 +458,16 @@ html[dir=ltr] .sidebar-links button{text-align:left}
  .det-title{font-size:1.15rem}
  .search-panel{padding:11px 4%}
  .search-inner input{padding:11px 14px}
+ .promo-content{gap:22px;padding-inline:18px}
 }
 
 /* الهواتف الصغيرة */
 @media(max-width:380px){
  header{padding-inline:7px}
- .header-group .icon-btn{width:33px;height:33px;flex-basis:33px}
- .brand img{width:28px;height:28px}
- .brand-name{font-size:.82rem}
+ .header-group{gap:4px}
+ .header-group .icon-btn{width:32px;height:32px;flex-basis:32px;font-size:.82rem}
+ .brand img{width:34px;height:34px}
+ .brand-name{font-size:.88rem}
  .p-img-box{height:150px}
  .p-bottom{align-items:stretch;flex-direction:column}
  .add-btn{width:100%}
@@ -491,12 +499,12 @@ html[dir=ltr] .sidebar-links button{text-align:left}
  <div class="promo-bar" aria-label="Store announcement">
   <div class="promo-track">
    <div class="promo-content">
-    <span>✦</span><span id="promo-bar-text" data-i18n="promo">مرحباً بكم في OUMAYSTORE — توصيل لجميع المدن المغربية</span><span>✦</span>
-    <span>عروض مميزة · تشكيلة جديدة · توصيل لجميع المدن</span><span>✦</span>
+    <span>✦</span><span class="promo-dynamic">مرحباً بكم في OUMAYSTORE — تشكيلة للجميع وتوصيل لجميع المدن المغربية</span><span>✦</span>
+    <span class="promo-extra">أزياء · إكسسوارات · منتجات منزلية · عروض مميزة</span><span>✦</span>
    </div>
    <div class="promo-content" aria-hidden="true">
-    <span>✦</span><span data-i18n="promo">مرحباً بكم في OUMAYSTORE — توصيل لجميع المدن المغربية</span><span>✦</span>
-    <span>عروض مميزة · تشكيلة جديدة · توصيل لجميع المدن</span><span>✦</span>
+    <span>✦</span><span class="promo-dynamic">مرحباً بكم في OUMAYSTORE — تشكيلة للجميع وتوصيل لجميع المدن المغربية</span><span>✦</span>
+    <span class="promo-extra">أزياء · إكسسوارات · منتجات منزلية · عروض مميزة</span><span>✦</span>
    </div>
   </div>
  </div>
@@ -506,7 +514,7 @@ html[dir=ltr] .sidebar-links button{text-align:left}
    <button class="icon-btn" onclick="toggleSidebar()" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
   </div>
 
-  <a class="brand" href="#" aria-label="OUMAYSTORE">
+  <a class="brand" href="#" aria-label="OUMAYSTORE" onclick="return false">
    <img src="logo.png" alt="OUMAYSTORE" onerror="this.style.display='none'">
    <div class="brand-name">OUMAY<span>STORE</span></div>
   </a>
@@ -515,7 +523,7 @@ html[dir=ltr] .sidebar-links button{text-align:left}
    <button class="icon-btn" onclick="toggleSearch()" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
    <button class="icon-btn" onclick="showWishlist()" aria-label="Wishlist"><i class="fa-regular fa-heart"></i><span class="counter" id="wishlist-count">0</span></button>
    <button class="icon-btn" onclick="toggleCart()" aria-label="Cart"><i class="fa-solid fa-bag-shopping"></i><span class="counter" id="cart-count">0</span></button>
-   <button class="icon-btn" onclick="changeLanguage()" aria-label="Language"><i class="fa-solid fa-globe"></i></button>
+   <button class="icon-btn language-header-btn" onclick="changeLanguage()" aria-label="Language"><i class="fa-solid fa-globe"></i></button>
   </div>
 
   <nav class="desktop-nav" style="grid-column:1/-1;grid-row:2">
@@ -556,21 +564,21 @@ html[dir=ltr] .sidebar-links button{text-align:left}
    <div class="hero-content">
     <div class="hero-kicker">OUMAYSTORE COLLECTION</div>
     <h1 data-i18n="heroTitle">أناقتك تبدأ من هنا</h1>
-    <p data-i18n="heroDesc">اكتشفي تشكيلة مختارة بعناية من الأزياء والإكسسوارات ومنتجات المنزل، واجعلي كل يوم أكثر أناقة.</p>
-    <button class="primary-btn" onclick="document.getElementById('products-section').scrollIntoView({behavior:'smooth'})"><span data-i18n="discover">اكتشفي المنتجات</span> <i class="fa-solid fa-arrow-left"></i></button>
+    <p data-i18n="heroDesc">اكتشفوا تشكيلة مختارة بعناية من الأزياء والإكسسوارات ومنتجات المنزل لجميع أفراد الأسرة، لتجدوا ما يناسب أسلوبكم واحتياجاتكم.</p>
+    <button class="primary-btn" onclick="document.getElementById('products-section').scrollIntoView({behavior:'smooth'})"><span data-i18n="discover">اكتشف المنتجات</span> <i class="fa-solid fa-arrow-left"></i></button>
    </div>
   </section>
 
   <section class="features">
-   <div class="feature"><i class="fa-solid fa-truck-fast"></i><div><strong data-i18n="delivery">توصيل لجميع المدن</strong><small data-i18n="door">إلى باب منزلك</small></div></div>
-   <div class="feature"><i class="fa-solid fa-money-bill-wave"></i><div><strong data-i18n="cash">الدفع عند الاستلام</strong><small data-i18n="easy">تسوق بكل راحة</small></div></div>
-   <div class="feature"><i class="fa-solid fa-shield-heart"></i><div><strong data-i18n="secure">تسوق آمن</strong><small data-i18n="trust">نهتم بثقتك</small></div></div>
-   <div class="feature"><i class="fa-solid fa-headset"></i><div><strong data-i18n="support">خدمة العملاء</strong><small data-i18n="help">نحن هنا لمساعدتك</small></div></div>
+   <div class="feature"><i class="fa-solid fa-truck-fast"></i><div><strong data-i18n="delivery">توصيل لجميع المدن</strong><small data-i18n="door">إلى باب منزلكم</small></div></div>
+   <div class="feature"><i class="fa-solid fa-money-bill-wave"></i><div><strong data-i18n="cash">الدفع عند الاستلام</strong><small data-i18n="easy">تسوقوا بكل راحة</small></div></div>
+   <div class="feature"><i class="fa-solid fa-shield-heart"></i><div><strong data-i18n="secure">تسوق آمن</strong><small data-i18n="trust">نهتم بثقتكم</small></div></div>
+   <div class="feature"><i class="fa-solid fa-headset"></i><div><strong data-i18n="support">خدمة العملاء</strong><small data-i18n="help">نحن هنا لمساعدتكم</small></div></div>
   </section>
 
   <section class="section" id="categories-section">
    <div class="section-heading">
-    <div><h2 data-i18n="shopCategory">تسوق حسب التصنيف</h2><p data-i18n="categorySubtitle">اكتشف تشكيلتنا حسب القسم الذي يناسبك</p></div>
+    <div><h2 data-i18n="shopCategory">تسوق حسب التصنيف</h2><p data-i18n="categorySubtitle">اكتشفوا تشكيلتنا حسب القسم الذي يناسبكم</p></div>
    </div>
    <div class="category-panels">
     <button class="category-card" style="--cat-image:url('https://images.unsplash.com/photo-1483985988355-763728e1935b?w=700&auto=format&fit=crop&q=80')" onclick="filterCategory('ملابس النساء')"><strong data-i18n="women">ملابس النساء</strong></button>
@@ -583,7 +591,7 @@ html[dir=ltr] .sidebar-links button{text-align:left}
   </section>
 
   <section class="section" id="products-section">
-   <div class="section-heading"><div><h2 id="section-title" data-i18n="latest">وصل حديثاً</h2><p data-i18n="latestSubtitle">اختياراتنا الجديدة لك</p></div></div>
+   <div class="section-heading"><div><h2 id="section-title" data-i18n="latest">وصل حديثاً</h2><p data-i18n="latestSubtitle">اختياراتنا الجديدة لكم</p></div></div>
    <div class="filter-panel">
     <select id="subCategoryFilter" onchange="applyFilters()"><option value="" data-i18n="allCategories">كل التصنيفات الفرعية</option></select>
     <select id="sortFilter" onchange="applyFilters()">
@@ -609,12 +617,12 @@ html[dir=ltr] .sidebar-links button{text-align:left}
   </section>
 
   <section class="offer-strip">
-   <div><h3 data-i18n="specialPicks">✨ اختيارات مميزة لك</h3><p data-i18n="specialDesc">اكتشف المنتجات الأكثر تميزاً في OUMAYSTORE</p></div>
+   <div><h3 data-i18n="specialPicks">✨ اختيارات مميزة للجميع</h3><p data-i18n="specialDesc">اكتشفوا المنتجات الأكثر تميزاً في OUMAYSTORE</p></div>
    <button class="primary-btn" onclick="showBestSellers()"><span data-i18n="discoverBest">اكتشف الأفضل</span> <i class="fa-solid fa-arrow-left"></i></button>
   </section>
 
   <section class="section" id="best-section">
-   <div class="section-heading"><div><h2 data-i18n="bestProducts">⭐ المنتجات الأكثر تميزاً</h2><p data-i18n="bestSubtitle">اختيارات المتجر المميزة</p></div></div>
+   <div class="section-heading"><div><h2 data-i18n="bestProducts">⭐ منتجات مميزة</h2><p data-i18n="bestSubtitle">اختيارات المتجر المميزة لجميع أفراد الأسرة</p></div></div>
    <div class="products-grid" id="best-products-container"></div>
   </section>
 
@@ -715,19 +723,25 @@ let currentLang='ar',shippingCost=40,currentFilter='all',showingWishlist=false;
 
 const translations={
  ar:{
-  promo:'مرحباً بكم في OUMAYSTORE — توصيل لجميع المدن المغربية',home:'الرئيسية',women:'النساء',men:'الرجال',kids:'الأطفال',shoes:'الأحذية',accessories:'الإكسسوارات',homeDecor:'المنزل والديكور',wishlist:'المفضلة',changeLanguage:'تغيير اللغة',contact:'تواصل معنا',search:'بحث',cart:'السلة',searchPlaceholder:'ابحث عن منتج...',clear:'مسح',
-  heroTitle:'أناقتك تبدأ من هنا',heroDesc:'اكتشفي تشكيلة مختارة بعناية من الأزياء والإكسسوارات ومنتجات المنزل، واجعلي كل يوم أكثر أناقة.',discover:'اكتشفي المنتجات',delivery:'توصيل لجميع المدن',door:'إلى باب منزلك',cash:'الدفع عند الاستلام',easy:'تسوقي بكل راحة',secure:'تسوق آمن',trust:'نهتم بثقتك',support:'خدمة العملاء',help:'نحن هنا لمساعدتك',
-  shopCategory:'تسوقي حسب التصنيف',categorySubtitle:'اكتشفي تشكيلتنا حسب القسم الذي يناسبك',latest:'وصل حديثاً',latestSubtitle:'اختياراتنا الجديدة لك',loading:'جارٍ تحميل المنتجات...',all:'الكل',allCategories:'كل التصنيفات الفرعية',sortNewest:'الأحدث',priceLow:'السعر: الأقل أولاً',priceHigh:'السعر: الأعلى أولاً',sortName:'الاسم',priceFrom:'السعر من',priceTo:'السعر إلى',resetFilters:'إعادة ضبط الفلاتر',specialPicks:'✨ اختيارات مميزة لك',specialDesc:'اكتشفي المنتجات الأكثر تميزاً في OUMAYSTORE',discoverBest:'اكتشفي الأفضل',bestProducts:'⭐ المنتجات الأكثر تميزاً',bestSubtitle:'اختيارات المتجر المميزة',reviewsTitle:'آراء عملائنا',reviewsSubtitle:'تجارب تسعدنا وثقتكم تعني لنا الكثير',reviewOne:'منتجات رائعة والجودة ممتازة، والتوصيل كان سريعاً جداً.',reviewTwo:'تعامل راقٍ وأسعار مناسبة، تجربة تسوق جميلة.',reviewThree:'المنتج وصلني كما في الصور، شكراً OUMAYSTORE.',morocco:'المغرب',rights:'جميع الحقوق محفوظة',chooseColor:'اختاري اللون:',chooseSize:'اختاري المقاس:',addCart:'أضيفي إلى السلة',buyerReviews:'تقييمات المشترين',yourName:'اسمك',yourReview:'اكتبي تجربتك...',publishReview:'نشر التقييم',cartTitle:'سلة المشتريات',fullName:'الاسم الكامل',phone:'رقم الهاتف',chooseCity:'اختر المدينة',otherCity:'مدينة أخرى',address:'العنوان التفصيلي',cashOnDelivery:'الدفع نقداً عند الاستلام',shipping:'التوصيل:',total:'المجموع:',confirmOrder:'تأكيد الطلب',new:'جديد',add:'أضيفي',added:'تمت الإضافة',noProducts:'لا توجد منتجات في هذا القسم حالياً',noReviews:'لا توجد تقييمات بعد.',emptyCart:'سلتك فارغة حالياً',chooseColorError:'يرجى اختيار اللون',chooseSizeError:'يرجى اختيار المقاس',outStock:'هذا المنتج غير متوفر حالياً',removedWish:'تمت الإزالة من المفضلة',addedWish:'أضيف المنتج إلى المفضلة',removedCart:'تم حذف المنتج من السلة',reviewThanks:'شكراً لك على تقييمك!',fillFields:'يرجى إكمال بيانات التوصيل',invalidPhone:'يرجى إدخال رقم هاتف صحيح',emptyWishlist:'قائمة المفضلة فارغة',searchResults:'نتائج البحث',latestTitle:'وصل حديثاً',product:'منتج',products:'منتجات',orderLoading:'جارٍ تسجيل الطلب...',orderSuccess:'تم تسجيل طلبك بنجاح. رقم الطلب: ',orderError:'تعذر تسجيل الطلب. حاول مجدداً.',loadingError:'تعذر تحميل المنتجات. يرجى المحاولة لاحقاً.',other:'لون موحد'
+  promo:'مرحباً بكم في OUMAYSTORE — تشكيلة للجميع وتوصيل لجميع المدن المغربية',
+  promoExtra:'أزياء · إكسسوارات · منتجات منزلية · عروض مميزة',
+  home:'الرئيسية',women:'النساء',men:'الرجال',kids:'الأطفال',shoes:'الأحذية',accessories:'الإكسسوارات',homeDecor:'المنزل والديكور',wishlist:'المفضلة',changeLanguage:'تغيير اللغة',contact:'تواصل معنا',search:'بحث',cart:'السلة',searchPlaceholder:'ابحث عن منتج...',clear:'مسح',
+  heroTitle:'أناقتكم تبدأ من هنا',heroDesc:'اكتشفوا تشكيلة مختارة بعناية من الأزياء والإكسسوارات ومنتجات المنزل لجميع أفراد الأسرة، لتجدوا ما يناسب أسلوبكم واحتياجاتكم.',discover:'اكتشف المنتجات',delivery:'توصيل لجميع المدن',door:'إلى باب منزلكم',cash:'الدفع عند الاستلام',easy:'تسوقوا بكل راحة',secure:'تسوق آمن',trust:'نهتم بثقتكم',support:'خدمة العملاء',help:'نحن هنا لمساعدتكم',
+  shopCategory:'تسوق حسب التصنيف',categorySubtitle:'اكتشفوا تشكيلتنا حسب القسم الذي يناسبكم',latest:'وصل حديثاً',latestSubtitle:'اختياراتنا الجديدة لكم',loading:'جارٍ تحميل المنتجات...',all:'الكل',allCategories:'كل التصنيفات الفرعية',sortNewest:'الأحدث',priceLow:'السعر: الأقل أولاً',priceHigh:'السعر: الأعلى أولاً',sortName:'الاسم',priceFrom:'السعر من',priceTo:'السعر إلى',resetFilters:'إعادة ضبط الفلاتر',specialPicks:'✨ اختيارات مميزة للجميع',specialDesc:'اكتشفوا المنتجات الأكثر تميزاً في OUMAYSTORE',discoverBest:'اكتشف الأفضل',bestProducts:'⭐ منتجات مميزة',bestSubtitle:'اختيارات المتجر المميزة لجميع أفراد الأسرة',reviewsTitle:'آراء عملائنا',reviewsSubtitle:'تجارب تسعدنا وثقتكم تعني لنا الكثير',reviewOne:'منتجات رائعة والجودة ممتازة، والتوصيل كان سريعاً جداً.',reviewTwo:'تعامل راقٍ وأسعار مناسبة، تجربة تسوق جميلة.',reviewThree:'المنتج وصلني كما في الصور، شكراً OUMAYSTORE.',morocco:'المغرب',rights:'جميع الحقوق محفوظة',chooseColor:'اختر اللون:',chooseSize:'اختر المقاس:',addCart:'أضف إلى السلة',buyerReviews:'تقييمات المشترين',yourName:'اسمك',yourReview:'اكتب تجربتك...',publishReview:'نشر التقييم',cartTitle:'سلة المشتريات',fullName:'الاسم الكامل',phone:'رقم الهاتف',chooseCity:'اختر المدينة',otherCity:'مدينة أخرى',address:'العنوان التفصيلي',cashOnDelivery:'الدفع نقداً عند الاستلام',shipping:'التوصيل:',total:'المجموع:',confirmOrder:'تأكيد الطلب',new:'جديد',add:'أضف',added:'تمت الإضافة',noProducts:'لا توجد منتجات في هذا القسم حالياً',noReviews:'لا توجد تقييمات بعد.',emptyCart:'سلتك فارغة حالياً',chooseColorError:'يرجى اختيار اللون',chooseSizeError:'يرجى اختيار المقاس',chooseRatingError:'يرجى اختيار عدد النجوم',outStock:'هذا المنتج غير متوفر حالياً',removedWish:'تمت الإزالة من المفضلة',addedWish:'أضيف المنتج إلى المفضلة',removedCart:'تم حذف المنتج من السلة',reviewThanks:'شكراً لك على تقييمك!',fillFields:'يرجى إكمال بيانات التوصيل',invalidPhone:'يرجى إدخال رقم هاتف صحيح',emptyWishlist:'قائمة المفضلة فارغة',searchResults:'نتائج البحث',latestTitle:'وصل حديثاً',product:'منتج',products:'منتجات',orderLoading:'جارٍ تسجيل الطلب...',orderSuccess:'تم تسجيل طلبك بنجاح. رقم الطلب: ',orderError:'تعذر تسجيل الطلب. حاول مجدداً.',loadingError:'تعذر تحميل المنتجات. يرجى المحاولة لاحقاً.',other:'لون موحد'
  },
  fr:{
-  promo:'Bienvenue chez OUMAYSTORE — Livraison dans toutes les villes du Maroc',home:'Accueil',women:'Femme',men:'Homme',kids:'Enfants',shoes:'Chaussures',accessories:'Accessoires',homeDecor:'Maison & Déco',wishlist:'Favoris',changeLanguage:'Changer la langue',contact:'Contactez-nous',search:'Recherche',cart:'Panier',searchPlaceholder:'Rechercher un produit...',clear:'Effacer',
-  heroTitle:'Votre style commence ici',heroDesc:'Découvrez une sélection soignée de vêtements, accessoires et articles pour la maison.',discover:'Découvrir les produits',delivery:'Livraison partout au Maroc',door:'À votre porte',cash:'Paiement à la livraison',easy:'Achetez en toute sérénité',secure:'Achats sécurisés',trust:'Votre confiance compte',support:'Service client',help:'Nous sommes là pour vous',
-  shopCategory:'Acheter par catégorie',categorySubtitle:'Découvrez nos collections par univers',latest:'Nouveautés',latestSubtitle:'Nos dernières sélections',loading:'Chargement des produits...',all:'Tout',allCategories:'Toutes les sous-catégories',sortNewest:'Plus récents',priceLow:'Prix croissant',priceHigh:'Prix décroissant',sortName:'Nom',priceFrom:'Prix min.',priceTo:'Prix max.',resetFilters:'Réinitialiser les filtres',specialPicks:'✨ Notre sélection',specialDesc:'Découvrez les articles incontournables OUMAYSTORE',discoverBest:'Voir la sélection',bestProducts:'⭐ Nos meilleures sélections',bestSubtitle:'Les coups de cœur de la boutique',reviewsTitle:'Avis clients',reviewsSubtitle:'Votre confiance nous inspire',reviewOne:'Des produits magnifiques et une livraison très rapide.',reviewTwo:'Un excellent service et des prix intéressants.',reviewThree:'Produit conforme aux photos. Merci OUMAYSTORE.',morocco:'Maroc',rights:'Tous droits réservés',chooseColor:'Choisir la couleur :',chooseSize:'Choisir la taille :',addCart:'Ajouter au panier',buyerReviews:'Avis des clients',yourName:'Votre nom',yourReview:'Votre avis...',publishReview:'Publier',cartTitle:'Votre panier',fullName:'Nom complet',phone:'Téléphone',chooseCity:'Choisir une ville',otherCity:'Autre ville',address:'Adresse détaillée',cashOnDelivery:'Paiement à la livraison',shipping:'Livraison :',total:'Total :',confirmOrder:'Confirmer la commande',new:'Nouveau',add:'Ajouter',added:'Ajouté',noProducts:'Aucun produit dans cette catégorie',noReviews:'Aucun avis pour le moment.',emptyCart:'Votre panier est vide',chooseColorError:'Veuillez choisir une couleur',chooseSizeError:'Veuillez choisir une taille',outStock:'Produit indisponible',removedWish:'Retiré des favoris',addedWish:'Ajouté aux favoris',removedCart:'Produit supprimé du panier',reviewThanks:'Merci pour votre avis !',fillFields:'Veuillez compléter vos informations',invalidPhone:'Veuillez saisir un numéro valide',emptyWishlist:'Votre liste de favoris est vide',searchResults:'Résultats de recherche',latestTitle:'Nouveautés',product:'produit',products:'produits',orderLoading:'Enregistrement...',orderSuccess:'Commande enregistrée. Numéro : ',orderError:'Impossible d’enregistrer la commande.',loadingError:'Impossible de charger les produits.',other:'Couleur unique'
+  promo:'Bienvenue chez OUMAYSTORE — Une collection pour tous, livraison partout au Maroc',
+  promoExtra:'Mode · Accessoires · Maison · Offres spéciales',
+  home:'Accueil',women:'Femmes',men:'Hommes',kids:'Enfants',shoes:'Chaussures',accessories:'Accessoires',homeDecor:'Maison & Déco',wishlist:'Favoris',changeLanguage:'Changer la langue',contact:'Contactez-nous',search:'Recherche',cart:'Panier',searchPlaceholder:'Rechercher un produit...',clear:'Effacer',
+  heroTitle:'Votre style commence ici',heroDesc:'Découvrez une sélection soignée de vêtements, accessoires et articles pour la maison, pour toute la famille.',discover:'Découvrir les produits',delivery:'Livraison partout au Maroc',door:'À votre porte',cash:'Paiement à la livraison',easy:'Achetez en toute sérénité',secure:'Achats sécurisés',trust:'Votre confiance compte',support:'Service client',help:'Nous sommes là pour vous',
+  shopCategory:'Acheter par catégorie',categorySubtitle:'Découvrez nos collections par univers',latest:'Nouveautés',latestSubtitle:'Nos dernières sélections',loading:'Chargement des produits...',all:'Tout',allCategories:'Toutes les sous-catégories',sortNewest:'Plus récents',priceLow:'Prix croissant',priceHigh:'Prix décroissant',sortName:'Nom',priceFrom:'Prix min.',priceTo:'Prix max.',resetFilters:'Réinitialiser les filtres',specialPicks:'✨ Notre sélection pour tous',specialDesc:'Découvrez les articles incontournables OUMAYSTORE',discoverBest:'Voir la sélection',bestProducts:'⭐ Nos produits sélectionnés',bestSubtitle:'Les coups de cœur de la boutique pour toute la famille',reviewsTitle:'Avis clients',reviewsSubtitle:'Votre confiance nous inspire',reviewOne:'Des produits magnifiques et une livraison très rapide.',reviewTwo:'Un excellent service et des prix intéressants.',reviewThree:'Produit conforme aux photos. Merci OUMAYSTORE.',morocco:'Maroc',rights:'Tous droits réservés',chooseColor:'Choisir la couleur :',chooseSize:'Choisir la taille :',addCart:'Ajouter au panier',buyerReviews:'Avis des clients',yourName:'Votre nom',yourReview:'Votre avis...',publishReview:'Publier',cartTitle:'Votre panier',fullName:'Nom complet',phone:'Téléphone',chooseCity:'Choisir une ville',otherCity:'Autre ville',address:'Adresse détaillée',cashOnDelivery:'Paiement à la livraison',shipping:'Livraison :',total:'Total :',confirmOrder:'Confirmer la commande',new:'Nouveau',add:'Ajouter',added:'Ajouté',noProducts:'Aucun produit dans cette catégorie',noReviews:'Aucun avis pour le moment.',emptyCart:'Votre panier est vide',chooseColorError:'Veuillez choisir une couleur',chooseSizeError:'Veuillez choisir une taille',chooseRatingError:'Veuillez choisir une note',outStock:'Produit indisponible',removedWish:'Retiré des favoris',addedWish:'Ajouté aux favoris',removedCart:'Produit supprimé du panier',reviewThanks:'Merci pour votre avis !',fillFields:'Veuillez compléter vos informations',invalidPhone:'Veuillez saisir un numéro valide',emptyWishlist:'Votre liste de favoris est vide',searchResults:'Résultats de recherche',latestTitle:'Nouveautés',product:'produit',products:'produits',orderLoading:'Enregistrement...',orderSuccess:'Commande enregistrée. Numéro : ',orderError:'Impossible d’enregistrer la commande.',loadingError:'Impossible de charger les produits.',other:'Couleur unique'
  },
  en:{
-  promo:'Welcome to OUMAYSTORE — Delivery across Morocco',home:'Home',women:'Women',men:'Men',kids:'Kids',shoes:'Shoes',accessories:'Accessories',homeDecor:'Home & Decor',wishlist:'Wishlist',changeLanguage:'Change language',contact:'Contact us',search:'Search',cart:'Cart',searchPlaceholder:'Search products...',clear:'Clear',
-  heroTitle:'Your style starts here',heroDesc:'Discover our carefully selected collection of fashion, accessories and home products.',discover:'Discover products',delivery:'Nationwide delivery',door:'To your doorstep',cash:'Cash on delivery',easy:'Shop with confidence',secure:'Secure shopping',trust:'Your trust matters',support:'Customer support',help:'We are here to help',
-  shopCategory:'Shop by category',categorySubtitle:'Explore collections that suit your style',latest:'New arrivals',latestSubtitle:'Our latest selections',loading:'Loading products...',all:'All',allCategories:'All subcategories',sortNewest:'Newest',priceLow:'Price: low to high',priceHigh:'Price: high to low',sortName:'Name',priceFrom:'Min price',priceTo:'Max price',resetFilters:'Reset filters',specialPicks:'✨ Selected for you',specialDesc:'Discover the best of OUMAYSTORE',discoverBest:'Explore picks',bestProducts:'⭐ Featured products',bestSubtitle:'Our store favourites',reviewsTitle:'Customer reviews',reviewsSubtitle:'Your trust means everything to us',reviewOne:'Beautiful products, great quality and fast delivery.',reviewTwo:'Excellent service and reasonable prices.',reviewThree:'The product matched the photos. Thank you!',morocco:'Morocco',rights:'All rights reserved',chooseColor:'Choose a color:',chooseSize:'Choose a size:',addCart:'Add to cart',buyerReviews:'Customer reviews',yourName:'Your name',yourReview:'Write your review...',publishReview:'Submit review',cartTitle:'Shopping cart',fullName:'Full name',phone:'Phone number',chooseCity:'Choose a city',otherCity:'Other city',address:'Full address',cashOnDelivery:'Cash on delivery',shipping:'Shipping:',total:'Total:',confirmOrder:'Confirm order',new:'New',add:'Add',added:'Added',noProducts:'No products in this category',noReviews:'No reviews yet.',emptyCart:'Your cart is empty',chooseColorError:'Please choose a color',chooseSizeError:'Please choose a size',outStock:'This product is unavailable',removedWish:'Removed from wishlist',addedWish:'Added to wishlist',removedCart:'Product removed from cart',reviewThanks:'Thank you for your review!',fillFields:'Please complete delivery details',invalidPhone:'Please enter a valid phone number',emptyWishlist:'Your wishlist is empty',searchResults:'Search results',latestTitle:'New arrivals',product:'product',products:'products',orderLoading:'Submitting order...',orderSuccess:'Order submitted. Number: ',orderError:'Could not submit order.',loadingError:'Could not load products.',other:'One color'
+  promo:'Welcome to OUMAYSTORE — A collection for everyone, delivered across Morocco',
+  promoExtra:'Fashion · Accessories · Home · Special offers',
+  home:'Home',women:'Women',men:'Men',kids:'Kids',shoes:'Shoes',accessories:'Accessories',homeDecor:'Home & Decor',wishlist:'Wishlist',changeLanguage:'Change language',contact:'Contact us',search:'Search',cart:'Cart',searchPlaceholder:'Search products...',clear:'Clear',
+  heroTitle:'Your style starts here',heroDesc:'Discover our carefully selected collection of fashion, accessories and home products for everyone in the family.',discover:'Discover products',delivery:'Nationwide delivery',door:'To your doorstep',cash:'Cash on delivery',easy:'Shop with confidence',secure:'Secure shopping',trust:'Your trust matters',support:'Customer support',help:'We are here to help',
+  shopCategory:'Shop by category',categorySubtitle:'Explore collections for every style',latest:'New arrivals',latestSubtitle:'Our latest selections',loading:'Loading products...',all:'All',allCategories:'All subcategories',sortNewest:'Newest',priceLow:'Price: low to high',priceHigh:'Price: high to low',sortName:'Name',priceFrom:'Min price',priceTo:'Max price',resetFilters:'Reset filters',specialPicks:'✨ Selected for everyone',specialDesc:'Discover the best of OUMAYSTORE',discoverBest:'Explore picks',bestProducts:'⭐ Featured products',bestSubtitle:'Our store favourites for the whole family',reviewsTitle:'Customer reviews',reviewsSubtitle:'Your trust means everything to us',reviewOne:'Beautiful products, great quality and fast delivery.',reviewTwo:'Excellent service and reasonable prices.',reviewThree:'The product matched the photos. Thank you!',morocco:'Morocco',rights:'All rights reserved',chooseColor:'Choose a color:',chooseSize:'Choose a size:',addCart:'Add to cart',buyerReviews:'Customer reviews',yourName:'Your name',yourReview:'Write your review...',publishReview:'Submit review',cartTitle:'Shopping cart',fullName:'Full name',phone:'Phone number',chooseCity:'Choose a city',otherCity:'Other city',address:'Full address',cashOnDelivery:'Cash on delivery',shipping:'Shipping:',total:'Total:',confirmOrder:'Confirm order',new:'New',add:'Add',added:'Added',noProducts:'No products in this category',noReviews:'No reviews yet.',emptyCart:'Your cart is empty',chooseColorError:'Please choose a color',chooseSizeError:'Please choose a size',chooseRatingError:'Please choose a rating',outStock:'This product is unavailable',removedWish:'Removed from wishlist',addedWish:'Added to wishlist',removedCart:'Product removed from cart',reviewThanks:'Thank you for your review!',fillFields:'Please complete delivery details',invalidPhone:'Please enter a valid phone number',emptyWishlist:'Your wishlist is empty',searchResults:'Search results',latestTitle:'New arrivals',product:'product',products:'products',orderLoading:'Submitting order...',orderSuccess:'Order submitted. Number: ',orderError:'Could not submit order.',loadingError:'Could not load products.',other:'One color'
  }
 };
 
@@ -752,9 +766,11 @@ function translatePage(){
   const key=el.dataset.i18nPlaceholder;
   if(translations[currentLang][key])el.placeholder=t(key);
  });
+ document.querySelectorAll('.promo-dynamic').forEach(el=>el.textContent=t('promo'));
+ document.querySelectorAll('.promo-extra').forEach(el=>el.textContent=t('promoExtra'));
  document.documentElement.lang=currentLang;
  document.documentElement.dir=currentLang==='ar'?'rtl':'ltr';
- document.title=currentLang==='ar'?'OUMAYSTORE | أناقتك تبدأ من هنا':'OUMAYSTORE | '+(currentLang==='fr'?'Votre style commence ici':'Your style starts here');
+ document.title=currentLang==='ar'?'OUMAYSTORE | أناقتكم تبدأ من هنا':'OUMAYSTORE | '+(currentLang==='fr'?'Votre style commence ici':'Your style starts here');
  document.querySelectorAll('.hero .primary-btn i').forEach(i=>i.className='fa-solid '+(currentLang==='ar'?'fa-arrow-left':'fa-arrow-right'));
 }
 
@@ -789,9 +805,23 @@ async function loadSettings(){
   const {data,error}=await client.from('store_settings').select('key,value');
   if(error)throw error;
   const settings={};(data||[]).forEach(row=>settings[row.key]=row.value);
-  if(settings.shipping_cost_mad!==undefined)shippingCost=Number(settings.shipping_cost_mad)||0;
+
+  if(settings.shipping_cost_mad!==undefined){
+   shippingCost=Number(settings.shipping_cost_mad)||0;
+  }
   document.getElementById('shipping-cost-display').textContent=shippingCost+' MAD';
-  if(settings.promo_text)document.getElementById('promo-bar-text').textContent=settings.promo_text;
+
+  if(settings.promo_text){
+   document.querySelectorAll('.promo-dynamic').forEach(el=>{
+    el.textContent=String(settings.promo_text);
+   });
+  }
+  if(settings.promo_extra){
+   document.querySelectorAll('.promo-extra').forEach(el=>{
+    el.textContent=String(settings.promo_extra);
+   });
+  }
+  updateCartUI();
  }catch(e){console.error('Settings load failed:',e)}
 }
 
@@ -882,7 +912,8 @@ function updateResultCount(n){document.getElementById('results-count').textConte
 function filterCategory(category){
  currentFilter=category;showingWishlist=false;closeSidebar();
  document.querySelectorAll('.category-chip').forEach(b=>{
-  b.classList.toggle('active',b.getAttribute('onclick')?.includes(category));
+  const value=b.getAttribute('onclick')||'';
+  b.classList.toggle('active',value.includes("'"+category+"'"));
  });
  const sub=document.getElementById('subCategoryFilter');sub.value='';
  applyFilters();
@@ -906,9 +937,17 @@ function applyFilters(){
  else if(sort==='name')result.sort((a,b)=>a.name.localeCompare(b.name));
  else result.sort((a,b)=>b.dateAdded-a.dateAdded);
  document.getElementById('section-title').textContent=
-  showingWishlist?t('wishlist'):q?t('searchResults'):currentFilter==='all'?t('latest'):currentFilter;
+  showingWishlist?t('wishlist'):q?t('searchResults'):currentFilter==='all'?t('latest'):categoryLabel(currentFilter);
  renderGrid(result,document.getElementById('products-container'));
  updateResultCount(result.length);
+}
+
+function categoryLabel(category){
+ const map={
+  'ملابس النساء':'women','ملابس الرجال':'men','الأطفال':'kids',
+  'أحذية':'shoes','إكسسوارات':'accessories','منزل':'homeDecor'
+ };
+ return map[category]?t(map[category]):category;
 }
 
 function resetFilters(){
@@ -1085,7 +1124,7 @@ function submitReview(){
  const rating=document.querySelector('input[name="rating"]:checked');
  const name=document.getElementById('reviewer-name').value.trim();
  const text=document.getElementById('review-text').value.trim();
- if(!rating)return toast(t('chooseColorError'));
+ if(!rating)return toast(t('chooseRatingError'));
  if(!name||!text)return toast(t('fillFields'));
  (reviews[currentProduct.id]??=[]).push({
   name,rating:Number(rating.value),text,date:new Date().toISOString()
