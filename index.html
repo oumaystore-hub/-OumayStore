@@ -515,6 +515,35 @@ header{min-height:112px;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);p
  .brand-name{font-size:.91rem}
 }
 
+/* OUMAYSTORE header + floating quick actions */
+.brand{min-width:220px;gap:2px}
+.brand img{width:82px;height:68px;object-fit:contain}
+.brand-name{font-size:1.65rem;letter-spacing:.4px}
+.header-group:last-child{justify-content:flex-end;align-items:center}
+.header-group .language-header-btn{width:44px;height:44px;flex-basis:44px}
+.quick-actions{position:fixed;right:22px;bottom:24px;z-index:500;display:flex;flex-direction:column-reverse;align-items:center;gap:11px;direction:ltr}
+.quick-main,.quick-action{border:0;border-radius:50%;display:grid;place-items:center;box-shadow:0 8px 24px #142b4930;transition:transform .2s,opacity .2s,background .2s}
+.quick-main{width:60px;height:60px;background:var(--navy);color:white;font-size:1.35rem;border:2px solid #ffffffb8}
+.quick-main:hover{background:var(--gold);transform:translateY(-2px)}
+.quick-list{display:flex;flex-direction:column;gap:10px;opacity:0;visibility:hidden;transform:translateY(12px);transition:.22s}
+.quick-actions.open .quick-list{opacity:1;visibility:visible;transform:translateY(0)}
+.quick-action{width:48px;height:48px;background:#fff;color:var(--navy);font-size:1.08rem;position:relative;border:1px solid var(--line)}
+.quick-action:hover{background:var(--gold);color:#fff;transform:scale(1.06)}
+.quick-action .counter{top:-4px;inset-inline-end:-5px}
+.quick-main .quick-close{display:none}
+.quick-actions.open .quick-main .quick-open{display:none}
+.quick-actions.open .quick-main .quick-close{display:inline}
+@media(max-width:650px){
+ header{min-height:94px;grid-template-columns:1fr auto 1fr;padding:7px 12px;gap:5px}
+ .brand{min-width:0}
+ .brand img{width:66px;height:57px}
+ .brand-name{font-size:1.25rem}
+ .header-group .language-header-btn{width:38px;height:38px;flex-basis:38px}
+ .quick-actions{right:14px;bottom:84px;gap:9px}
+ .quick-main{width:56px;height:56px}
+ .quick-action{width:45px;height:45px}
+}
+@media(max-width:380px){.brand img{width:59px;height:52px}.brand-name{font-size:1.1rem}}
 </style>
 </head>
 
@@ -556,9 +585,6 @@ header{min-height:112px;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);p
   </a>
 
   <div class="header-group">
-   <button class="icon-btn" onclick="toggleSearch()" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
-   <button class="icon-btn" onclick="showWishlist()" aria-label="Wishlist"><i class="fa-regular fa-heart"></i><span class="counter" id="wishlist-count">0</span></button>
-   <button class="icon-btn" onclick="toggleCart()" aria-label="Cart"><i class="fa-solid fa-bag-shopping"></i><span class="counter" id="cart-count">0</span></button>
    <button class="icon-btn language-header-btn" onclick="changeLanguage()" aria-label="Language"><i class="fa-solid fa-globe"></i></button>
   </div>
 
@@ -693,6 +719,14 @@ header{min-height:112px;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);p
   <button onclick="showWishlist()"><i class="fa-regular fa-heart"></i><span data-i18n="wishlist">المفضلة</span></button>
   <button onclick="toggleCart()"><i class="fa-solid fa-bag-shopping"></i><span data-i18n="cart">السلة</span></button>
  </nav>
+ <div class="quick-actions" id="quickActions">
+  <div class="quick-list" aria-label="اختصارات المتجر">
+   <button class="quick-action" onclick="toggleSearch();toggleQuickActions(false)" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+   <button class="quick-action" onclick="showWishlist();toggleQuickActions(false)" aria-label="Wishlist"><i class="fa-regular fa-heart"></i><span class="counter" id="wishlist-count">0</span></button>
+   <button class="quick-action" onclick="toggleCart();toggleQuickActions(false)" aria-label="Cart"><i class="fa-solid fa-bag-shopping"></i><span class="counter" id="cart-count">0</span></button>
+  </div>
+  <button class="quick-main" onclick="toggleQuickActions()" aria-label="Quick actions" aria-expanded="false"><i class="fa-solid fa-bolt quick-open"></i><i class="fa-solid fa-xmark quick-close"></i></button>
+ </div>
 </div>
 
 <div class="modal-overlay" id="details-modal" onclick="if(event.target===this)closeDetails()">
@@ -1000,6 +1034,15 @@ function resetFilters(){
 }
 function filterSearch(){applyFilters()}
 function clearSearch(){document.getElementById('searchInput').value='';applyFilters()}
+function toggleQuickActions(force){
+ const menu=document.getElementById('quickActions');
+ if(!menu)return;
+ const open=typeof force==='boolean'?force:!menu.classList.contains('open');
+ menu.classList.toggle('open',open);
+ const button=menu.querySelector('.quick-main');
+ if(button)button.setAttribute('aria-expanded',String(open));
+}
+
 function showWishlist(){
  closeSidebar();showingWishlist=true;currentFilter='all';applyFilters();
  document.getElementById('products-section').scrollIntoView({behavior:'smooth'});
